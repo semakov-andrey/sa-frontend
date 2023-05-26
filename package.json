@@ -1,5 +1,12 @@
 {
   "name": "sa-frontend",
   "author": "Semakov Andrey",
-  "scripts": {}
+  "version": "1.0.0",
+  "scripts": {},
+  "workspaces": [
+    "./packages/*"
+  ],
+  "dependencies": {
+    "typescript": "^5.0.4"
+  }
 }
