@@ -56,3 +56,7 @@ type UnionToTuple<T, K = T> = [T] extends [never]
   : T extends T
     ? [T, ...UnionToTuple<OmitX<K, T>>]
     : [];
+
+type ClassConstructor<T> = {
+  new (...args: Array<unknown>): T
+};
