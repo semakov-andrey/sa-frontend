@@ -1,0 +1,8 @@
+{
+  "name": "@sa-frontend/utils",
+  "author": "Semakov Andrey",
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}
