@@ -49,16 +49,19 @@
          │  ├─ {StyleName}.d.ts
          │  └─ {StyleName}.d.ts
          ├─ {ComponentName}.types
-         │  ├─ {TypesName}.ts
-         │  └─ {TypesName}.ts
+         │  ├─ {TypeName}.ts
+         │  └─ {TypeName}.ts
          ├─ {ComponentName}.tests
          │  ├─ {ComponentName}.test.hooks
          │  │  ├─ use{HookName}.test.ts
          │  │  └─ use{HookName}.test.ts
+         │  ├─ {ComponentName}.test.utilities
+         │  │  ├─ {UtilityName}.test.ts
+         │  │  └─ {UtilityName}.test.ts
          │  └─ {ComponentName}.test.tsx
          │─ {ComponentName}.utilities
-         │  ├─ {UtilitiesName}.ts
-         │  └─ {UtilitiesName}.ts
+         │  ├─ {UtilityName}.ts
+         │  └─ {UtilityName}.ts
          ├─ {ComponentName}.constants.ts
          ├─ {ComponentName}.css
          ├─ {ComponentName}.css.d.ts
