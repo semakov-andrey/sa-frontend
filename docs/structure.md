@@ -1,6 +1,6 @@
-## Структура проекта на реакте
+## Структура проекта
 
-```
+```js
 .  
 └─ interface
    ├─ main
@@ -17,11 +17,16 @@
       └─ {ComponentName}
          ├─ {ComponentName}.assets
          │  ├─ {AssetName}.png
-         │  ├─ {AssetName}.d.ts
+         │  ├─ {AssetName}.png
+         │  ├─ {AssetName}.svg
          │  ├─ {AssetName}.svg
          │  ├─ {AssetName}.d.ts
+         │  ├─ {AssetName}.d.ts
          │  ├─ {AssetName}.woff2
+         │  └─ {AssetName}.woff2
          ├─ {ComponentName}.constants
+         │  ├─ {ConstantsName}.ts
+         │  └─ {ConstantsName}.ts
          ├─ {ComponentName}.components
          │  ├─ {ComponentName}
          │  ├─ {ComponentName}
@@ -35,21 +40,30 @@
          │  │  └─ use{HookName}.types.ts
          │  ├─ use{HookName}.ts
          │  └─ use{HookName}.ts
+         ├─ {ComponentName}.stores
+         │  ├─ {StoreName}.ts
+         │  └─ {StoreName}.ts
          ├─ {ComponentName}.styles
+         │  ├─ {StyleName}.css
+         │  ├─ {StyleName}.css
+         │  ├─ {StyleName}.d.ts
+         │  └─ {StyleName}.d.ts
          ├─ {ComponentName}.types
+         │  ├─ {TypesName}.ts
+         │  └─ {TypesName}.ts
          ├─ {ComponentName}.tests
          │  ├─ {ComponentName}.test.hooks
          │  │  ├─ use{HookName}.test.ts
          │  │  └─ use{HookName}.test.ts
          │  └─ {ComponentName}.test.tsx
          │─ {ComponentName}.utilities
-         │
-         ├─ {ComponentName}.const.ts
+         │  ├─ {UtilitiesName}.ts
+         │  └─ {UtilitiesName}.ts
+         ├─ {ComponentName}.constants.ts
          ├─ {ComponentName}.css
          ├─ {ComponentName}.css.d.ts
          ├─ {ComponentName}.tsx
-         ├─ {ComponentName}.store
          ├─ {ComponentName}.stories.ts
          ├─ {ComponentName}.types.ts
-         └─ {ComponentName}.utils.ts
+         └─ {ComponentName}.utilities.ts
 ```
