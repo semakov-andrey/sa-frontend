@@ -1,23 +1,24 @@
 ## Структура проекта на реакте
 
+```
 .  
-└─ interface  
-   ├─ main  
-   │  ├─ {ComponentName}  
-   │  └─ {ComponentName}  
-   ├─ pages  
-   │  ├─ {ComponentName}  
-   │  └─ {ComponentName}  
-   ├─ segments  
-   │  ├─ {ComponentName}  
-   │  └─ {ComponentName}  
-   └─ ui-kit  
-      ├─ {ComponentName}  
-      └─ {ComponentName}  
-         ├─ {ComponentName}.assets  
-         │  ├─ {AssetName}.png  
-         │  ├─ {AssetName}.d.ts  
-         │  ├─ {AssetName}.svg  
+└─ interface
+   ├─ main
+   │  ├─ {ComponentName}
+   │  └─ {ComponentName}
+   ├─ pages
+   │  ├─ {ComponentName}
+   │  └─ {ComponentName}
+   ├─ segments
+   │  ├─ {ComponentName}
+   │  └─ {ComponentName}
+   └─ ui-kit
+      ├─ {ComponentName}
+      └─ {ComponentName}
+         ├─ {ComponentName}.assets
+         │  ├─ {AssetName}.png
+         │  ├─ {AssetName}.d.ts
+         │  ├─ {AssetName}.svg
          │  ├─ {AssetName}.d.ts
          │  ├─ {AssetName}.woff2
          ├─ {ComponentName}.constants
@@ -51,3 +52,4 @@
          ├─ {ComponentName}.stories.ts
          ├─ {ComponentName}.types.ts
          └─ {ComponentName}.utils.ts
+```
