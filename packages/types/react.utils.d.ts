@@ -1,8 +1,8 @@
-type TEntireElement = OneOrMore<JSX.Element | string | number | null | undefined>;
+type EntireElement = OneOrMore<JSX.Element | string | number | null | undefined>;
 
-type TExistElement = OneOrMore<JSX.Element | string | number>;
+type ExistElement = OneOrMore<JSX.Element | string | number>;
 
-interface IIconProps {
+interface SvgIconProps {
   className?: string;
   style?: React.CSSProperties;
 }
