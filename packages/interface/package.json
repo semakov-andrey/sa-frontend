@@ -1,11 +1,12 @@
 {
-  "name": "@sa-frontend/types",
+  "name": "@sa-frontend/interface",
   "author": "Semakov Andrey",
-  "version": "1.9.0",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
+    "@sa-frontend/application": "^1.0.0",
     "@types/react": "^18.2.7"
   }
 }
