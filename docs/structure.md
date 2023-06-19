@@ -34,7 +34,7 @@
 │  └─ utilities
 │     ├─ {utility}.utility.ts
 │     └─ {utility}.utility.ts
-├─ interface
+├─ presentation
 │  ├─ common
 │  │  ├─ assets
 │  │  ├─ constants
@@ -130,7 +130,7 @@
 │  │     └─ {Component}.utilities.ts
 │  ├─ index.html
 │  └─ index.ts
-├─ services
+├─ infrastucture
 │  ├─ {service}
 │  ├─ {service}
 │  │  ├─ {service}.schemas
