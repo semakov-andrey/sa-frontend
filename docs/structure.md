@@ -7,27 +7,30 @@
 │  │  ├─ {Contract}
 │  │  └─ {Contract}
 │  │     ├─ {Contract}.constants
-│  │     │  ├─ {Contract}.constant.ts
-│  │     │  └─ {Contract}.constant.ts
+│  │     │  ├─ {constant}.constant.ts
+│  │     │  └─ {constant}.constant.ts
 │  │     ├─ {Contract}.constants.ts
 │  │     └─ {Contract}.ts
 │  ├─ entities
 │  │  ├─ {Entity}
 │  │  └─ {Entity}
 │  │     ├─ {Entity}.utilities
-│  │     │  ├─ {Entity}.utility.ts
-│  │     │  └─ {Entity}.utility.ts
+│  │     │  ├─ {utility}.utility.ts
+│  │     │  └─ {utility}.utility.ts
 │  │     ├─ {Entity}.ts
 │  │     └─ {Entity}.utilities.ts
 │  └─ useCases
 ├─ application
 │  ├─ iocContainer
 │  │  └─ iocContainer.ts
-│  ├─ services.types
-│  │  ├─ {serviceType}
-│  │  └─ {serviceType}
-│  │     ├─ {serviceType}.symbols.ts
-│  │     └─ {serviceType}.types.ts
+│  ├─ contracts
+│  │  ├─ {Contract}
+│  │  └─ {Contract}
+│  │     ├─ {Contract}.constants
+│  │     │  ├─ {constant}.constant.ts
+│  │     │  └─ {constant}.constant.ts
+│  │     ├─ {Contract}.constants.ts
+│  │     └─ {Contract}.ts
 │  └─ utilities
 │     ├─ {utility}.utility.ts
 │     └─ {utility}.utility.ts
