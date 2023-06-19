@@ -3,118 +3,136 @@
 ```js
 . 
 ├─ domain
+│  ├─ contracts
+│  │  ├─ {Contract}
+│  │  └─ {Contract}
+│  │     ├─ {Contract}.constants
+│  │     │  ├─ {Contract}.constant.ts
+│  │     │  └─ {Contract}.constant.ts
+│  │     ├─ {Contract}.constants.ts
+│  │     └─ {Contract}.ts
 │  ├─ entities
-│  │  ├─ {EntityName}
-│  │  └─ {EntityName}
-│  │     └─ {EntityName}.ts
-│  ├─ entities.types
-│  │  ├─ {EntityTypeName}
-│  │  └─ {EntityTypeName}
-│  │     └─ {EntityTypeName}.types.ts
+│  │  ├─ {Entity}
+│  │  └─ {Entity}
+│  │     ├─ {Entity}.utilities
+│  │     │  ├─ {Entity}.utility.ts
+│  │     │  └─ {Entity}.utility.ts
+│  │     ├─ {Entity}.ts
+│  │     └─ {Entity}.utilities.ts
 │  └─ useCases
 ├─ application
 │  ├─ iocContainer
 │  │  └─ iocContainer.ts
-│  └─ services.types
-│     ├─ {serviceTypeName}
-│     └─ {serviceTypeName}
-│        ├─ {serviceTypeName}.symbols.ts
-│        └─ {serviceTypeName}.types.ts
+│  ├─ services.types
+│  │  ├─ {serviceType}
+│  │  └─ {serviceType}
+│  │     ├─ {serviceType}.symbols.ts
+│  │     └─ {serviceType}.types.ts
+│  └─ utilities
+│     ├─ {utility}.utility.ts
+│     └─ {utility}.utility.ts
 ├─ interface
 │  ├─ common
-│  │  ├─ common.assets
-│  │  │  └─ {ComponentStructure}
+│  │  ├─ assets
+│  │  ├─ constants
+│  │  ├─ contexts
+│  │  ├─ stores
+│  │  ├─ stories
+│  │  ├─ styles
+│  │  ├─ types
+│  │  ├─ tests
+│  │  └─ utilities
 │  ├─ main
-│  │  ├─ {ComponentName}
-│  │  └─ {ComponentName}
+│  │  ├─ {Component}
+│  │  └─ {Component}
 │  ├─ pages
-│  │  ├─ {ComponentName}
-│  │  └─ {ComponentName}
+│  │  ├─ {Component}
+│  │  └─ {Component}
 │  ├─ segments
-│  │  ├─ {ComponentName}
-│  │  └─ {ComponentName}
+│  │  ├─ {Component}
+│  │  └─ {Component}
 │  ├─ uiKit
-│  │  ├─ {ComponentName}
-│  │  └─ {ComponentName}
-│  │     ├─ {ComponentName}.assets
-│  │     │  ├─ {assetName}.asset.png
-│  │     │  ├─ {assetName}.asset.png
-│  │     │  ├─ {assetName}.asset.svg
-│  │     │  ├─ {assetName}.asset.svg
-│  │     │  ├─ {assetName}.asset.d.ts
-│  │     │  ├─ {assetName}.asset.d.ts
-│  │     │  ├─ {assetName}.asset.woff2
-│  │     │  └─ {assetName}.asset.woff2
-│  │     ├─ {ComponentName}.constants
-│  │     │  ├─ {constantName}.constant.ts
-│  │     │  └─ {constantName}.constant.ts
-│  │     ├─ {ComponentName}.contexts
-│  │     │  ├─ {contextName}.context
-│  │     │  ├─ {contextName}.context
-│  │     │  │  ├─ {contextName}.constant.ts
-│  │     │  │  ├─ {contextName}.context.ts
-│  │     │  │  └─ {contextName}.type.ts
-│  │     │  ├─ {contextName}.context.ts
-│  │     │  └─ {contextName}.context.ts
-│  │     ├─ {ComponentName}.components
-│  │     │  ├─ {ComponentName}
-│  │     │  ├─ {ComponentName}
-│  │     │  ├─ {ComponentName}{SubName}
-│  │     │  └─ {ComponentName}{SubName}
-│  │     ├─ {ComponentName}.hooks
-│  │     │  ├─ use{HookName}
-│  │     │  ├─ use{HookName}
-│  │     │  │  ├─ use{HookName}.constant.ts
-│  │     │  │  ├─ use{HookName}.hook.ts
-│  │     │  │  └─ use{HookName}.type.ts
-│  │     │  ├─ use{HookName}.ts
-│  │     │  └─ use{HookName}.ts
-│  │     ├─ {ComponentName}.stores
-│  │     │  ├─ {storeName}
-│  │     │  ├─ {storeName}
-│  │     │  │  ├─ {storeName}.constant.ts
-│  │     │  │  ├─ {storeName}.store.ts
-│  │     │  │  └─ {storeName}.type.ts
-│  │     │  ├─ {storeName}.store.ts
-│  │     │  └─ {storeName}.store.ts
-│  │     ├─ {ComponentName}.styles
-│  │     │  ├─ {styleName}.style.css
-│  │     │  ├─ {styleName}.style.css
-│  │     │  ├─ {styleName}.style.d.ts
-│  │     │  └─ {styleName}.style.d.ts
-│  │     ├─ {ComponentName}.stories.ts
-│  │     │  ├─ {storyName}.story.ts
-│  │     │  ├─ {storyName}.story.ts
-│  │     ├─ {ComponentName}.types
-│  │     │  ├─ {TypeName}.type.ts
-│  │     │  └─ {TypeName}.type.ts
-│  │     ├─ {ComponentName}.tests
-│  │     │  ├─ {ComponentName}.test.tsx
-│  │     │  └─ {ComponentName}.test.tsx
-│  │     │─ {ComponentName}.utilities
-│  │     │  ├─ {utilityName}.utility.ts
-│  │     │  └─ {utilityName}.utility.ts
-│  │     ├─ {ComponentName}.assets.svg
-│  │     ├─ {ComponentName}.assets.svg.d.ts
-│  │     ├─ {ComponentName}.constants.ts
-│  │     ├─ {ComponentName}.contexts.ts
-│  │     ├─ {ComponentName}.hooks.ts
-│  │     ├─ {ComponentName}.stores.ts
-│  │     ├─ {ComponentName}.stories.ts
-│  │     ├─ {ComponentName}.styles.css
-│  │     ├─ {ComponentName}.styles.css.d.ts
-│  │     ├─ {ComponentName}.tsx
-│  │     ├─ {ComponentName}.tests.ts
-│  │     ├─ {ComponentName}.types.ts
-│  │     └─ {ComponentName}.utilities.ts
+│  │  ├─ {Component}
+│  │  └─ {Component}
+│  │     ├─ {Component}.assets
+│  │     │  ├─ {asset}.asset.png
+│  │     │  ├─ {asset}.asset.png
+│  │     │  ├─ {asset}.asset.svg
+│  │     │  ├─ {asset}.asset.svg
+│  │     │  ├─ {asset}.asset.d.ts
+│  │     │  ├─ {asset}.asset.d.ts
+│  │     │  ├─ {asset}.asset.woff2
+│  │     │  └─ {asset}.asset.woff2
+│  │     ├─ {Component}.constants
+│  │     │  ├─ {constant}.constant.ts
+│  │     │  └─ {constant}.constant.ts
+│  │     ├─ {Component}.contexts
+│  │     │  ├─ {context}.context
+│  │     │  ├─ {context}.context
+│  │     │  │  ├─ {context}.constant.ts
+│  │     │  │  ├─ {context}.context.ts
+│  │     │  │  └─ {context}.type.ts
+│  │     │  ├─ {context}.context.ts
+│  │     │  └─ {context}.context.ts
+│  │     ├─ {Component}.components
+│  │     │  ├─ {Component}
+│  │     │  ├─ {Component}
+│  │     │  ├─ {Component}{Sub}
+│  │     │  └─ {Component}{Sub}
+│  │     ├─ {Component}.hooks
+│  │     │  ├─ use{Hook}
+│  │     │  ├─ use{Hook}
+│  │     │  │  ├─ use{Hook}.constant.ts
+│  │     │  │  ├─ use{Hook}.hook.ts
+│  │     │  │  └─ use{Hook}.type.ts
+│  │     │  ├─ use{Hook}.ts
+│  │     │  └─ use{Hook}.ts
+│  │     ├─ {Component}.stores
+│  │     │  ├─ {store}
+│  │     │  ├─ {store}
+│  │     │  │  ├─ {store}.constant.ts
+│  │     │  │  ├─ {store}.store.ts
+│  │     │  │  └─ {store}.type.ts
+│  │     │  ├─ {store}.store.ts
+│  │     │  └─ {store}.store.ts
+│  │     ├─ {Component}.stories
+│  │     │  ├─ {story}.story.ts
+│  │     │  ├─ {story}.story.ts
+│  │     ├─ {Component}.styles
+│  │     │  ├─ {style}.style.css
+│  │     │  ├─ {style}.style.css
+│  │     │  ├─ {style}.style.d.ts
+│  │     │  └─ {style}.style.d.ts
+│  │     ├─ {Component}.types
+│  │     │  ├─ {Type}.type.ts
+│  │     │  └─ {Type}.type.ts
+│  │     ├─ {Component}.tests
+│  │     │  ├─ {Component}.test.tsx
+│  │     │  └─ {Component}.test.tsx
+│  │     ├─ {Component}.utilities
+│  │     │  ├─ {utility}.utility.ts
+│  │     │  └─ {utility}.utility.ts
+│  │     ├─ {Component}.assets.svg
+│  │     ├─ {Component}.assets.svg.d.ts
+│  │     ├─ {Component}.constants.ts
+│  │     ├─ {Component}.contexts.ts
+│  │     ├─ {Component}.hooks.ts
+│  │     ├─ {Component}.stores.ts
+│  │     ├─ {Component}.stories.ts
+│  │     ├─ {Component}.styles.css
+│  │     ├─ {Component}.styles.css.d.ts
+│  │     ├─ {Component}.tsx
+│  │     ├─ {Component}.tests.ts
+│  │     ├─ {Component}.types.ts
+│  │     └─ {Component}.utilities.ts
 │  ├─ index.html
 │  └─ index.ts
 ├─ services
-│  ├─ {serviceName}
-│  ├─ {serviceName}
-│  │  ├─ {serviceName}.schemas
-│  │  ├─ {serviceName}.ts
-│  │  └─ {serviceName}.utilities.ts
+│  ├─ {service}
+│  ├─ {service}
+│  │  ├─ {service}.schemas
+│  │  ├─ {service}.ts
+│  │  └─ {service}.utilities.ts
 │  └─ index.ts
 └─ index.ts
 ```
