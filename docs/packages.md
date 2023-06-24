@@ -15,8 +15,15 @@
 ## Настройка eslint:
 ```
 "extends": [
-  "./node_modules/@sa-frontend/eslint/configs/main.config.cjs",
-  "./node_modules/@sa-frontend/eslint/configs/progress.config.cjs",
-  "./node_modules/@sa-frontend/eslint/configs/structure.config.cjs"
+  "./node_modules/@sa-frontend/linting/configs/main.config.cjs",
+  "./node_modules/@sa-frontend/linting/configs/progress.config.cjs",
+  "./node_modules/@sa-frontend/linting/configs/structure.config.cjs"
 ]
+```
+
+## Настройка jest:
+```
+import config from '@sa-frontend/testing/configs/jest.config.js';
+
+export default { ...config };
 ```
