@@ -1,7 +1,7 @@
 {
-  "name": "@sa-frontend/eslint",
+  "name": "@sa-frontend/linting",
   "author": "Semakov Andrey",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
