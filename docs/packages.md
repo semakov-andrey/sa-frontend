@@ -23,7 +23,7 @@
 
 ## Настройка jest:
 ```
-import config from '@sa-frontend/testing/configs/jest.config.js';
+import { jestConfig } from '@sa-frontend/testing/configs/jest.config.js';
 
-export default { ...config };
+export default { ...jestConfig };
 ```
