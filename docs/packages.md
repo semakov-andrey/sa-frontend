@@ -15,8 +15,8 @@
 ## Настройка eslint:
 ```
 "extends": [
-  "node_modules/@sa-frontend/eslint/configs/main.config.cjs",
-  "node_modules/@sa-frontend/eslint/configs/progress.config.cjs",
-  "node_modules/@sa-frontend/eslint/configs/structure.config.cjs"
+  "./node_modules/@sa-frontend/eslint/configs/main.config.cjs",
+  "./node_modules/@sa-frontend/eslint/configs/progress.config.cjs",
+  "./node_modules/@sa-frontend/eslint/configs/structure.config.cjs"
 ]
 ```

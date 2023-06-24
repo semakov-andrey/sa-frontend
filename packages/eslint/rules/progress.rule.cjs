@@ -1,20 +1,17 @@
 const fg = require('fast-glob');
 const logUpdate = require('log-update');
 
-const createCLIOptions = require('../../../node_modules/eslint/lib/options.js');
-
-let options;
+let glob;
 let files;
 const fullPercents = 100;
 
 module.exports = {
   create(context) {
-    if (!options && process && process.argv) {
+    if (!glob && process && Array.isArray(process.argv) && typeof process.argv[2] === 'string') {
       try {
-        const CLIOptions = createCLIOptions();
-        options = CLIOptions.parse(process.argv);
-        if (options && Array.isArray(options._)) {
-          files = fg.sync(options._, {
+        glob = process.argv[2];
+        if (glob) {
+          files = fg.sync(glob, {
             absolute: true,
             ignore: [ '**/node_modules/**', '**/build/**' ]
           }).sort();
