@@ -1,7 +1,7 @@
-export default {
+export const jestConfig = {
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\.(j|t)sx?$': 'esbuild-jest',
+    '^.+\\.(j|t)sx?$': 'esbuild-jest'
   },
   transformIgnorePatterns: [],
   testMatch: [ '<rootDir>/tests/**/*.test.{ts,tsx}' ],
