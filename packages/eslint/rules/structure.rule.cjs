@@ -18,7 +18,8 @@ module.exports = {
   },
   create(context) {
     const rules = context.options[0].rules;
-    const filePath = context.filename.replace(`${ path.resolve(__dirname, '../../') }/`, '');
+    const root = path.resolve(__dirname).split('node_modules')[0];
+    const filePath = context.filename.replace(root, '');
 
     let matched = false;
     rules.forEach((rule) => {
