@@ -1,15 +1,13 @@
 module.exports = {
   overrides: [
     {
-      files: [ '*.ts', '*.tsx' ],
+      files: [ 'src/**/*.ts', 'src/**/*.tsx' ],
       parserOptions: {
         project: './tsconfig.json'
       },
       rules: {
         'rulesdir/structure': [ 'error', {
           rules: [
-            'data/(.*).ts',
-            'tests/(.*).ts',
             'src/domain/entities/(.*)/\\1.ts',
             'src/domain/entities/(.*)/\\1.constants/(.*).constant.ts',
             'src/domain/entities/(.*)/\\1.utilities/(.*).utility.ts',
