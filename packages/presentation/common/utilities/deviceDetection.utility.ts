@@ -1,10 +1,10 @@
 const { userAgent, platform } = navigator;
 
-export const isAppleDevice = () =>
-  platform.match(/(Mac|iPhone|iPod|iPad)/iu);
+export const isAppleDevice = (): boolean =>
+  Boolean(/(Mac|iPhone|iPod|iPad)/iu.exec(platform));
 
-export const isWindows = () =>
-  /Windows/u.test(userAgent);
+export const isWindows = (): boolean =>
+  userAgent.includes('Windows');
 
-export const isAndroid = () =>
-  /Android/u.test(userAgent);
+export const isAndroid = (): boolean =>
+  userAgent.includes('Android');

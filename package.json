@@ -2,11 +2,15 @@
   "name": "sa-frontend",
   "author": "Semakov Andrey",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "eslint": "eslint \"./**/*.{cjs,ts,tsx,js,jsx}\"",
+    "eslint-fix": "eslint \"./**/*.{cjs,ts,tsx,js,jsx}\" --fix"
+  },
   "workspaces": [
     "./packages/*"
   ],
   "dependencies": {
+    "eslint": "^8.43.0",
     "typescript": "^5.0.4"
   }
 }
