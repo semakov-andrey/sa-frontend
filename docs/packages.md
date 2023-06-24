@@ -14,11 +14,13 @@
 
 ## Настройка eslint:
 ```
-"extends": [
-  "./node_modules/@sa-frontend/linting/configs/main.config.cjs",
-  "./node_modules/@sa-frontend/linting/configs/progress.config.cjs",
-  "./node_modules/@sa-frontend/linting/configs/structure.config.cjs"
-]
+module.exports = {
+  extends: [
+    './node_modules/@sa-frontend/linting/configs/main.config.cjs',
+    './node_modules/@sa-frontend/linting/configs/progress.config.cjs',
+    './node_modules/@sa-frontend/linting/configs/structure.config.cjs'
+  ]
+};
 ```
 
 ## Настройка jest:
