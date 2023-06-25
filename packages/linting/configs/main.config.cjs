@@ -308,7 +308,7 @@ module.exports = {
           { pattern: '@/**/*.svg', group: 'object' },
           { pattern: '@/**/*.css', group: 'object' },
           { pattern: '@sa-frontend/**/*', group: 'unknown' },
-          { pattern: '@sa-**/**', group: 'internal' },
+          { pattern: '@sa-**/**', group: 'unknown' },
           { pattern: '@/**', group: 'internal' }
         ],
         'pathGroupsExcludedImportTypes': [ 'type' ]
