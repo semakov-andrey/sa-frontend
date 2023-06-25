@@ -117,7 +117,12 @@ module.exports = {
     'selector-list-comma-newline-before': 'never-multi-line',
     'selector-list-comma-space-before': 'never',
     'selector-max-attribute': 3,
-    'selector-max-class': 3,
+    'selector-max-class': [
+      3,
+      {
+        severity: 'warning'
+      }
+    ],
     'selector-max-empty-lines': 0,
     'selector-max-id': 0,
     'selector-max-pseudo-class': 3,
