@@ -238,7 +238,8 @@ module.exports = {
     'padded-blocks': [ 'error', 'never' ],
     'padding-line-between-statements': [
       'error',
-      { blankLine: 'always', prev: '*', next: [ 'do', 'class', 'for', 'switch', 'try', 'while' ] }
+      { blankLine: 'always', prev: '*', next: [ 'do', 'class', 'for', 'switch', 'try', 'while' ] },
+      { blankLine: 'always', prev: [ 'do', 'class', 'for', 'switch', 'try', 'while' ], next: '*' }
     ],
     'prefer-object-spread': 'error',
     'quote-props': [ 'error', 'consistent-as-needed' ],
