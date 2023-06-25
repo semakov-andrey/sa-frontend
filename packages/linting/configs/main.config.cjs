@@ -301,13 +301,11 @@ module.exports = {
     'import/order': [
       'error',
       {
-        'groups': [ 'builtin', 'external', 'unknown', 'internal', 'parent', 'sibling', 'index', 'object', 'type' ],
+        'groups': [ 'builtin', 'external', 'object', 'unknown', 'internal', 'parent', 'sibling', 'index', 'type' ],
         'newlines-between': 'always',
         'alphabetize': { order: 'asc', caseInsensitive: true },
         'pathGroups': [
-          { pattern: '@/**/*.svg', group: 'object' },
-          { pattern: '@/**/*.css', group: 'object' },
-          { pattern: '@sa-frontend/**/*', group: 'unknown' },
+          { pattern: '@sa-frontend/**/*', group: 'object' },
           { pattern: '@sa-**/**', group: 'unknown' },
           { pattern: '@/**', group: 'internal' }
         ],
