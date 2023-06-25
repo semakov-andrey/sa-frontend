@@ -324,7 +324,7 @@ module.exports = {
         'jam3/no-sanitizer-with-danger': 'error',
         'react/button-has-type': 'error',
         'react/no-access-state-in-setstate': 'error',
-        'react/no-array-index-key': 'error',
+        'react/no-array-index-key': 'warn',
         'react/no-children-prop': 'error',
         'react/no-danger-with-children': 'error',
         'react/no-deprecated': 'error',
