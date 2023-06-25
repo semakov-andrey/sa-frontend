@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/linting",
   "author": "Semakov Andrey",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "publishConfig": {
     "access": "public"
   },
@@ -15,9 +15,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "fast-glob": "^3.2.12",
     "log-update": "4.0.0",
-    "module-alias": "^2.2.2"
+    "module-alias": "^2.2.2",
+    "stylelint": "14.0.1",
+    "stylelint-order": "5.0.0"
   },
   "_moduleAliases": {
-    "eslint-plugin-rulesdir": "./rules/index.cjs"
+    "eslint-plugin-rulesdir": "./eslint/rules/index.cjs"
   }
 }

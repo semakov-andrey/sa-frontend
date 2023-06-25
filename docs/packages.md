@@ -16,9 +16,19 @@
 ```
 module.exports = {
   extends: [
-    './node_modules/@sa-frontend/linting/configs/main.config.cjs',
-    './node_modules/@sa-frontend/linting/configs/progress.config.cjs',
-    './node_modules/@sa-frontend/linting/configs/structure.config.cjs'
+    './node_modules/@sa-frontend/linting/eslint/configs/main.config.cjs',
+    './node_modules/@sa-frontend/linting/eslint/configs/progress.config.cjs',
+    './node_modules/@sa-frontend/linting/eslint/configs/structure.config.cjs'
+  ]
+};
+```
+
+## Настройка stylelint:
+```
+module.exports = {
+  extends: [
+    './node_modules/@sa-frontend/linting/stylelint/main.config.cjs',
+    './node_modules/@sa-frontend/linting/stylelint/order.config.cjs'
   ]
 };
 ```

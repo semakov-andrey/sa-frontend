@@ -2,7 +2,7 @@ const path = require('path');
 
 const moduleAliasInit = require('module-alias');
 
-moduleAliasInit({ base: path.resolve(__dirname, '../') });
+moduleAliasInit({ base: path.resolve(__dirname, '../../') });
 
 const INDENT = 2;
 const MAX_CLASSES_PER_FILE = 1;
