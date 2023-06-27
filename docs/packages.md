@@ -2,7 +2,8 @@
 
 - @sa-frontend/application
 - @sa-frontend/presentation
-- @sa-frontend/eslint
+- @sa-frontend/linting
+- @sa-frontend/testing
 
 ## Настройка tsconfig:
 ```
