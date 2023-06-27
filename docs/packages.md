@@ -7,8 +7,8 @@
 ## Настройка tsconfig:
 ```
 "include": [
-  "node_modules/@sa-frontend/application/types",
-  "node_modules/@sa-frontend/presentation/common/types"
+  "./node_modules/@sa-frontend/application/types",
+  "./node_modules/@sa-frontend/presentation/common/types"
 ]
 ```
 
