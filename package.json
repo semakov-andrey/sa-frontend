@@ -7,7 +7,8 @@
     "eslint-fix": "eslint \"./**/*.{cjs,ts,tsx,js,jsx}\" --fix"
   },
   "workspaces": [
-    "./packages/*"
+    "./packages/source/*",
+    "./packages/tools/*"
   ],
   "dependencies": {
     "eslint": "^8.43.0",
