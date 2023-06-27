@@ -19,7 +19,7 @@ export const isIEOrOldEdge = (): boolean =>
   isIE10() || isIE11() || isEdge();
 
 export const isSafari = (): boolean =>
-  userAgent.includes('Safari') && !userAgent.includes('Chrome');
+  /^((?!chrome|android).)*safari/iu.test(navigator.userAgent);
 
 export const isFirefox = (): boolean =>
   userAgent.includes('Firefox');
