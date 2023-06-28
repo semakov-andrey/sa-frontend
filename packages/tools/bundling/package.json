@@ -1,0 +1,12 @@
+{
+  "name": "@sa-frontend/bundling",
+  "author": "Semakov Andrey",
+  "version": "1.0.0",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "webpack": "^5.88.0"
+  }
+}
