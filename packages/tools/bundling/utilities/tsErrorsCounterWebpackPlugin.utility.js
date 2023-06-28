@@ -1,4 +1,4 @@
-export const TSErrorsCounter = (forkTsCheckerWebpackPlugin) =>
+export const TSErrorsCounterWebpackPlugin = (forkTsCheckerWebpackPlugin) =>
   class TSErrorsCounterPlugin {
     apply(compiler) {
       const waitTime = 1500;
