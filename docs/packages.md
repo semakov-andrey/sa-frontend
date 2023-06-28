@@ -2,6 +2,7 @@
 
 - @sa-frontend/application
 - @sa-frontend/presentation
+- @sa-frontend/bundling
 - @sa-frontend/linting
 - @sa-frontend/testing
 
