@@ -6,7 +6,6 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "importsNotUsedAsValues": "error",
     "lib": [
       "DOM",
       "ES2015",
@@ -27,6 +26,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true
   }
 }

@@ -5,9 +5,11 @@
 - @sa-frontend/bundling
 - @sa-frontend/linting
 - @sa-frontend/testing
+- @sa-frontend/typing
 
 ## Настройка tsconfig:
 ```
+"extends": "./node_modules/@sa-frontend/typing/tsconfig.json",
 "include": [
   "./node_modules/@sa-frontend/application/types",
   "./node_modules/@sa-frontend/presentation/common/types"
