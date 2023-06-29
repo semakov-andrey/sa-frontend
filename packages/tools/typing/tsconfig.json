@@ -25,6 +25,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
+    "useDefineForClassFields": false,
     "useUnknownInCatchVariables": true,
     "verbatimModuleSyntax": true
   }
