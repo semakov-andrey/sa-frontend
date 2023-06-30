@@ -20,6 +20,7 @@ module.exports = {
             'src/application/contracts/(.*)/\\1.constants/(.*).constant.ts',
             'src/application/contracts/(.*)/\\1.constants.ts',
             'src/application/contracts/(.*)/\\1.ts',
+            'src/application/types/(.*).type(.d)?.ts',
             'src/presentation/common/assets/(.*).asset.svg.d.ts',
             'src/presentation/common/constants/(.*).constant.ts',
             'src/presentation/common/contexts/(.*)(.context/\\1)?.(constant|context|type).ts',
