@@ -16,6 +16,8 @@ type OneOrMore<T> = T | Array<T>;
 
 type ArrayInnerType<T> = T extends Array<infer R> ? R : never;
 
+type NonEmptyArray<T> = [T, ...Array<T>];
+
 type KeyOf<T> = keyof T;
 
 type ValueOf<T> = T[KeyOf<T>];
@@ -34,6 +36,23 @@ interface ObjectConstructor {
 
 interface Array<T> {
   includes<U>(searchElement: U, fromIndex?: number): U extends T ? boolean : false;
+
+  map<D extends NonEmptyArray<T>, U>(
+    this: D,
+    callbackfn: (value: T, index: number, array: NonEmptyArray<T>) => U
+  ): NonEmptyArray<U>;
+
+  reduce<D extends NonEmptyArray<T>, U>(
+    this: D,
+    callbackfn: (
+      previousValue: NonEmptyArray<U>, currentValue: T, currentIndex: number, array: NonEmptyArray<T>
+    ) => NonEmptyArray<U>,
+    initialValue: Array<U>
+  ): NonEmptyArray<U>;
+
+  flat<D extends NonEmptyArray<T>>(
+    this: D
+  ): T;
 }
 
 type Modify<T, R> = Omit<T, KeyOf<R>> & R;
