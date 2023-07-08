@@ -1,14 +1,14 @@
 {
   "name": "@sa-frontend/linting",
   "author": "Semakov Andrey",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jam3": "^0.2.3",
     "eslint-plugin-react": "^7.32.2",
