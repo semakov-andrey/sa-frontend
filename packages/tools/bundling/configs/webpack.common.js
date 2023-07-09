@@ -1,7 +1,6 @@
 import path from 'path';
 
 import autoprefixer from 'autoprefixer';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import postcssCustomMedia from 'postcss-custom-media';
@@ -11,10 +10,7 @@ import webpack from 'webpack';
 export const webpackCommonConfig = (params) => {
   const {
     rootDirectory,
-    directories,
-    copyPatterns = [],
-    variables = {},
-    aliases = {}
+    directories
   } = params;
 
   return {
@@ -114,16 +110,11 @@ export const webpackCommonConfig = (params) => {
           context: path.resolve(rootDirectory)
         }
       }),
-      new webpack.DefinePlugin({ ...variables }),
-      ...copyPatterns.length > 0
-        ? [ new CopyWebpackPlugin({ patterns: copyPatterns }) ]
-        : [],
       new webpack.ProgressPlugin({ percentBy: 'entries' })
     ],
     resolve: {
       extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
       alias: {
-        ...aliases,
         '@': directories.source
       }
     },
