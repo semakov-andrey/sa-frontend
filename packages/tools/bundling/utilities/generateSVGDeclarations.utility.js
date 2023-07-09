@@ -21,14 +21,14 @@ export const writeSVGDeclarationFile = async (filePath, content) => {
   await fs.writeFile(filePath, content);
 };
 
-export const generateSVGDeclarations = async (folder, isInitial = true) => {
+export const generateFolderSVGDeclarations = async (folder) => {
   const items = await fs.readdir(folder);
 
   for await (const item of items) {
     const fullItem = `${ folder }/${ item }`;
     const stat = await fs.lstat(fullItem);
 
-    if (stat.isDirectory()) await generateSVGDeclarations(fullItem, false);
+    if (stat.isDirectory()) await generateFolderSVGDeclarations(fullItem);
 
     if (stat.isFile() && fullItem.endsWith(SVG_EXTENSION)) {
       const filePath = `${ fullItem }.d.ts`;
@@ -37,6 +37,12 @@ export const generateSVGDeclarations = async (folder, isInitial = true) => {
       await writeSVGDeclarationFile(filePath, content);
     }
   }
+};
 
-  if (isInitial) console.info('SVG declarations was generated');
+export const generateSVGDeclarations = async (folders) => {
+  for await (const folder of folders) {
+    await generateFolderSVGDeclarations(folder);
+  }
+
+  console.info('SVG declarations was generated');
 };

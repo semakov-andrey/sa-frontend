@@ -21,14 +21,14 @@ export const writePNGDeclarationFile = async (filePath, content) => {
   await fs.writeFile(filePath, content);
 };
 
-export const generatePNGDeclarations = async (folder, isInitial = true) => {
+export const generateFolderPNGDeclarations = async (folder) => {
   const items = await fs.readdir(folder);
 
   for await (const item of items) {
     const fullItem = `${ folder }/${ item }`;
     const stat = await fs.lstat(fullItem);
 
-    if (stat.isDirectory()) await generatePNGDeclarations(fullItem, false);
+    if (stat.isDirectory()) await generateFolderPNGDeclarations(fullItem);
 
     if (stat.isFile() && fullItem.endsWith(PNG_EXTENSION)) {
       const filePath = `${ fullItem }.d.ts`;
@@ -37,6 +37,12 @@ export const generatePNGDeclarations = async (folder, isInitial = true) => {
       await writePNGDeclarationFile(filePath, content);
     }
   }
+};
 
-  if (isInitial) console.info('PNG declarations was generated');
+export const generatePNGDeclarations = async (folders) => {
+  for await (const folder of folders) {
+    await generateFolderPNGDeclarations(folder);
+  }
+
+  console.info('PNG declarations was generated');
 };

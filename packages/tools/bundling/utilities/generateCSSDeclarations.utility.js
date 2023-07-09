@@ -45,14 +45,14 @@ export const writeCSSDeclarationFile = async (filePath, content) => {
   await fs.writeFile(filePath, content);
 };
 
-export const generateCSSDeclarations = async (folder, isInitial = true) => {
+export const generateFolderCSSDeclarations = async (folder) => {
   const items = await fs.readdir(folder);
 
   for await (const item of items) {
     const fullItem = `${ folder }/${ item }`;
     const stat = await fs.lstat(fullItem);
 
-    if (stat.isDirectory()) await generateCSSDeclarations(fullItem, false);
+    if (stat.isDirectory()) await generateFolderCSSDeclarations(fullItem);
 
     if (stat.isFile() && fullItem.endsWith(CSS_EXTENSION)) {
       const filePath = `${ fullItem }.d.ts`;
@@ -61,6 +61,12 @@ export const generateCSSDeclarations = async (folder, isInitial = true) => {
       await writeCSSDeclarationFile(filePath, content);
     }
   }
+};
 
-  if (isInitial) console.info('CSS declarations was generated');
+export const generateCSSDeclarations = async (folders) => {
+  for await (const folder of folders) {
+    await generateFolderCSSDeclarations(folder);
+  }
+
+  console.info('CSS declarations was generated');
 };
