@@ -1,10 +1,10 @@
 import { deleteAsync } from 'del';
 import webpack from 'webpack';
 
-import { webpackConfig } from '../configs/webpack.prod.js';
+import { webpackProdConfig } from '../configs/webpack.prod.js';
 import { STATS_OPTIONS } from '../constants/statsOptions.constant.js';
 
-export const build = async (params) => {
+export const build = async (config, params) => {
   const { directories } = params;
 
   try {
@@ -13,7 +13,7 @@ export const build = async (params) => {
 
   return await new Promise((resolve, reject) => {
     console.info('Building...');
-    const compiler = webpack(webpackConfig(params));
+    const compiler = webpack(webpackProdConfig(config, params));
 
     compiler.run((_, stats) => {
       console.info(stats.toString(STATS_OPTIONS));

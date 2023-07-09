@@ -8,7 +8,7 @@ import postcssCustomMedia from 'postcss-custom-media';
 import postcssNested from 'postcss-nested';
 import webpack from 'webpack';
 
-export const webpackConfigCommon = (params) => {
+export const webpackCommonConfig = (params) => {
   const {
     rootDirectory,
     directories,
@@ -96,7 +96,7 @@ export const webpackConfigCommon = (params) => {
             {
               loader: 'file-loader',
               options: {
-                name: `${ directories.assets }[name].[contenthash:8].[ext]`
+                name: `${ directories.assets }/[name].[contenthash:8].[ext]`
               }
             }
           ]

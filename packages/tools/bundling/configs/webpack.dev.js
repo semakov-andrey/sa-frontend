@@ -8,12 +8,12 @@ import { merge } from 'webpack-merge';
 
 import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsErrorsCounterWebpack.plugin.js';
 
-import { webpackConfigCommon } from './webpack.common.js';
+import { webpackCommonConfig } from './webpack.common.js';
 
-export const webpackConfig = (params) => {
+export const webpackDevConfig = (config, params) => {
   const { directories } = params;
 
-  return merge(webpackConfigCommon(params), {
+  return merge(webpackCommonConfig(params), {
     mode: 'development',
     entry: [
       'webpack-hot-middleware/client?reload=true',
@@ -35,5 +35,5 @@ export const webpackConfig = (params) => {
       new webpack.HotModuleReplacementPlugin(),
       new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))()
     ]
-  });
+  }, config);
 };

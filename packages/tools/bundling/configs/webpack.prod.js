@@ -5,18 +5,18 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { merge } from 'webpack-merge';
 
-import { webpackConfigCommon } from './webpack.common.js';
+import { webpackCommonConfig } from './webpack.common.js';
 
-export const webpackConfig = (params) => {
+export const webpackProdConfig = (config, params) => {
   const { directories } = params;
 
-  return merge(webpackConfigCommon(params), {
+  return merge(webpackCommonConfig(params), {
     mode: 'production',
     entry: [
       path.resolve(directories.source, 'index.ts')
     ],
     output: {
-      publicPath: './',
+      publicPath: '/',
       filename: 'index.[contenthash:8].js',
       path: directories.production,
       assetModuleFilename: `${ directories.assets }/[name].[contenthash:8].[ext]`
@@ -49,5 +49,5 @@ export const webpackConfig = (params) => {
         })
       ]
     }
-  });
+  }, config);
 };
