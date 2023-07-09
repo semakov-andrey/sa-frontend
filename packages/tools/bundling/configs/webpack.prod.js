@@ -1,16 +1,16 @@
 import path from 'path';
 
 import { ESBuildMinifyPlugin } from 'esbuild-loader';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
 import { webpackConfigCommon } from './webpack.common.js';
 
-export const webpackConfig = (rootDirectory, directories) =>
-  merge(webpackConfigCommon(rootDirectory, directories), {
+export const webpackConfig = (params) => {
+  const { directories } = params;
+
+  return merge(webpackConfigCommon(params), {
     mode: 'production',
     entry: [
       path.resolve(directories.source, 'index.ts')
@@ -38,13 +38,6 @@ export const webpackConfig = (rootDirectory, directories) =>
       }),
       new MiniCssExtractPlugin({
         filename: 'index.[contenthash:8].css'
-      }),
-      new webpack.ProgressPlugin({ percentBy: 'entries' }),
-      new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          configFile: path.resolve(rootDirectory, 'tsconfig.json'),
-          context: rootDirectory
-        }
       })
     ],
     optimization: {
@@ -57,3 +50,4 @@ export const webpackConfig = (rootDirectory, directories) =>
       ]
     }
   });
+};

@@ -10,8 +10,10 @@ import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsEr
 
 import { webpackConfigCommon } from './webpack.common.js';
 
-export const webpackConfig = (rootDirectory, directories) =>
-  merge(webpackConfigCommon(rootDirectory, directories), {
+export const webpackConfig = (params) => {
+  const { directories } = params;
+
+  return merge(webpackConfigCommon(params), {
     mode: 'development',
     entry: [
       'webpack-hot-middleware/client?reload=true',
@@ -31,13 +33,7 @@ export const webpackConfig = (rootDirectory, directories) =>
         filename: 'index.css'
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          configFile: path.resolve(rootDirectory, 'tsconfig.json'),
-          context: path.resolve(rootDirectory)
-        }
-      }),
-      new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))(),
-      new webpack.ProgressPlugin({ percentBy: 'entries' })
+      new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))()
     ]
   });
+};
