@@ -6,10 +6,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import postcssCustomMedia from 'postcss-custom-media';
 import postcssNested from 'postcss-nested';
 
-import { DIRECTORIES } from '../constants/directories.constant.js';
-import { ROOT } from '../constants/root.constant.js';
-
-export const webpackConfigCommon = () => ({
+export const webpackConfigCommon = (rootDirectory, directories) => ({
   target: 'web',
   module: {
     rules: [
@@ -25,7 +22,7 @@ export const webpackConfigCommon = () => ({
       {
         test: /\.css$/u,
         use: [
-          path.resolve(ROOT, 'compiler', 'loaders', 'namedCSSExport.loader.js'),
+          '@sa-frontend/bundling/loaders/namedCSSExport.loader.js',
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
@@ -59,7 +56,7 @@ export const webpackConfigCommon = () => ({
               target: 'es2020'
             }
           },
-          path.resolve(ROOT, 'compiler', 'loaders', 'namedSVGExport.loader.js'),
+          '@sa-frontend/bundling/loaders/namedSVGExport.loader.js',
           {
             loader: 'react-svg-loader',
             options: {
@@ -86,15 +83,15 @@ export const webpackConfigCommon = () => ({
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(ROOT, 'data', 'data.assets'), to: 'pokedex' }
+        { from: path.resolve(rootDirectory, 'data', 'data.assets'), to: 'pokedex' }
       ]
     })
   ],
   resolve: {
     extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
     alias: {
-      '@/data': path.resolve(ROOT, 'data'),
-      '@': DIRECTORIES.SOURCE
+      '@/data': path.resolve(rootDirectory, 'data'),
+      '@': directories.source
     }
   }
 });

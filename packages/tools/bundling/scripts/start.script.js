@@ -5,11 +5,10 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import { webpackConfig } from '../configs/webpack.dev.js';
-import { PORT } from '../constants/port.constant.js';
 
-export const start = async () => {
+export const start = async (rootDirectory, directories, PORT) => {
   const server = fastify();
-  const compiler = webpack(webpackConfig(false));
+  const compiler = webpack(webpackConfig(rootDirectory, directories));
 
   await server.register(fastifyMiddle);
   server.use(webpackDevMiddleware(compiler, { stats: 'minimal' }));

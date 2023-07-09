@@ -8,27 +8,24 @@ import { merge } from 'webpack-merge';
 
 import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/utilities/tsErrorsCounterWebpackPlugin.utility.js';
 
-import { DIRECTORIES } from '../constants/directories.constant.js';
-import { ROOT } from '../constants/root.constant.js';
-
 import { webpackConfigCommon } from './webpack.common.js';
 
-export const webpackConfig = () =>
-  merge(webpackConfigCommon(), {
+export const webpackConfig = (rootDirectory, directories) =>
+  merge(webpackConfigCommon(rootDirectory, directories), {
     mode: 'development',
     entry: [
       'webpack-hot-middleware/client?reload=true',
-      path.resolve(DIRECTORIES.SOURCE, 'index.ts')
+      path.resolve(directories.source, 'index.ts')
     ],
     output: {
       publicPath: '/',
       filename: 'index.js',
-      assetModuleFilename: `${ DIRECTORIES.ASSETS }/[name].[ext]`
+      assetModuleFilename: `${ directories.assets }/[name].[ext]`
     },
     plugins: [
       new HtmlWebpackPlugin({
         inject: 'head',
-        template: path.resolve(DIRECTORIES.SOURCE, 'presentation', 'index.html')
+        template: path.resolve(directories.source, 'presentation', 'index.html')
       }),
       new MiniCssExtractPlugin({
         filename: 'index.css'
@@ -36,8 +33,8 @@ export const webpackConfig = () =>
       new webpack.HotModuleReplacementPlugin(),
       new ForkTsCheckerWebpackPlugin({
         typescript: {
-          configFile: path.resolve(ROOT, 'tsconfig.json'),
-          context: path.resolve(ROOT)
+          configFile: path.resolve(rootDirectory, 'tsconfig.json'),
+          context: path.resolve(rootDirectory)
         }
       }),
       new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))(),

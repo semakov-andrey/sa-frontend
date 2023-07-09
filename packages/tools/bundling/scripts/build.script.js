@@ -2,17 +2,16 @@ import { deleteAsync } from 'del';
 import webpack from 'webpack';
 
 import { webpackConfig } from '../configs/webpack.prod.js';
-import { DIRECTORIES } from '../constants/directories.constant.js';
 import { STATS_OPTIONS } from '../constants/statsOptions.constant.js';
 
-export const build = async () => {
+export const build = async (rootDirectory, directories) => {
   try {
-    await deleteAsync(`${ DIRECTORIES.PRODUCTION }/**/*`);
+    await deleteAsync(`${ directories.production }/**/*`);
   } catch {}
 
   return await new Promise((resolve, reject) => {
     console.info('Building...');
-    const compiler = webpack(webpackConfig(true));
+    const compiler = webpack(webpackConfig(rootDirectory, directories));
 
     compiler.run((_, stats) => {
       console.info(stats.toString(STATS_OPTIONS));

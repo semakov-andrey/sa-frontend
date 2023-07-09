@@ -7,27 +7,24 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import { DIRECTORIES } from '../constants/directories.constant.js';
-import { ROOT } from '../constants/root.constant.js';
-
 import { webpackConfigCommon } from './webpack.common.js';
 
-export const webpackConfig = () =>
-  merge(webpackConfigCommon(), {
+export const webpackConfig = (rootDirectory, directories) =>
+  merge(webpackConfigCommon(rootDirectory, directories), {
     mode: 'production',
     entry: [
-      path.resolve(DIRECTORIES.SOURCE, 'index.ts')
+      path.resolve(directories.source, 'index.ts')
     ],
     output: {
       publicPath: './',
       filename: 'index.[contenthash:8].js',
-      path: DIRECTORIES.PRODUCTION,
-      assetModuleFilename: `${ DIRECTORIES.ASSETS }/[name].[contenthash:8].[ext]`
+      path: directories.production,
+      assetModuleFilename: `${ directories.assets }/[name].[contenthash:8].[ext]`
     },
     plugins: [
       new HtmlWebpackPlugin({
         inject: 'head',
-        template: path.resolve(DIRECTORIES.SOURCE, 'presentation', 'index.html'),
+        template: path.resolve(directories.source, 'presentation', 'index.html'),
         minify: {
           removeComments: true,
           collapseWhitespace: true,
@@ -45,8 +42,8 @@ export const webpackConfig = () =>
       new webpack.ProgressPlugin({ percentBy: 'entries' }),
       new ForkTsCheckerWebpackPlugin({
         typescript: {
-          configFile: path.resolve(ROOT, 'tsconfig.json'),
-          context: ROOT
+          configFile: path.resolve(rootDirectory, 'tsconfig.json'),
+          context: rootDirectory
         }
       })
     ],
