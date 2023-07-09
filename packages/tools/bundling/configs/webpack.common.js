@@ -97,9 +97,9 @@ export const webpackConfigCommon = (params) => {
           context: path.resolve(rootDirectory)
         }
       }),
-      new CopyWebpackPlugin({
-        patterns: copyPatterns
-      }),
+      ...copyPatterns.length > 0
+        ? [ new CopyWebpackPlugin({ patterns: copyPatterns }) ]
+        : [],
       new webpack.ProgressPlugin({ percentBy: 'entries' })
     ],
     resolve: {
