@@ -17,7 +17,7 @@ export const webpackProdConfig = (config, params) => {
     ],
     output: {
       publicPath: '/',
-      filename: 'index.[contenthash:8].js',
+      filename: `${ directories.assets }/index.[name].[contenthash:8].js`,
       path: directories.production,
       assetModuleFilename: `${ directories.assets }/[name].[contenthash:8].[ext]`
     },
@@ -37,7 +37,7 @@ export const webpackProdConfig = (config, params) => {
         }
       }),
       new MiniCssExtractPlugin({
-        filename: 'index.[contenthash:8].css'
+        filename: `${ directories.assets }/index.[name].[contenthash:8].css`
       })
     ],
     optimization: {
