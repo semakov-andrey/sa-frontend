@@ -6,7 +6,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/utilities/tsErrorsCounterWebpackPlugin.utility.js';
+import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsErrorsCounterWebpack.plugin.js';
 
 import { webpackConfigCommon } from './webpack.common.js';
 
