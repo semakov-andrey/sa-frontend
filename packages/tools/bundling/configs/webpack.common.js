@@ -57,7 +57,11 @@ export const webpackConfigCommon = (params) => {
           ]
         },
         {
-          test: /\.svg$/u,
+          test: (path) => !path.endsWith('.asset.svg') && path.endsWith('.svg'),
+          type: 'asset/inline'
+        },
+        {
+          test: (path) => path.endsWith('.asset.svg'),
           use: [
             {
               loader: 'esbuild-loader',
@@ -80,6 +84,18 @@ export const webpackConfigCommon = (params) => {
                     { removeUselessStrokeAndFill: false }
                   ]
                 }
+              }
+            }
+          ]
+        },
+        {
+          test: /\.png$/u,
+          use: [
+            '@sa-frontend/bundling/loaders/namedPNGExport.loader.js',
+            {
+              loader: 'file-loader',
+              options: {
+                name: `${ directories.assets }[name].[contenthash:8].[ext]`
               }
             }
           ]
