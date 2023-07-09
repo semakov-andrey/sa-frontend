@@ -13,6 +13,7 @@ export const webpackConfigCommon = (params) => {
     rootDirectory,
     directories,
     copyPatterns = [],
+    variables = {},
     aliases = {}
   } = params;
 
@@ -113,6 +114,7 @@ export const webpackConfigCommon = (params) => {
           context: path.resolve(rootDirectory)
         }
       }),
+      new webpack.DefinePlugin({ ...variables }),
       ...copyPatterns.length > 0
         ? [ new CopyWebpackPlugin({ patterns: copyPatterns }) ]
         : [],
@@ -124,6 +126,11 @@ export const webpackConfigCommon = (params) => {
         ...aliases,
         '@': directories.source
       }
+    },
+    performance: {
+      hints: 'warning',
+      maxEntrypointSize: 512000,
+      maxAssetSize: 4096000
     }
   };
 };
