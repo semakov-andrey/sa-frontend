@@ -8,10 +8,10 @@ import nested from 'postcss-nested';
 import { camelCase } from './camelCase.utility.js';
 import { capitalize } from './capitalize.utility.js';
 
-export const CSS_EXTENSION = '.css';
+export const CSS_EXTENSION = '.styles.css';
 
 export const getCSSDeclarationName = (item) =>
-  `css${ capitalize(camelCase(path.basename(item, CSS_EXTENSION))).replace('Styles', '') }`;
+  `css${ capitalize(camelCase(path.basename(item, CSS_EXTENSION))) }`;
 
 export const getCSSDeclarationContent = async (from, styleName) => {
   let tokens = [];
@@ -54,7 +54,7 @@ export const generateCSSDeclarations = async (folder, isInitial = true) => {
 
     if (stat.isDirectory()) await generateCSSDeclarations(fullItem, false);
 
-    if (stat.isFile() && path.extname(fullItem) === CSS_EXTENSION) {
+    if (stat.isFile() && fullItem.endsWith(CSS_EXTENSION)) {
       const filePath = `${ fullItem }.d.ts`;
       const styleName = getCSSDeclarationName(item);
       const content = await getCSSDeclarationContent(fullItem, styleName);

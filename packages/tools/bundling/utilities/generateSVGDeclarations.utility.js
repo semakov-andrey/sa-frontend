@@ -4,10 +4,10 @@ import path from 'path';
 import { camelCase } from './camelCase.utility.js';
 import { capitalize } from './capitalize.utility.js';
 
-export const SVG_EXTENSION = '.svg';
+export const SVG_EXTENSION = '.asset.svg';
 
 export const getSVGDeclarationName = (item) =>
-  `Svg${ capitalize(camelCase(path.basename(item, SVG_EXTENSION))).replace('Asset', '') }`;
+  `Svg${ capitalize(camelCase(path.basename(item, SVG_EXTENSION))) }`;
 
 export const getSVGDeclarationContent = (iconName) =>
   `export const ${ iconName }: React.ComponentType<SvgIconProps>;\n`;
@@ -30,7 +30,7 @@ export const generateSVGDeclarations = async (folder, isInitial = true) => {
 
     if (stat.isDirectory()) await generateSVGDeclarations(fullItem, false);
 
-    if (stat.isFile() && path.extname(fullItem) === SVG_EXTENSION) {
+    if (stat.isFile() && fullItem.endsWith(SVG_EXTENSION)) {
       const filePath = `${ fullItem }.d.ts`;
       const iconName = getSVGDeclarationName(item);
       const content = getSVGDeclarationContent(iconName);

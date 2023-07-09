@@ -30,7 +30,7 @@ export const webpackConfigCommon = (params) => {
           }
         },
         {
-          test: /\.css$/u,
+          test: /\.styles\.css$/u,
           use: [
             '@sa-frontend/bundling/loaders/namedCSSExport.loader.js',
             MiniCssExtractPlugin.loader,
@@ -89,7 +89,7 @@ export const webpackConfigCommon = (params) => {
           ]
         },
         {
-          test: /\.png$/u,
+          test: /\.asset\.png$/u,
           use: [
             '@sa-frontend/bundling/loaders/namedPNGExport.loader.js',
             {
@@ -101,7 +101,7 @@ export const webpackConfigCommon = (params) => {
           ]
         },
         {
-          test: /\.woff2$/u,
+          test: /\.asset\.woff2$/u,
           type: 'asset/resource'
         }
       ]

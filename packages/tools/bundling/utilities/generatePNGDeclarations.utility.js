@@ -4,10 +4,10 @@ import path from 'path';
 import { camelCase } from './camelCase.utility.js';
 import { capitalize } from './capitalize.utility.js';
 
-export const PNG_EXTENSION = '.png';
+export const PNG_EXTENSION = '.asset.png';
 
 export const getPNGDeclarationName = (item) =>
-  `Png${ capitalize(camelCase(path.basename(item, PNG_EXTENSION))).replace('Asset', '') }`;
+  `Png${ capitalize(camelCase(path.basename(item, PNG_EXTENSION))) }`;
 
 export const getPNGDeclarationContent = (imageName) =>
   `export const ${ imageName }: string;\n`;
@@ -30,7 +30,7 @@ export const generatePNGDeclarations = async (folder, isInitial = true) => {
 
     if (stat.isDirectory()) await generatePNGDeclarations(fullItem, false);
 
-    if (stat.isFile() && path.extname(fullItem) === PNG_EXTENSION) {
+    if (stat.isFile() && fullItem.endsWith(PNG_EXTENSION)) {
       const filePath = `${ fullItem }.d.ts`;
       const imageName = getPNGDeclarationName(item);
       const content = getPNGDeclarationContent(imageName);
