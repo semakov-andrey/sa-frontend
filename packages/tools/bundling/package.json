@@ -1,12 +1,31 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "webpack": "^5.88.0"
+    "@fastify/middie": "^8.1.0",
+    "autoprefixer": "^10.4.14",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.3",
+    "del": "^7.0.0",
+    "esbuild-loader": "2.21.0",
+    "fastify": "^4.15.0",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss": "^8.4.21",
+    "postcss-custom-media": "^9.1.2",
+    "postcss-loader": "^7.1.0",
+    "postcss-modules": "^6.0.0",
+    "postcss-nested": "^6.0.1",
+    "react-svg-loader": "^3.0.3",
+    "webpack": "^5.88.0",
+    "webpack-dev-middleware": "^6.0.2",
+    "webpack-hot-middleware": "^2.25.3",
+    "webpack-merge": "^5.8.0"
   }
 }
