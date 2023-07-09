@@ -27,7 +27,7 @@ export const webpackConfig = (params) => {
     plugins: [
       new HtmlWebpackPlugin({
         inject: 'head',
-        template: path.resolve(directories.source, 'presentation', 'index.html')
+        template: path.resolve(directories.interface, 'index.html')
       }),
       new MiniCssExtractPlugin({
         filename: 'index.css'
