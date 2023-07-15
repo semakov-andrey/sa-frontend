@@ -8,28 +8,40 @@ import { merge } from 'webpack-merge';
 
 import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsErrorsCounterWebpack.plugin.js';
 
+import { DIRECTORIES as directories } from './constants/directories.constant.js';
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackDevConfig = (config, params) => {
-  const { directories } = params;
+  const initialDirectories = directories(params.rootDirectory);
+  const {
+    directories: {
+      assets = initialDirectories.assets,
+      presentation = initialDirectories.presentation,
+      source
+    },
+    withHTML = true
+  } = params;
 
   return merge(webpackCommonConfig(params), {
     mode: 'development',
     devtool: 'source-map',
     entry: [
       'webpack-hot-middleware/client?reload=true',
-      path.resolve(directories.source, 'index.ts')
+      path.resolve(source, 'index.ts')
     ],
     output: {
-      publicPath: '/',
       filename: 'index.js',
-      assetModuleFilename: `${ directories.assets }/[name].[ext]`
+      assetModuleFilename: `${ assets }/[name].[ext]`
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        inject: 'head',
-        template: path.resolve(directories.interface, 'index.html')
-      }),
+      ...withHTML
+        ? [
+          new HtmlWebpackPlugin({
+            inject: 'head',
+            template: path.resolve(presentation, 'index.html')
+          })
+        ]
+        : [],
       new MiniCssExtractPlugin({
         filename: 'index.css'
       }),

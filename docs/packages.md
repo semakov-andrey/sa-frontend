@@ -43,3 +43,16 @@ import { jestConfig } from '@sa-frontend/testing/configs/jest.config.js';
 
 export default { ...jestConfig };
 ```
+
+## Настройка bundling:
+interface Params {
+  rootDirectory: string;
+  directories: {
+    assets?: string; // assets
+    presentation?: string; // presentation
+    production: string;
+    source: string;
+  };
+  port: number;
+  withHTML?: boolean; // true
+};

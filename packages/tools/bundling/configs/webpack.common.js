@@ -7,14 +7,22 @@ import postcssCustomMedia from 'postcss-custom-media';
 import postcssNested from 'postcss-nested';
 import webpack from 'webpack';
 
+import { DIRECTORIES as directories } from './constants/directories.constant.js';
+
 export const webpackCommonConfig = (params) => {
+  const initialDirectories = directories(params.rootDirectory);
   const {
     rootDirectory,
-    directories
+    directories: {
+      assets = initialDirectories.assets
+    }
   } = params;
 
   return {
     target: 'web',
+    output: {
+      publicPath: '/'
+    },
     module: {
       rules: [
         {
@@ -92,7 +100,7 @@ export const webpackCommonConfig = (params) => {
             {
               loader: 'file-loader',
               options: {
-                name: `${ directories.assets }/[name].[contenthash:8].[ext]`
+                name: `${ assets }/[name].[contenthash:8].[ext]`
               }
             }
           ]
