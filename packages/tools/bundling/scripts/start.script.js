@@ -6,12 +6,13 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import { webpackDevConfig } from '../configs/webpack.dev.js';
 
-export const start = async (config, params) => {
+export const start = async (config, params, middlewares = []) => {
   const { port } = params;
   const server = fastify();
   const compiler = webpack(webpackDevConfig(config, params));
 
   await server.register(fastifyMiddle);
+  middlewares.forEach((middleware) => middleware(server));
   server.use(webpackDevMiddleware(compiler, { stats: 'minimal' }));
   server.use(webpackHotMiddleware(compiler, { log: false }));
   server.listen({ port });
