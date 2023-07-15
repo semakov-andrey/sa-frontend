@@ -5,6 +5,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import { webpackDevConfig } from '../configs/webpack.dev.js';
+import { isset } from '../utilities/typeGuards.utility';
 
 export const start = async (config, params, middlewares = []) => {
   const { port } = params;
@@ -15,7 +16,12 @@ export const start = async (config, params, middlewares = []) => {
   middlewares.forEach((middleware) => middleware(server));
   server.use(webpackDevMiddleware(compiler, { stats: 'minimal' }));
   server.use(webpackHotMiddleware(compiler, { log: false }));
-  server.listen({ port });
+  if (isset(port)) server.listen({ port });
+  else {
+    await new Promise((resolve) => {
+      compiler.watch({}, resolve);
+    });
+  }
 
   return { compiler, server };
 };
