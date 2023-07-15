@@ -5,7 +5,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import { webpackDevConfig } from '../configs/webpack.dev.js';
-import { isset } from '../utilities/typeGuards.utility';
+import { isset } from '../utilities/typeGuards.utility.js';
 
 export const start = async (config, params, middlewares = []) => {
   const { port } = params;
