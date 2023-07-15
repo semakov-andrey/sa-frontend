@@ -16,5 +16,5 @@ export const start = async (config, params) => {
   server.use(webpackHotMiddleware(compiler, { log: false }));
   server.listen({ port });
 
-  return compiler;
+  return { compiler, server };
 };
