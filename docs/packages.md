@@ -54,5 +54,6 @@ interface Params {
     source: string;
   };
   port?: number;
-  withHTML?: boolean; // true
+  isHTML?: boolean; // true
+  isCleanDirectory?: boolean; // true
 };

@@ -5,11 +5,13 @@ import { webpackProdConfig } from '../configs/webpack.prod.js';
 import { STATS_OPTIONS } from '../constants/statsOptions.constant.js';
 
 export const build = async (config, params) => {
-  const { directories } = params;
+  const { directories, isCleanDirectory = true } = params;
 
-  try {
-    await deleteAsync(`${ directories.production }/**/*`);
-  } catch {}
+  if (isCleanDirectory) {
+    try {
+      await deleteAsync(`${ directories.production }/**/*`);
+    } catch {}
+  }
 
   return await new Promise((resolve, reject) => {
     console.info('Building...');

@@ -20,7 +20,7 @@ export const webpackDevConfig = (config, params) => {
       presentation = initialDirectories.presentation,
       source
     },
-    withHTML = true
+    isHTML = true
   } = params;
 
   return merge(webpackCommonConfig(params), {
@@ -35,7 +35,7 @@ export const webpackDevConfig = (config, params) => {
       assetModuleFilename: `${ assets }/[name].[ext]`
     },
     plugins: [
-      ...withHTML
+      ...isHTML
         ? [
           new HtmlWebpackPlugin({
             inject: 'head',

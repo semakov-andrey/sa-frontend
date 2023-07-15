@@ -18,7 +18,7 @@ export const webpackProdConfig = (config, params) => {
       production,
       source
     },
-    withHTML = true
+    isHTML = true
   } = params;
 
   return merge(webpackCommonConfig(params), {
@@ -32,7 +32,7 @@ export const webpackProdConfig = (config, params) => {
       assetModuleFilename: `${ assets }/[name].[contenthash:8].[ext]`
     },
     plugins: [
-      ...withHTML
+      ...isHTML
         ? [
           new HtmlWebpackPlugin({
             inject: 'head',
