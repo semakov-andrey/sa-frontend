@@ -8,7 +8,8 @@ import { merge } from 'webpack-merge';
 
 import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsErrorsCounterWebpack.plugin.js';
 
-import { DIRECTORIES as directories } from './constants/directories.constant.js';
+import { DIRECTORIES as directories } from '../constants/directories.constant.js';
+
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackDevConfig = (config, params) => {

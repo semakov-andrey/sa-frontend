@@ -5,7 +5,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { merge } from 'webpack-merge';
 
-import { DIRECTORIES as directories } from './constants/directories.constant.js';
+import { DIRECTORIES as directories } from '../constants/directories.constant.js';
+
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackProdConfig = (config, params) => {
