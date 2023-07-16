@@ -49,6 +49,7 @@ interface Params {
   rootDirectory: string;
   directories: {
     assets?: string; // assets
+    development?: string;
     presentation?: string; // presentation
     production: string;
     source: string;

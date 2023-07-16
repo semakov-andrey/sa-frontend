@@ -18,6 +18,7 @@ export const webpackDevConfig = (config, params) => {
   const {
     directories: {
       assets = initialDirectories.assets,
+      development,
       presentation = initialDirectories.presentation,
       source
     },
@@ -34,6 +35,7 @@ export const webpackDevConfig = (config, params) => {
     ],
     output: {
       filename: 'index.js',
+      path: development,
       assetModuleFilename: `${ assets }/[name].[ext]`
     },
     plugins: [
