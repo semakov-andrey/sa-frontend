@@ -3,8 +3,8 @@
   "author": "Semakov Andrey",
   "version": "1.0.0",
   "scripts": {
-    "eslint": "eslint \"./**/*.{cjs,ts,tsx,js,jsx}\"",
-    "eslint-fix": "eslint \"./**/*.{cjs,ts,tsx,js,jsx}\" --fix"
+    "eslint": "eslint './**/*.{cjs,ts,tsx,js,jsx}'",
+    "eslint-fix": "eslint './**/*.{cjs,ts,tsx,js,jsx}' --fix"
   },
   "workspaces": [
     "./packages/source/*",
