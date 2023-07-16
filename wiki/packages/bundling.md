@@ -29,7 +29,7 @@ interface Params {
   directories: {
     assets?: string; // default: 'assets'
     development?: string;
-    presentation?: string; // default: directories.source + 'presentation'
+    presentation?: string; // default: directories.source + '/presentation'
     production: string;
     source: string;
   }; // Набор директорий для сборки проекта
