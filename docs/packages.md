@@ -54,6 +54,7 @@ interface Params {
     source: string;
   };
   port?: number;
+  copyPatterns?: Array<{ from: string; to: string }>;
   isHTML?: boolean; // true
   isCleanDirectory?: boolean; // true
 };

@@ -1,5 +1,6 @@
 import path from 'path';
 
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { ESBuildMinifyPlugin } from 'esbuild-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -18,6 +19,7 @@ export const webpackProdConfig = (config, params) => {
       production,
       source
     },
+    copyPatterns,
     isHTML = true
   } = params;
 
@@ -47,6 +49,13 @@ export const webpackProdConfig = (config, params) => {
               removeAttributeQuotes: true,
               removeOptionalTags: false
             }
+          })
+        ]
+        : [],
+      ...Array.isArray(copyPatterns)
+        ? [
+          new CopyWebpackPlugin({
+            patterns: copyPatterns
           })
         ]
         : [],

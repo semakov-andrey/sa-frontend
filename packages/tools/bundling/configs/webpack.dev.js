@@ -1,5 +1,6 @@
 import path from 'path';
 
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -20,6 +21,7 @@ export const webpackDevConfig = (config, params) => {
       presentation = initialDirectories.presentation,
       source
     },
+    copyPatterns,
     isHTML = true
   } = params;
 
@@ -40,6 +42,13 @@ export const webpackDevConfig = (config, params) => {
           new HtmlWebpackPlugin({
             inject: 'head',
             template: path.resolve(presentation, 'index.html')
+          })
+        ]
+        : [],
+      ...Array.isArray(copyPatterns)
+        ? [
+          new CopyWebpackPlugin({
+            patterns: copyPatterns
           })
         ]
         : [],

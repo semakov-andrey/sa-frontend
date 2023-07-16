@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "1.26.0",
+  "version": "1.27.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -9,6 +9,7 @@
   "dependencies": {
     "@fastify/middie": "^8.1.0",
     "autoprefixer": "^10.4.14",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "del": "^7.0.0",
     "esbuild-loader": "2.21.0",
