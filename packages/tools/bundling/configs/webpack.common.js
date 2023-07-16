@@ -7,10 +7,10 @@ import postcssCustomMedia from 'postcss-custom-media';
 import postcssNested from 'postcss-nested';
 import webpack from 'webpack';
 
-import { DIRECTORIES as directories } from '../constants/directories.constant.js';
+import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
 
 export const webpackCommonConfig = (params) => {
-  const initialDirectories = directories(params.rootDirectory);
+  const initialDirectories = getInitialDirectories(params);
   const {
     rootDirectory,
     directories: {

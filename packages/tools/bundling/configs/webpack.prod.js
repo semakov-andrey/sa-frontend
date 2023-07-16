@@ -6,12 +6,12 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { merge } from 'webpack-merge';
 
-import { DIRECTORIES as directories } from '../constants/directories.constant.js';
+import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
 
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackProdConfig = (config, params) => {
-  const initialDirectories = directories(params.rootDirectory);
+  const initialDirectories = getInitialDirectories(params);
   const {
     directories: {
       assets = initialDirectories.assets,

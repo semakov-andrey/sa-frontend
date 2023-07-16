@@ -4,7 +4,7 @@
 
 Файл `compiler/compile.js`
 
-- генерация d.ts для css, svg, png:
+- Генерация d.ts для css, svg, png:
 ```ts
 function generateCSSDeclarations(folders: Array<string>): Promise<void>;
 function generateSVGDeclarations(folders: Array<string>): Promise<void>; 
@@ -23,22 +23,19 @@ function build(
   config: webpack.Configuration,
   params: Params
 ): Promise<void>;
-```
 
-- Params
-```ts
 interface Params {
-  rootDirectory: string;
+  rootDirectory: string; // Корневая директория проекта
   directories: {
-    assets?: string; // assets
+    assets?: string; // default: 'assets'
     development?: string;
-    presentation?: string; // presentation
+    presentation?: string; // default: directories.source + 'presentation'
     production: string;
     source: string;
-  };
-  port?: number;
-  copyPatterns?: Array<{ from: string; to: string }>;
-  isHTML?: boolean; // true
-  isCleanDirectory?: boolean; // true
+  }; // Набор директорий для сборки проекта
+  port?: number; // Порт для webpack dev server
+  copyPatterns?: Array<{ from: string; to: string }>; // Паттерны для CopyWebpackPlugin
+  isHTML?: boolean; // Использовать HTMLWebpackPlugin; default: true
+  isCleanDirectory?: boolean; // Очистить директорию перед сборкой; default: true
 };
 ```

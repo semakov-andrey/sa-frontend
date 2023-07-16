@@ -9,12 +9,12 @@ import { merge } from 'webpack-merge';
 
 import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsErrorsCounterWebpack.plugin.js';
 
-import { DIRECTORIES as directories } from '../constants/directories.constant.js';
+import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
 
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackDevConfig = (config, params) => {
-  const initialDirectories = directories(params.rootDirectory);
+  const initialDirectories = getInitialDirectories(params);
   const {
     directories: {
       assets = initialDirectories.assets,
