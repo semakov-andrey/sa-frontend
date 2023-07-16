@@ -1,6 +1,6 @@
 ## @sa-frontend/testing
 
-## Подключение jest конфига
+### Подключение jest конфига
 
 Файл `jest.config.js`
 

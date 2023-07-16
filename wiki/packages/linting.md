@@ -1,6 +1,6 @@
 ## @sa-frontend/linting
 
-## Подключение eslint конфига
+### Подключение eslint конфига
 
 Файл `.eslintrc.cjs`
 
@@ -14,7 +14,7 @@ module.exports = {
 };
 ```
 
-## Подключение stylelint конфига
+### Подключение stylelint конфига
 
 Файл `.stylelintrc.cjs`
 

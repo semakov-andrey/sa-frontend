@@ -1,6 +1,6 @@
 ## @sa-frontend/typing
 
-## Подключение typescript конфига
+### Подключение typescript конфига
 
 Файл `tsconfig.json`
 

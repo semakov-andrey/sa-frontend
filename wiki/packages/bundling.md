@@ -1,6 +1,6 @@
 ## @sa-frontend/bunding
 
-## Подключение сборки
+### Подключение сборки
 
 Файл `compiler/compile.js`
 
