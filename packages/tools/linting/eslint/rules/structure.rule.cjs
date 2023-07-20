@@ -23,7 +23,7 @@ module.exports = {
 
     let matched = false;
     rules.forEach((rule) => {
-      const regexp = new RegExp(`^${ rule }$`, 'u');
+      const regexp = new RegExp(`${ rule }$`, 'u');
       if (regexp.test(filePath)) matched = true;
     });
 
