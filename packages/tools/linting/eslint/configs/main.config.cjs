@@ -367,7 +367,7 @@ module.exports = {
         'react/style-prop-object': 'error',
         'react/void-dom-elements-no-children': 'error',
 
-        'react/jsx-boolean-value': [ 'error', 'always' ],
+        'react/jsx-boolean-value': [ 'error', 'never' ],
         'react/jsx-closing-bracket-location': 'error',
         'react/jsx-closing-tag-location': 'error',
         'react/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'ignore' } ],
