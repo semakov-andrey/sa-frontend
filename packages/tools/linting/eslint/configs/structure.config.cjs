@@ -16,7 +16,7 @@ module.exports = {
             'src/domain/contracts/(.*)/\\1.utilities/(.*).utility.ts',
             'src/domain/contracts/(.*)/\\1.(constants|utilities).ts',
             'src/domain/contracts/(.*)/\\1.ts',
-            'src/application/(.*)/\\1.ts',
+            'src/application/components/(.*)/\\1.ts',
             'src/application/utilities/(.*).utility.ts',
             'src/application/contracts/(.*)/\\1.constants/(.*).constant.ts',
             'src/application/contracts/(.*)/\\1.constants.ts',
