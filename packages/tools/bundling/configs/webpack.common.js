@@ -106,6 +106,10 @@ export const webpackCommonConfig = (params) => {
           ]
         },
         {
+          test: /\.bin$/u,
+          loader: '@sa-frontend/bundling/loaders/namedBINExport.loader.js'
+        },
+        {
           test: /\.asset\.woff2$/u,
           type: 'asset/resource'
         }
