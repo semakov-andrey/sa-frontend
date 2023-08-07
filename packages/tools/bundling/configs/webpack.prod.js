@@ -75,6 +75,11 @@ export const webpackProdConfig = (config, params) => {
           minifySyntax: true
         })
       ]
+    },
+    performance: {
+      hints: 'warning',
+      maxEntrypointSize: 512000,
+      maxAssetSize: 4096000
     }
   }, config);
 };

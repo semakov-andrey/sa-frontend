@@ -126,11 +126,6 @@ export const webpackCommonConfig = (params) => {
     ],
     resolve: {
       extensions: [ '.js', '.jsx', '.ts', '.tsx' ]
-    },
-    performance: {
-      hints: 'warning',
-      maxEntrypointSize: 512000,
-      maxAssetSize: 4096000
     }
   };
 };
