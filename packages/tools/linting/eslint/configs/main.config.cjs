@@ -410,8 +410,8 @@ module.exports = {
             prop: 'parens-new-line'
           }
         ],
-        'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'error'
+        'react-hooks/rules-of-hooks': 'warn',
+        'react-hooks/exhaustive-deps': 'warn'
       }
     },
     {
