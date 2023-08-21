@@ -1,4 +1,4 @@
-import { isset } from '@sa-frontend/application/utilities/typeGuards.utility';
+import { isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 export const cn = <T>(...classNames: Array<T>): string =>
   classNames

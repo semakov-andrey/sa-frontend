@@ -1,4 +1,4 @@
-import { isexists } from '@sa-frontend/application/utilities/typeGuards.utility';
+import { isexists } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 export const toArray = (children?: OneOrMore<EntireElement>): Array<ExistElement> =>
   (Array.isArray(children) ? children : [ children ])

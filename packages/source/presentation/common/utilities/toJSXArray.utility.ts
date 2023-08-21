@@ -1,4 +1,4 @@
-import { isTypeObject, isexists } from '@sa-frontend/application/utilities/typeGuards.utility';
+import { isTypeObject, isexists } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 export const toJSXArray = (children?: OneOrMore<EntireElement>): Array<JSX.Element> =>
   (Array.isArray(children) ? children : [ children ])
