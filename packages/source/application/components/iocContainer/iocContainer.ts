@@ -1,4 +1,4 @@
-import { isset } from '../../utilities/typeGuards.utility';
+import { isset } from '../../utilities/typeGuards.utilities';
 
 class IoCContainer {
   private instances: Map<symbol, unknown> = new Map();

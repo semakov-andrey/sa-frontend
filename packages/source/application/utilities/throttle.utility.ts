@@ -1,4 +1,4 @@
-import { isTypeNumber } from './typeGuards.utility';
+import { isTypeNumber } from './typeGuards.utilities';
 
 export type TTrottleFunction<T> = (...args: Array<T>) => void;
 export type TTrottleReturn<T> = (...args: Array<T>) => void;

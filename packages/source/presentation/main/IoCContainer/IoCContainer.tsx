@@ -2,7 +2,7 @@ import React from 'react';
 
 import { iocContainer } from '@sa-frontend/application/components/iocContainer/iocContainer';
 
-import { IoCContainerContext } from './IoCContainer.contexts';
+import { IoCContainerContext } from './IoCContainer.context';
 
 export interface IoCContainerProviderProps {
   children: EntireElement;
