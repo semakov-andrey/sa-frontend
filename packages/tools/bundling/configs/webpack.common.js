@@ -35,7 +35,7 @@ export const webpackCommonConfig = (params) => {
           }
         },
         {
-          test: /\.styles\.css$/u,
+          test: /\.styles?\.css$/u,
           use: [
             '@sa-frontend/bundling/loaders/namedCSSExport.loader.js',
             MiniCssExtractPlugin.loader,
