@@ -60,13 +60,15 @@ const STRUCTURE = {
     domain: {
       '(entities|contracts)': {
         '(.*)': {
-          constants: {
+          '\\2.constants': {
             file: '(.*).constants?.ts'
           },
-          utilities: {
+          '\\2.utilities': {
             file: '(.*).utilit(y|ies).ts'
           },
-          file: '\\1.ts'
+          'file1': '\\2.constants?.ts',
+          'file2': '\\2.utilit(y|ies).ts',
+          'file3': '\\2.ts'
         }
       }
     },
@@ -93,17 +95,19 @@ const STRUCTURE = {
     presentation: {
       'common': REACT_APP_COMMON_STRUCTURE,
       '(main|pages|segments|uiKit)(/(.*).components)?': {
-        '(.*)': REACT_APP_INNER_STRUCTURE,
-        'file1': '\\4.asset.svg.d.ts',
-        'file2': '\\4.asset.png.d.ts',
-        'file3': '\\4.constants?.ts',
-        'file4': '\\4.contexts?.ts',
-        'file5': '\\4.hooks?.ts',
-        'file6': '\\4.stor(y|ies).tsx?',
-        'file7': '\\4.styles?.css.d.ts',
-        'file8': '\\4.tests?.tsx?',
-        'file9': '\\4.utilit(y|ies).ts',
-        'file10': '\\4.tsx?'
+        '(.*)': {
+          ...REACT_APP_INNER_STRUCTURE,
+          file1: '\\4.asset.svg.d.ts',
+          file2: '\\4.asset.png.d.ts',
+          file3: '\\4.constants?.ts',
+          file4: '\\4.contexts?.ts',
+          file5: '\\4.hooks?.ts',
+          file6: '\\4.stor(y|ies).tsx?',
+          file7: '\\4.styles?.css.d.ts',
+          file8: '\\4.tests?.tsx?',
+          file9: '\\4.utilit(y|ies).ts',
+          file10: '\\4.tsx?'
+        }
       },
       'file1': 'index.html',
       'file2': 'index.tsx'
@@ -152,3 +156,6 @@ module.exports = {
     }
   ]
 };
+
+module.exports.STRUCTURE = STRUCTURE;
+module.exports.processDir = processDir;
