@@ -1,4 +1,4 @@
-const { STRUCTURE, processDir } = require('./packages.structure.config.cjs');
+const config = require('./packages.structure.config.cjs');
 
 module.exports = {
   overrides: [
@@ -7,11 +7,7 @@ module.exports = {
       parserOptions: {
         project: './tsconfig.json'
       },
-      rules: {
-        'rulesdir/structure': [ 'error', {
-          rules: processDir(STRUCTURE)
-        } ]
-      }
+      rules: config.overrides[0].rules
     }
   ]
 };

@@ -156,6 +156,3 @@ module.exports = {
     }
   ]
 };
-
-module.exports.STRUCTURE = STRUCTURE;
-module.exports.processDir = processDir;
