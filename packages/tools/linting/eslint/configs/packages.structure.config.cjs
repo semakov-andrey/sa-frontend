@@ -76,6 +76,11 @@ const STRUCTURE = {
       '(.*)': {
         file: '\\1.ts'
       },
+      'components': {
+        '(.*)': {
+          file: '\\1.ts'
+        }
+      },
       'utilities': {
         file: '(.*).utilit(y|ies).ts'
       },

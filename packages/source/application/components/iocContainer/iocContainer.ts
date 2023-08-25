@@ -1,20 +1,24 @@
 import { isset } from '../../utilities/typeGuards.utilities';
 
-class IoCContainer {
-  private instances: Map<symbol, unknown> = new Map();
+export class IoCContainer<Instances> {
+  private instances: Partial<Instances> = {};
 
-  public get = <T>(token: symbol): T | never => {
-    const constructor = this.instances.get(token);
-    if (!isset(constructor)) {
+  private isset = <Token extends keyof Instances>(
+    instance: Partial<Instances>[Token]
+  ): instance is Instances[Token] =>
+    isset(instance);
+
+  public get = <Token extends keyof Instances>(token: Token & symbol): Instances[Token] | never => {
+    const instance = this.instances[token];
+
+    if (!this.isset(instance)) {
       throw new Error(`DI failed: token "${ token.description ?? 'NoName token' }" not found`);
     }
 
-    return constructor as T;
+    return instance;
   };
 
-  public set = <T>(token: symbol, constructor: T): void => {
-    this.instances.set(token, constructor);
+  public set = <Token extends keyof Instances>(token: Token, instance: Instances[Token]): void => {
+    this.instances[token] = instance;
   };
 }
-
-export const iocContainer = new IoCContainer();
