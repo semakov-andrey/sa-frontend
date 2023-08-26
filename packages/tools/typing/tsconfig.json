@@ -27,6 +27,7 @@
     "target": "ESNext",
     "useDefineForClassFields": false,
     "useUnknownInCatchVariables": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "noErrorTruncation": true
   }
 }
