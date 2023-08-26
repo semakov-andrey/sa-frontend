@@ -12,6 +12,12 @@ type Optional<T> = T | undefined;
 
 type Absent<T> = T | null | undefined;
 
+type NonOptional<T> = T extends undefined ? never : T;
+
+type NonNullable<T> = T extends null ? never : T;
+
+type NonAbsent<T> = T extends null | undefined ? never : T;
+
 type OneOrMore<T> = T | Array<T>;
 
 type ArrayInnerType<T> = T extends Array<infer R> ? R : never;
