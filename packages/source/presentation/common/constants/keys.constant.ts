@@ -4,5 +4,7 @@ export const KEYBOARD_KEYS = {
   ARROW_UP: 'ArrowUp',
   ARROW_DOWN: 'ArrowDown',
   SPACE: 'Space',
-  ESCAPE: 'Escape'
+  ESCAPE: 'Escape',
+  ENTER: 'Enter',
+  BACKSPACE: 'Backspace'
 } as const;
