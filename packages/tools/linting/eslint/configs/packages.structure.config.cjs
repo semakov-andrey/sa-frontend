@@ -122,8 +122,15 @@ const STRUCTURE = {
         '\\1.(schemas)': {
           file: '(.*).schemas?.ts'
         },
-        'file1': '\\1.(utilities).ts',
-        'file2': '\\1.ts'
+        '\\1.constants': {
+          file: '(.*).constants?.ts'
+        },
+        '\\1.utilities': {
+          file: '(.*).utilit(y|ies).ts'
+        },
+        'file1': '\\1.constants?.ts',
+        'file2': '\\1.utilit(y|ies).ts',
+        'file3': '\\1.ts'
       },
       'file': 'index.ts'
     },
