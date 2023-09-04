@@ -4,6 +4,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { ESBuildMinifyPlugin } from 'esbuild-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 
 import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
@@ -20,7 +21,9 @@ export const webpackProdConfig = (config, params) => {
       source
     },
     copyPatterns,
-    isHTML = true
+    isHTML = true,
+    isAnalyzeBundle = true,
+    analyzeStatsFilename = 'stats.json'
   } = params;
 
   return merge(webpackCommonConfig(params), {
@@ -61,7 +64,17 @@ export const webpackProdConfig = (config, params) => {
         : [],
       new MiniCssExtractPlugin({
         filename: `${ assets }/index.[name].[contenthash:8].css`
-      })
+      }),
+      ...isAnalyzeBundle
+        ? [
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: true,
+            defaultSizes: 'parsed',
+            statsFilename: analyzeStatsFilename
+          })
+        ]
+        : []
     ],
     optimization: {
       minimize: true,

@@ -1,5 +1,6 @@
 import path from 'path';
 
+import CircularDependencyPlugin from 'circular-dependency-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -58,7 +59,14 @@ export const webpackDevConfig = (config, params) => {
         filename: 'index.css'
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))()
+      new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))(),
+      new CircularDependencyPlugin({
+        exclude: /node_modules/u,
+        include: /src/u,
+        failOnError: true,
+        allowAsyncCycles: false,
+        cwd: process.cwd()
+      })
     ]
   }, config);
 };
