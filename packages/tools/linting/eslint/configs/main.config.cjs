@@ -265,7 +265,6 @@ module.exports = {
     'no-class-assign': 'error',
     'no-const-assign': 'error',
     'no-dupe-class-members': 'error',
-    'no-duplicate-imports': 'error',
     'no-new-symbol': 'error',
     'no-this-before-super': 'error',
     'no-useless-computed-key': [ 'error', { enforceForClassMembers: true } ],
@@ -292,6 +291,7 @@ module.exports = {
     'import/no-anonymous-default-export': 'error',
     'import/no-cycle': 'error',
     'import/no-default-export': 'error',
+    'import/no-duplicates': [ 'error', { 'prefer-inline': true} ],
     'import/no-named-as-default-member': 'error',
     'import/no-named-as-default': 'error',
     'import/no-named-default': 'error',
@@ -495,7 +495,6 @@ module.exports = {
         '@typescript-eslint/no-extra-non-null-assertion': 'error',
         '@typescript-eslint/no-extraneous-class': 'error',
         '@typescript-eslint/no-for-in-array': 'error',
-        '@typescript-eslint/no-implicit-any-catch': 'error',
         '@typescript-eslint/no-inferrable-types': [
           'error',
           { ignoreParameters: true, ignoreProperties: true }
@@ -556,7 +555,6 @@ module.exports = {
         'lines-between-class-members': 'off',
         'no-array-constructor': 'off',
         'no-dupe-class-members': 'off',
-        'no-duplicate-imports': 'off',
         'no-empty-function': 'off',
         'no-extra-parens': 'off',
         'no-implied-eval': 'off',
@@ -579,7 +577,6 @@ module.exports = {
         '@typescript-eslint/lines-between-class-members': [ 'error', 'always' ],
         '@typescript-eslint/no-array-constructor': 'error',
         '@typescript-eslint/no-dupe-class-members': 'error',
-        '@typescript-eslint/no-duplicate-imports': 'error',
         '@typescript-eslint/no-empty-function': 'error',
         '@typescript-eslint/no-extra-parens': [
           'error',
