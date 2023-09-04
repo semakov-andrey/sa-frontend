@@ -22,7 +22,8 @@ module.exports = {
     'react',
     'react-hooks',
     'jam3',
-    '@typescript-eslint'
+    '@typescript-eslint',
+    'unused-imports'
   ],
   settings: {
     react: { version: 'detect' }
@@ -312,7 +313,9 @@ module.exports = {
         ],
         'pathGroupsExcludedImportTypes': [ 'type' ]
       }
-    ]
+    ],
+      
+    'unused-imports/no-unused-imports': 'error'
   },
   overrides: [
     {
