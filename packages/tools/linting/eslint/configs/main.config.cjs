@@ -291,7 +291,7 @@ module.exports = {
     'import/no-anonymous-default-export': 'error',
     'import/no-cycle': 'error',
     'import/no-default-export': 'error',
-    'import/no-duplicates': [ 'error', { 'prefer-inline': true} ],
+    'import/no-duplicates': [ 'error', { 'prefer-inline': true } ],
     'import/no-named-as-default-member': 'error',
     'import/no-named-as-default': 'error',
     'import/no-named-default': 'error',
@@ -314,7 +314,7 @@ module.exports = {
         'pathGroupsExcludedImportTypes': [ 'type' ]
       }
     ],
-      
+
     'unused-imports/no-unused-imports': 'error'
   },
   overrides: [
