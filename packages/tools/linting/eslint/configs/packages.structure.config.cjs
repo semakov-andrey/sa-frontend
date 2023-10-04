@@ -58,7 +58,7 @@ const REACT_APP_INNER_STRUCTURE = JSON.parse(
 const STRUCTURE = {
   src: {
     domain: {
-      '(entities|contracts)': {
+      contracts: {
         '(.*)': {
           '\\2.constants': {
             file: '(.*).constants?.ts'
@@ -68,7 +68,20 @@ const STRUCTURE = {
           },
           'file1': '\\2.constants?.ts',
           'file2': '\\2.utilit(y|ies).ts',
-          'file3': '\\2.ts'
+          'file3': '\\2.contracts?.ts'
+        }
+      },
+      entities: {
+        '(.*)': {
+          '\\2.constants': {
+            file: '(.*).constants?.ts'
+          },
+          '\\2.utilities': {
+            file: '(.*).utilit(y|ies).ts'
+          },
+          'file1': '\\2.constants?.ts',
+          'file2': '\\2.utilit(y|ies).ts',
+          'file3': '\\2.entit(y|ies).ts'
         }
       }
     },
