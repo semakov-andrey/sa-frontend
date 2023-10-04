@@ -60,28 +60,28 @@ const STRUCTURE = {
     domain: {
       contracts: {
         '(.*)': {
-          '\\2.constants': {
+          '\\1.constants': {
             file: '(.*).constants?.ts'
           },
-          '\\2.utilities': {
+          '\\1.utilities': {
             file: '(.*).utilit(y|ies).ts'
           },
-          'file1': '\\2.constants?.ts',
-          'file2': '\\2.utilit(y|ies).ts',
-          'file3': '\\2.contracts?.ts'
+          'file1': '\\1.constants?.ts',
+          'file2': '\\1.utilit(y|ies).ts',
+          'file3': '\\1.contracts?.ts'
         }
       },
       entities: {
         '(.*)': {
-          '\\2.constants': {
+          '\\1.constants': {
             file: '(.*).constants?.ts'
           },
-          '\\2.utilities': {
+          '\\1.utilities': {
             file: '(.*).utilit(y|ies).ts'
           },
-          'file1': '\\2.constants?.ts',
-          'file2': '\\2.utilit(y|ies).ts',
-          'file3': '\\2.entit(y|ies).ts'
+          'file1': '\\1.constants?.ts',
+          'file2': '\\1.utilit(y|ies).ts',
+          'file3': '\\1.entit(y|ies).ts'
         }
       }
     },
