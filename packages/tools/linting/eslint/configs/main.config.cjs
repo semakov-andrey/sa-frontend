@@ -5,7 +5,7 @@ const moduleAliasInit = require('module-alias');
 moduleAliasInit({ base: path.resolve(__dirname, '../../') });
 
 const INDENT = 2;
-const MAX_CLASSES_PER_FILE = 1;
+const MAX_CLASSES_PER_FILE = 5;
 
 module.exports = {
   env: { browser: true, node: true, es6: true },
@@ -90,7 +90,7 @@ module.exports = {
     'eqeqeq': 'error',
     'grouped-accessor-pairs': [ 'error', 'getBeforeSet' ],
     'guard-for-in': 'error',
-    'max-classes-per-file': [ 'error', MAX_CLASSES_PER_FILE ],
+    'max-classes-per-file': [ 'warning', MAX_CLASSES_PER_FILE ],
     'no-alert': 'error',
     'no-caller': 'error',
     'no-case-declarations': 'error',
