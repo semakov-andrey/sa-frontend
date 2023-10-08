@@ -9,11 +9,11 @@ export const useKeyboardEvent = (
   combination: string,
   handler: (event: KeyboardEvent) => void,
   deps: Array<unknown> = [],
-  { skip }: { skip?: boolean } = {}
+  { skip, timeout }: { skip?: boolean, timeout?: number } = {}
 ): void => {
   useEffect(() => {
     if (Boolean(skip)) return;
-    const trottledHandler = throttle(handler, 250);
+    const trottledHandler = throttle(handler, timeout ?? 250);
     const callback = (event: KeyboardEvent): void => {
       const keys = combination.split(COMBINATION_SEPARATOR);
       const button = keys[keys.length === 1 ? 0 : 1];
