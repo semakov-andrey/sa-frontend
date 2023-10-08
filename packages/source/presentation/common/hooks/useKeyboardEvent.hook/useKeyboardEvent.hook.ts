@@ -4,16 +4,18 @@ import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
 
 import { COMBINATION_SEPARATOR } from './useKeyboardEvent.constants';
 import { getAdditionalCondition } from './useKeyboardEvent.utility';
+import { useEvent } from '../useEvent.hook';
 
 export const useKeyboardEvent = (
   combination: string,
   handler: (event: KeyboardEvent) => void,
-  deps: Array<unknown> = [],
   { skip, timeout }: { skip?: boolean, timeout?: number } = {}
 ): void => {
+  const fn = useEvent(handler);
+
   useEffect(() => {
     if (Boolean(skip)) return;
-    const trottledHandler = throttle(handler, timeout ?? 250);
+    const trottledHandler = throttle(fn, timeout ?? 250);
     const callback = (event: KeyboardEvent): void => {
       const keys = combination.split(COMBINATION_SEPARATOR);
       const button = keys[keys.length === 1 ? 0 : 1];
@@ -30,5 +32,5 @@ export const useKeyboardEvent = (
     return (): void => {
       document.documentElement.removeEventListener('keydown', callback);
     };
-  }, [ skip, ...deps ]);
+  }, [ skip ]);
 };
