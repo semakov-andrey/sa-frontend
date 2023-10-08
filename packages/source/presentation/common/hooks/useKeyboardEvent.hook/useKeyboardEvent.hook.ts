@@ -8,6 +8,7 @@ import { getAdditionalCondition } from './useKeyboardEvent.utility';
 export const useKeyboardEvent = (
   combination: string,
   handler: (event: KeyboardEvent) => void,
+  deps: Array<unknown> = [],
   { skip }: { skip?: boolean } = {}
 ): void => {
   useEffect(() => {
@@ -29,5 +30,5 @@ export const useKeyboardEvent = (
     return (): void => {
       document.documentElement.removeEventListener('keydown', callback);
     };
-  }, [ skip ]);
+  }, [ skip, ...deps ]);
 };
