@@ -1,19 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 
-export const useLocation = (): string => {
-  const [ location, setLocation ] = useState(window.location.pathname);
+import { RouterContext } from '../Router.context';
 
-  useEffect(() => {
-    const handler = (): void => {
-      setLocation(window.location.pathname);
-    };
-
-    window.addEventListener('popstate', handler);
-
-    return (): void => {
-      window.removeEventListener('popstate', handler);
-    };
-  }, []);
-
-  return location;
-};
+export const useLocation = (): string =>
+  useContext(RouterContext).location;
