@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 
 import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
 
+import { useEvent } from '../useEvent.hook';
+
 import { COMBINATION_SEPARATOR } from './useKeyboardEvent.constants';
 import { getAdditionalCondition } from './useKeyboardEvent.utility';
-import { useEvent } from '../useEvent.hook';
 
 export const useKeyboardEvent = (
   combination: string,
