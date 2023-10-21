@@ -18,18 +18,21 @@ export const useInternalChildren = (params: UseInternalChildrenParams): Array<Ex
   useEffect(() => {
     let matched = false;
 
-    const childrenArray = toArray(children).filter((element: ExistElement) => {
-      if (isRouteElement(element)) {
-        if (matched) return false;
-        const { regexp } = pathToRegexp(element.props.path);
-        const out = regexp.exec(location);
-        if (!iswritten(out)) return false;
-        matched = true;
+    const childrenArray = toArray(children)
+      .map((element: ExistElement) =>
+        isRouteElement(element) ? { ...element, key: element.props.path } : element)
+      .filter((element: ExistElement) => {
+        if (isRouteElement(element)) {
+          if (matched) return false;
+          const { regexp } = pathToRegexp(element.props.path);
+          const out = regexp.exec(location);
+          if (!iswritten(out)) return false;
+          matched = true;
+          return true;
+        }
+        if (isRedirectElement(element)) return !matched;
         return true;
-      }
-      if (isRedirectElement(element)) return !matched;
-      return true;
-    });
+      });
 
     setChildrenArray(childrenArray);
   }, [ children, location ]);
