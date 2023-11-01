@@ -76,7 +76,12 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
 
   const activeInactiveSwitch = useEvent((enable: boolean): (() => void) => {
-    if (enable) setSelectedVisible(true);
+    if (enable) {
+      if (scrollIntoView) {
+        container?.children[selected]?.scrollIntoView({ block: 'center' });
+      }
+      setSelectedVisible(true);
+    }
     window.clearTimeout(visibilityTimeout.current);
     visibilityTimeout.current = window.setTimeout(() => {
       setSelectedVisible(false);
@@ -155,10 +160,6 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     if (isSelectedChangedByClickRef.current) {
       isSelectedChangedByClickRef.current = false;
       return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
-    }
-
-    if (scrollIntoView) {
-      container?.children[selected]?.scrollIntoView({ block: 'center' });
     }
 
     return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
