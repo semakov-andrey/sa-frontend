@@ -1,11 +1,11 @@
+import '@sa-frontend/infrastructure/services';
+
 import React, { useMemo } from 'react';
 
 import { RouterContext } from './Router.context';
 import { useInternalChildren } from './Router.hooks/useInternalChildren.hook/useInternalChildren.hook';
 import { useInternalLocation } from './Router.hooks/useInternalLocation.hook/useInternalLocation.hook';
 import { useInternalMatch } from './Router.hooks/useInternalMatch.hook/useInternalMatch.hook';
-
-import '@sa-frontend/infrastructure/services';
 
 export interface RouterProps {
   children: OneOrMore<EntireElement>;

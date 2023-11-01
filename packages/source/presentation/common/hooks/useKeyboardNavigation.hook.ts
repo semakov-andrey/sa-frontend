@@ -1,3 +1,5 @@
+import '@sa-frontend/infrastructure/services';
+
 import { useEffect, useState } from 'react';
 
 import { localStorageUnique, sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
