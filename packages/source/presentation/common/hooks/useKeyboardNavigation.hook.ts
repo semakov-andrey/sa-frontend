@@ -14,6 +14,7 @@ import { useInject } from './useInject.hook';
 
 export interface UseGamesNavigationParams {
   container: HTMLElement | null;
+  amount?: number;
   localStorageKey?: string;
   sessionStorageKey?: string;
   action?: (element: HTMLElement) => void;
@@ -25,7 +26,7 @@ export interface UseGamesNavigationReturn {
 }
 
 export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGamesNavigationReturn => {
-  const { container, localStorageKey, sessionStorageKey, action } = params;
+  const { container, amount, localStorageKey, sessionStorageKey, action } = params;
 
   const localStorage = useInject(localStorageUnique);
   const sessionStorage = useInject(sessionStorageUnique);
@@ -54,7 +55,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     return Math.floor((container.clientWidth - parseInt(paddingLeft, 10) - parseInt(paddingRight, 10)) / parseInt(width, 10));
   });
 
-  const getAmount = useEvent(() => container?.children.length ?? 0);
+  const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
     const amount = getAmount();
