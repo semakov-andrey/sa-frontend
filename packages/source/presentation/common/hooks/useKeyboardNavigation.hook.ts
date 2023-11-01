@@ -1,6 +1,6 @@
 import '@sa-frontend/infrastructure/services';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { localStorageUnique, sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isTypeNumber, isset, iswritten } from '@sa-frontend/application/utilities/typeGuards.utilities';
@@ -8,25 +8,40 @@ import { KEYBOARD_KEYS } from '@sa-frontend/presentation/common/constants/keys.c
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 import { useKeyboardEvent } from '@sa-frontend/presentation/common/hooks/useKeyboardEvent.hook/useKeyboardEvent.hook';
 
-import { isTypeHTMLElement } from '../utilities/typeGuards.utilities';
+import { isTypeHTMLElement, isTypeNode } from '../utilities/typeGuards.utilities';
 
 import { useInject } from './useInject.hook';
+import { useUpdateEffect } from './useUpdateEffect.hook';
 
 export interface UseGamesNavigationParams {
   container: HTMLElement | null;
   amount?: number;
   localStorageKey?: string;
   sessionStorageKey?: string;
-  action?: (element: HTMLElement) => void;
+  onPressEnter?: (element: HTMLElement) => void;
+  onClick?: (element: HTMLElement) => void;
+  timeToInactive?: number;
+  scrollIntoView?: boolean;
 }
 
 export interface UseGamesNavigationReturn {
   selected: number;
   setSelected: (selected: number) => void;
+  isSelectedVisible: boolean;
+  setSelectedVisible: (isSelectedVisible: boolean) => void;
 }
 
 export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGamesNavigationReturn => {
-  const { container, amount, localStorageKey, sessionStorageKey, action } = params;
+  const {
+    container,
+    amount,
+    localStorageKey,
+    sessionStorageKey,
+    onPressEnter,
+    onClick,
+    timeToInactive,
+    scrollIntoView = false
+  } = params;
 
   const localStorage = useInject(localStorageUnique);
   const sessionStorage = useInject(sessionStorageUnique);
@@ -44,6 +59,8 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
       : 0;
 
   const [ selected, setSelected ] = useState(initialSelected);
+  const [ isSelectedVisible, setSelectedVisible ] = useState(false);
+  const isSelectedChangedByClickRef = useRef(false);
 
   const getItemsInRow = useEvent(() => {
     const firstChild = container?.firstChild;
@@ -97,7 +114,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
 
   useKeyboardEvent(KEYBOARD_KEYS.ENTER, () => {
     const element = container?.children[selected];
-    if (isTypeHTMLElement(element)) action?.(element);
+    if (isTypeHTMLElement(element)) onPressEnter?.(element);
   });
 
   useEffect(() => {
@@ -105,5 +122,48 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     if (isset(sessionStorageKey)) sessionStorage.set(sessionStorageKey, selected);
   }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
 
-  return { selected, setSelected };
+  useUpdateEffect(() => {
+    const activeInactiveSwitch = (enable: boolean): (() => void) => {
+      if (enable) setSelectedVisible(true);
+      const timeout = window.setTimeout(() => {
+        setSelectedVisible(false);
+      }, timeToInactive);
+
+      return () => {
+        window.clearTimeout(timeout);
+      };
+    };
+
+    if (isSelectedChangedByClickRef.current) {
+      isSelectedChangedByClickRef.current = false;
+      return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
+    }
+
+    if (scrollIntoView) {
+      container?.children[selected]?.scrollIntoView({ block: 'center' });
+    }
+
+    return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
+  }, [ selected, timeToInactive ]);
+
+  useEffect(() => {
+    const handler = (event: MouseEvent): void => {
+      const elements = Array.from(container?.children ?? []);
+      const index = elements
+        .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
+      const element = elements[index];
+      if (isTypeHTMLElement(element)) {
+        isSelectedChangedByClickRef.current = true;
+        setSelected(index);
+        onClick?.(element);
+      }
+    };
+    container?.addEventListener('click', handler);
+
+    return () => {
+      container?.removeEventListener('click', handler);
+    };
+  }, [ container ]);
+
+  return { selected, setSelected, isSelectedVisible, setSelectedVisible };
 };
