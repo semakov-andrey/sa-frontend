@@ -1,7 +1,9 @@
 import { iocInstance } from '@sa-frontend/application/components/IoCInstance/IoCInstance';
-import { externalStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
+import { localStorageUnique, sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 
 import { LocalStorage } from './LocalStorage/LocalStorage.service';
+import { SessionStorage } from './SessionStorage/SessionStorage.service';
 
-iocInstance.set(externalStorageUnique, new LocalStorage());
+iocInstance.set(localStorageUnique, new LocalStorage());
+iocInstance.set(sessionStorageUnique, new SessionStorage());
 

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { externalStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
+import { sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isFilledString } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 import { useInject } from '../../../../common/hooks/useInject.hook';
 
-import { LS_KEY } from './useInternalLocation.constant';
+import { SS_KEY } from './useInternalLocation.constant';
 import { isCustomEvent } from './useInternalLocation.utility';
 
 export interface UseInternalLocationParams {
@@ -15,8 +15,8 @@ export interface UseInternalLocationParams {
 export const useInternalLocation = (params: UseInternalLocationParams): string => {
   const { isMemory = false } = params;
 
-  const localStorage = useInject(externalStorageUnique);
-  const lsLocation = localStorage.get(LS_KEY);
+  const sessionStorage = useInject(sessionStorageUnique);
+  const lsLocation = sessionStorage.get(SS_KEY);
 
   const [ location, setLocation ] = useState<string>(isMemory
     ? isFilledString(lsLocation) ? lsLocation : '/'
@@ -28,7 +28,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     const location = event.detail;
     setLocation(location);
     if (isMemory) {
-      localStorage.set(LS_KEY, location);
+      sessionStorage.set(SS_KEY, location);
       return;
     }
 

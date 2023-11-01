@@ -1,2 +1,2 @@
-export const LS_KEY = 'memoryRouterLocation';
+export const SS_KEY = 'memoryRouterLocation';
 
