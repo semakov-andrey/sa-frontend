@@ -61,6 +61,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   const [ selected, setSelected ] = useState(initialSelected);
   const [ isSelectedVisible, setSelectedVisible ] = useState(false);
   const isSelectedChangedByClickRef = useRef(false);
+  const visibilityTimeout = useRef(0);
 
   const getItemsInRow = useEvent(() => {
     const firstChild = container?.firstChild;
@@ -74,7 +75,23 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
 
   const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
 
+  const activeInactiveSwitch = useEvent((enable: boolean): (() => void) => {
+    if (enable) setSelectedVisible(true);
+    window.clearTimeout(visibilityTimeout.current);
+    visibilityTimeout.current = window.setTimeout(() => {
+      setSelectedVisible(false);
+    }, timeToInactive);
+
+    return () => {
+      window.clearTimeout(visibilityTimeout.current);
+    };
+  });
+
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
+    if (!isSelectedVisible) {
+      activeInactiveSwitch(true);
+      return;
+    }
     const amount = getAmount();
     const itemsInRow = getItemsInRow();
     const itemsInCurrentRow = selected >= Math.floor(amount / itemsInRow) * itemsInRow
@@ -84,6 +101,10 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   }, { timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_RIGHT, () => {
+    if (!isSelectedVisible) {
+      activeInactiveSwitch(true);
+      return;
+    }
     const amount = getAmount();
     const itemsInRow = getItemsInRow();
     const itemsInCurrentRow = selected >= Math.floor(amount / itemsInRow) * itemsInRow
@@ -93,6 +114,10 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   }, { timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_UP, () => {
+    if (!isSelectedVisible) {
+      activeInactiveSwitch(true);
+      return;
+    }
     const amount = getAmount();
     const itemsInRow = getItemsInRow();
     if (amount <= itemsInRow) return;
@@ -104,6 +129,10 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   }, { timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_DOWN, () => {
+    if (!isSelectedVisible) {
+      activeInactiveSwitch(true);
+      return;
+    }
     const amount = getAmount();
     const itemsInRow = getItemsInRow();
     if (amount <= itemsInRow) return;
@@ -123,17 +152,6 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
 
   useUpdateEffect(() => {
-    const activeInactiveSwitch = (enable: boolean): (() => void) => {
-      if (enable) setSelectedVisible(true);
-      const timeout = window.setTimeout(() => {
-        setSelectedVisible(false);
-      }, timeToInactive);
-
-      return () => {
-        window.clearTimeout(timeout);
-      };
-    };
-
     if (isSelectedChangedByClickRef.current) {
       isSelectedChangedByClickRef.current = false;
       return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
