@@ -63,6 +63,8 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   const isSelectedChangedByClickRef = useRef(false);
   const visibilityTimeout = useRef(0);
 
+  const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
+
   const getItemsInRow = useEvent(() => {
     const firstChild = container?.firstChild;
     if (!iswritten(container) || !(firstChild instanceof HTMLElement)) return 1;
@@ -74,12 +76,12 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     const widthNumbered = parseInt(width, 10);
     const columnGapNumbered = parseInt(columnGap, 10);
 
-    return Math.floor(
+    const amount = getAmount();
+    const itemsInRow = Math.floor(
       (container.clientWidth + columnGapNumbered - paddingLeftNumbered - paddingRightNumbered) / (widthNumbered + columnGapNumbered)
     );
+    return amount > itemsInRow ? itemsInRow : amount;
   });
-
-  const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
 
   const activeInactiveSwitch = useEvent((enable: boolean): (() => void) => {
     if (enable) {
