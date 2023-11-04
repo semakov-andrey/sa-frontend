@@ -67,10 +67,14 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     const firstChild = container?.firstChild;
     if (!iswritten(container) || !(firstChild instanceof HTMLElement)) return 1;
 
-    const { paddingLeft, paddingRight } = window.getComputedStyle(container);
+    const { paddingLeft, paddingRight, gap } = window.getComputedStyle(container);
     const { width } = window.getComputedStyle(firstChild);
+    const paddingLeftNumbered = parseInt(paddingLeft, 10);
+    const paddingRightNumbered = parseInt(paddingRight, 10);
+    const widthNumbered = parseInt(width, 10);
+    const gapNumbered = parseInt(gap, 10);
 
-    return Math.floor((container.clientWidth - parseInt(paddingLeft, 10) - parseInt(paddingRight, 10)) / parseInt(width, 10));
+    return Math.floor((container.clientWidth + gapNumbered - paddingLeftNumbered - paddingRightNumbered) / (widthNumbered + gapNumbered));
   });
 
   const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
