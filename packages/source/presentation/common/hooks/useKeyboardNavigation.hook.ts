@@ -74,7 +74,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     const paddingLeftNumbered = parseInt(paddingLeft, 10);
     const paddingRightNumbered = parseInt(paddingRight, 10);
     const widthNumbered = parseInt(width, 10);
-    const columnGapNumbered = parseInt(columnGap, 10);
+    const columnGapNumbered = !Number.isNaN(parseInt(columnGap, 10)) ? parseInt(columnGap, 10) : 0;
 
     const amount = getAmount();
     const itemsInRow = Math.floor(
