@@ -58,10 +58,15 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
       ? valueFromSessionStorage
       : 0;
 
-  const [ selected, setSelected ] = useState(initialSelected);
+  const [ selected, setSelectedState ] = useState(initialSelected);
   const [ isSelectedVisible, setSelectedVisible ] = useState(false);
-  const isSelectedChangedByClickRef = useRef(false);
+  const dontChangeVisibleState = useRef(false);
   const visibilityTimeout = useRef(0);
+
+  const setSelected = useEvent((selected: number) => {
+    dontChangeVisibleState.current = true;
+    setSelectedState(selected);
+  });
 
   const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
 
@@ -165,8 +170,8 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
 
   useUpdateEffect(() => {
-    if (isSelectedChangedByClickRef.current) {
-      isSelectedChangedByClickRef.current = false;
+    if (dontChangeVisibleState.current) {
+      dontChangeVisibleState.current = false;
       return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
     }
 
@@ -180,7 +185,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
         .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
       const element = elements[index];
       if (isTypeHTMLElement(element)) {
-        isSelectedChangedByClickRef.current = true;
+        dontChangeVisibleState.current = true;
         setSelected(index);
         onClick?.(element);
       }
