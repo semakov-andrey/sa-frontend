@@ -1,11 +1,11 @@
 {
   "name": "@sa-frontend/presentation",
   "author": "Semakov Andrey",
-  "version": "1.38.2",
+  "version": "1.38.3",
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
+  "dependencies": {
     "@sa-frontend/application": "^1.5.1",
     "@sa-frontend/infrastructure": "^1.0.0",
     "@types/react": "^18.2.7"
