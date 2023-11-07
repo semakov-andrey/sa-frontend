@@ -14,6 +14,7 @@ export const webpackCommonConfig = (params) => {
   const {
     rootDirectory,
     directories: {
+      source,
       assets = initialDirectories.assets
     }
   } = params;
@@ -125,7 +126,10 @@ export const webpackCommonConfig = (params) => {
       new webpack.ProgressPlugin({ percentBy: 'entries' })
     ],
     resolve: {
-      extensions: [ '.js', '.jsx', '.ts', '.tsx' ]
+      extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
+      alias: {
+        '@': source
+      }
     }
   };
 };
