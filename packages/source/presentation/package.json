@@ -1,12 +1,12 @@
 {
   "name": "@sa-frontend/presentation",
   "author": "Semakov Andrey",
-  "version": "1.38.4",
+  "version": "1.38.5",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@sa-frontend/application": "^1.5.1",
-    "@sa-frontend/infrastructure": "^1.0.0"
+    "@sa-frontend/application": "^1.8.0",
+    "@sa-frontend/infrastructure": "^1.1.0"
   }
 }
