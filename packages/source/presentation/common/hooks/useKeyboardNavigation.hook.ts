@@ -22,6 +22,7 @@ export interface UseGamesNavigationParams {
   onClick?: (element: HTMLElement) => void;
   timeToInactive?: number;
   scrollIntoView?: boolean;
+  skip?: boolean;
 }
 
 export interface UseGamesNavigationReturn {
@@ -41,7 +42,8 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     onPressEnter,
     onClick,
     timeToInactive,
-    scrollIntoView = false
+    scrollIntoView = false,
+    skip
   } = params;
 
   const localStorage = useInject(localStorageUnique);
@@ -117,7 +119,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
       ? amount % itemsInRow
       : itemsInRow;
     setSelected(selected % itemsInRow === 0 ? selected + itemsInCurrentRow - 1 : selected - 1);
-  }, { timeout: 100 });
+  }, { skip, timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_RIGHT, () => {
     if (!isSelectedVisible) {
@@ -130,7 +132,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
       ? amount % itemsInRow
       : itemsInRow;
     setSelected(selected % itemsInRow === itemsInCurrentRow - 1 ? selected - itemsInCurrentRow + 1 : selected + 1);
-  }, { timeout: 100 });
+  }, { skip, timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_UP, () => {
     if (!isSelectedVisible) {
@@ -145,7 +147,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
         ? amount - amount % itemsInRow + selected
         : amount - amount % itemsInRow - itemsInRow + selected
       : selected - itemsInRow);
-  }, { timeout: 100 });
+  }, { skip, timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_DOWN, () => {
     if (!isSelectedVisible) {
@@ -158,12 +160,12 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     setSelected(selected + itemsInRow > amount - 1
       ? selected % itemsInRow
       : selected + itemsInRow);
-  }, { timeout: 100 });
+  }, { skip, timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ENTER, () => {
     const element = container?.children[selected];
     if (isTypeHTMLElement(element)) onPressEnter?.(element);
-  });
+  }, { skip });
 
   useEffect(() => {
     if (isset(localStorageKey)) localStorage.set(localStorageKey, selected);
