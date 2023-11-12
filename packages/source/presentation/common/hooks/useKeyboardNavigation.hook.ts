@@ -27,6 +27,7 @@ export interface UseGamesNavigationParams {
 export interface UseGamesNavigationReturn {
   selected: number;
   setSelected: (selected: number) => void;
+  setSelectedNotChangingVisible: (selected: number) => void;
   isSelectedVisible: boolean;
   setSelectedVisible: (isSelectedVisible: boolean) => void;
 }
@@ -58,14 +59,14 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
       ? valueFromSessionStorage
       : 0;
 
-  const [ selected, setSelectedState ] = useState(initialSelected);
+  const [ selected, setSelected ] = useState(initialSelected);
   const [ isSelectedVisible, setSelectedVisible ] = useState(false);
   const dontChangeVisibleState = useRef(false);
   const visibilityTimeout = useRef(0);
 
-  const setSelected = useEvent((selected: number) => {
+  const setSelectedNotChangingVisible = useEvent((selected: number) => {
     dontChangeVisibleState.current = true;
-    setSelectedState(selected);
+    setSelected(selected);
   });
 
   const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
@@ -197,5 +198,11 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     };
   }, [ container ]);
 
-  return { selected, setSelected, isSelectedVisible, setSelectedVisible };
+  return {
+    selected,
+    setSelected,
+    setSelectedNotChangingVisible,
+    isSelectedVisible,
+    setSelectedVisible
+  };
 };
