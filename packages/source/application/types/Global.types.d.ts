@@ -61,6 +61,10 @@ interface Array<T> {
   ): T;
 }
 
+interface ReadonlyArray<T> {
+  includes<U>(searchElement: U, fromIndex?: number): U extends T ? boolean : false;
+}
+
 type Modify<T, R> = Omit<T, KeyOf<R>> & R;
 
 type PromiseResolve<T> = (value: T) => void;
