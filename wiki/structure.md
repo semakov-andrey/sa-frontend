@@ -4,36 +4,49 @@
 . 
 ├─ domain
 │  ├─ contracts
-│  │  ├─ {Contract}
-│  │  └─ {Contract}
-│  │     ├─ {Contract}.constants
-│  │     │  ├─ {constant}.constant.ts
-│  │     │  └─ {constant}.constant.ts
-│  │     ├─ {Contract}.constants.ts
-│  │     └─ {Contract}.ts
+│  │  ├─ {ContractA}
+│  │  └─ {ContractB}
+│  │     ├─ {ContractB}.constants
+│  │     │  ├─ {constantX}.constant.ts
+│  │     │  └─ {constantY}.constant.ts
+│  │     ├─ {ContractB}.utilities.ts
+│  │     │  ├─ {utilityX}.utility.ts
+│  │     │  └─ {utilityY}.utility.ts
+│  │     ├─ {ContractB}.constant.ts
+│  │     ├─ {ContractB}.contract.ts
+│  │     └─ {ContractB}.utility.ts
 │  ├─ entities
-│  │  ├─ {Entity}
-│  │  └─ {Entity}
-│  │     ├─ {Entity}.utilities
-│  │     │  ├─ {utility}.utility.ts
-│  │     │  └─ {utility}.utility.ts
-│  │     ├─ {Entity}.ts
-│  │     └─ {Entity}.utilities.ts
+│  │  ├─ {EntityA}
+│  │  └─ {EntityB}
+│  │     ├─ {EntityB}.constants
+│  │     │  ├─ {constantX}.constant.ts
+│  │     │  └─ {constantY}.constant.ts
+│  │     ├─ {EntityB}.utilities.ts
+│  │     │  ├─ {utilityX}.utility.ts
+│  │     │  └─ {utilityY}.utility.ts
+│  │     ├─ {EntityB}.constant.ts
+│  │     ├─ {EntityB}.entity.ts
+│  │     └─ {EntityB}.utility.ts
 │  └─ useCases
 ├─ application
-│  ├─ iocContainer
-│  │  └─ iocContainer.ts
+│  ├─ components
+│  │  ├─ {ComponentA}
+│  │  └─ {ComponentB}
+│  │     └─ {ComponentB}.ts
 │  ├─ contracts
-│  │  ├─ {Contract}
-│  │  └─ {Contract}
-│  │     ├─ {Contract}.constants
-│  │     │  ├─ {constant}.constant.ts
-│  │     │  └─ {constant}.constant.ts
-│  │     ├─ {Contract}.constants.ts
-│  │     └─ {Contract}.ts
+│  │  ├─ {ContractA}
+│  │  └─ {ContractB}
+│  │     ├─ {ContractB}.constants
+│  │     │  ├─ {constantX}.constant.ts
+│  │     │  └─ {constantY}.constant.ts
+│  │     ├─ {ContractB}.constant.ts
+│  │     └─ {ContractB}.contract.ts
+│  ├─ types
+│  │  ├─ {TypeX}.type.ts
+│  │  └─ {TypeY}.type.ts
 │  └─ utilities
-│     ├─ {utility}.utility.ts
-│     └─ {utility}.utility.ts
+│     ├─ {utilityX}.utility.ts
+│     └─ {utilityY}.utility.ts
 ├─ presentation
 │  ├─ common
 │  │  ├─ assets
@@ -46,96 +59,98 @@
 │  │  ├─ tests
 │  │  └─ utilities
 │  ├─ main
-│  │  ├─ {Component}
-│  │  └─ {Component}
+│  │  ├─ {ComponentA}
+│  │  └─ {ComponentB}
 │  ├─ pages
-│  │  ├─ {Component}
-│  │  └─ {Component}
+│  │  ├─ {ComponentA}
+│  │  └─ {ComponentB}
 │  ├─ segments
-│  │  ├─ {Component}
-│  │  └─ {Component}
+│  │  ├─ {ComponentA}
+│  │  └─ {ComponentB}
 │  ├─ uiKit
-│  │  ├─ {Component}
-│  │  └─ {Component}
-│  │     ├─ {Component}.assets
-│  │     │  ├─ {asset}.asset.png
-│  │     │  ├─ {asset}.asset.png
-│  │     │  ├─ {asset}.asset.svg
-│  │     │  ├─ {asset}.asset.svg
-│  │     │  ├─ {asset}.asset.d.ts
-│  │     │  ├─ {asset}.asset.d.ts
-│  │     │  ├─ {asset}.asset.woff2
-│  │     │  └─ {asset}.asset.woff2
-│  │     ├─ {Component}.constants
-│  │     │  ├─ {constant}.constant.ts
-│  │     │  └─ {constant}.constant.ts
-│  │     ├─ {Component}.contexts
-│  │     │  ├─ {context}.context
-│  │     │  ├─ {context}.context
-│  │     │  │  ├─ {context}.constant.ts
-│  │     │  │  ├─ {context}.context.ts
-│  │     │  │  └─ {context}.type.ts
-│  │     │  ├─ {context}.context.ts
-│  │     │  └─ {context}.context.ts
-│  │     ├─ {Component}.components
-│  │     │  ├─ {Component}
-│  │     │  ├─ {Component}
-│  │     │  ├─ {Component}{Sub}
-│  │     │  └─ {Component}{Sub}
-│  │     ├─ {Component}.hooks
-│  │     │  ├─ use{Hook}
-│  │     │  ├─ use{Hook}
-│  │     │  │  ├─ use{Hook}.constant.ts
-│  │     │  │  ├─ use{Hook}.hook.ts
-│  │     │  │  └─ use{Hook}.type.ts
-│  │     │  ├─ use{Hook}.ts
-│  │     │  └─ use{Hook}.ts
-│  │     ├─ {Component}.stores
-│  │     │  ├─ {store}
-│  │     │  ├─ {store}
-│  │     │  │  ├─ {store}.constant.ts
-│  │     │  │  ├─ {store}.store.ts
-│  │     │  │  └─ {store}.type.ts
-│  │     │  ├─ {store}.store.ts
-│  │     │  └─ {store}.store.ts
-│  │     ├─ {Component}.stories
-│  │     │  ├─ {story}.story.ts
-│  │     │  ├─ {story}.story.ts
-│  │     ├─ {Component}.styles
-│  │     │  ├─ {style}.style.css
-│  │     │  ├─ {style}.style.css
-│  │     │  ├─ {style}.style.d.ts
-│  │     │  └─ {style}.style.d.ts
-│  │     ├─ {Component}.types
-│  │     │  ├─ {Type}.type.ts
-│  │     │  └─ {Type}.type.ts
-│  │     ├─ {Component}.tests
-│  │     │  ├─ {Component}.test.tsx
-│  │     │  └─ {Component}.test.tsx
-│  │     ├─ {Component}.utilities
-│  │     │  ├─ {utility}.utility.ts
-│  │     │  └─ {utility}.utility.ts
-│  │     ├─ {Component}.assets.svg
-│  │     ├─ {Component}.assets.svg.d.ts
-│  │     ├─ {Component}.constants.ts
-│  │     ├─ {Component}.contexts.ts
-│  │     ├─ {Component}.hooks.ts
-│  │     ├─ {Component}.stores.ts
-│  │     ├─ {Component}.stories.ts
-│  │     ├─ {Component}.styles.css
-│  │     ├─ {Component}.styles.css.d.ts
-│  │     ├─ {Component}.tsx
-│  │     ├─ {Component}.tests.ts
-│  │     ├─ {Component}.types.ts
-│  │     └─ {Component}.utilities.ts
+│  │  ├─ {ComponentA}
+│  │  └─ {ComponentB}
+│  │     ├─ {ComponentB}.assets
+│  │     │  ├─ {assetX}.asset.png
+│  │     │  ├─ {assetY}.asset.png
+│  │     │  ├─ {assetX}.asset.svg
+│  │     │  ├─ {assetY}.asset.svg
+│  │     │  ├─ {assetX}.asset.png.d.ts
+│  │     │  ├─ {assetY}.asset.svg.d.ts
+│  │     ├─ {ComponentB}.constants
+│  │     │  ├─ {constantX}.constant.ts
+│  │     │  └─ {constantY}.constant.ts
+│  │     ├─ {ComponentB}.contexts
+│  │     │  ├─ {contextX}.context
+│  │     │  ├─ {contextY}.context
+│  │     │  │  ├─ {contextY}.constant.ts
+│  │     │  │  ├─ {contextY}.context.ts
+│  │     │  │  └─ {contextY}.type.ts
+│  │     │  └─ {contextZ}.context.ts
+│  │     ├─ {ComponentB}.components
+│  │     │  ├─ {ComponentX}
+│  │     │  ├─ {ComponentY}
+│  │     │  ├─ {ComponentA}{Sub}
+│  │     │  └─ {ComponentB}{Sub}
+│  │     ├─ {ComponentB}.hooks
+│  │     │  ├─ use{HookX}
+│  │     │  ├─ use{HookY}
+│  │     │  │  ├─ use{HookY}.constant.ts
+│  │     │  │  ├─ use{HookY}.hook.ts
+│  │     │  │  └─ use{HookY}.type.ts
+│  │     │  └─ use{HookZ}.ts
+│  │     ├─ {ComponentB}.stores
+│  │     │  ├─ {storeX}
+│  │     │  ├─ {storeY}
+│  │     │  │  ├─ {storeY}.constant.ts
+│  │     │  │  ├─ {storeY}.store.ts
+│  │     │  │  └─ {storeY}.type.ts
+│  │     │  └─ {storeZ}.store.ts
+│  │     ├─ {ComponentB}.stories
+│  │     │  ├─ {storyX}.story.ts
+│  │     │  ├─ {storyY}.story.ts
+│  │     ├─ {ComponentB}.styles
+│  │     │  ├─ {styleX}.style.css
+│  │     │  ├─ {styleY}.style.css
+│  │     │  ├─ {styleX}.style.css.d.ts
+│  │     │  └─ {styleY}.style.css.d.ts
+│  │     ├─ {ComponentB}.types
+│  │     │  ├─ {TypeX}.type.ts
+│  │     │  └─ {TypeY}.type.ts
+│  │     ├─ {ComponentB}.tests
+│  │     │  ├─ {ComponentX}.test.tsx
+│  │     │  └─ {ComponentY}.test.tsx
+│  │     ├─ {ComponentB}.utilities
+│  │     │  ├─ {utilityX}.utility.ts
+│  │     │  └─ {utilityY}.utility.ts
+│  │     ├─ {ComponentB}.asset.svg
+│  │     ├─ {ComponentB}.asset.svg.d.ts
+│  │     ├─ {ComponentB}.constant.ts
+│  │     ├─ {ComponentB}.context.ts
+│  │     ├─ {ComponentB}.hook.ts
+│  │     ├─ {ComponentB}.store.ts
+│  │     ├─ {ComponentB}.story.ts
+│  │     ├─ {ComponentB}.style.css
+│  │     ├─ {ComponentB}.style.css.d.ts
+│  │     ├─ {ComponentB}.tsx
+│  │     ├─ {ComponentB}.test.ts
+│  │     ├─ {ComponentB}.type.ts
+│  │     └─ {ComponentB}.utility.ts
 │  ├─ index.html
 │  └─ index.ts
 ├─ infrastucture
-│  ├─ {service}
-│  ├─ {service}
-│  │  ├─ {service}.schemas
-│  │  ├─ {service}.ts
-│  │  └─ {service}.utilities.ts
-│  └─ index.ts
+│  └─ services
+│     ├─ {ServiceA}
+│     ├─ {ServiceB}
+│     │  ├─ {ServiceB}.constants
+│     │  │  ├─ {constantX}.constant.ts
+│     │  │  └─ {constantY}.constant.ts
+│     │  ├─ {ServiceB}.utilities.ts
+│     │  │  ├─ {utilityX}.utility.ts
+│     │  │  └─ {utilityY}.utility.ts
+│     │  ├─ {ServiceB}.constant.ts
+│     │  ├─ {ServiceB}.service.ts
+│     │  └─ {ServiceB}.utility.ts
+│     └─ index.ts
 └─ index.ts
 ```

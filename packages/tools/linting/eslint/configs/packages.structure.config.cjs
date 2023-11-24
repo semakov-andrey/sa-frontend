@@ -38,7 +38,7 @@ const REACT_APP_COMMON_STRUCTURE = {
     file: '(.*).styles?.css.d.ts'
   },
   tests: {
-    file: '(.*).test.tsx?'
+    file: '(.*).tests?.tsx?'
   },
   types: {
     file: '(.*).types?(.d)?.ts'
@@ -87,18 +87,15 @@ const STRUCTURE = {
       }
     },
     application: {
-      '(.*)': {
-        file: '\\1.ts'
-      },
-      'components': {
+      components: {
         '(.*)': {
           file: '\\1.ts'
         }
       },
-      'utilities': {
+      utilities: {
         file: '(.*).utilit(y|ies).ts'
       },
-      'contracts': {
+      contracts: {
         '(.*)': {
           '\\1.constants': {
             file: '(.*).constants?.ts'
@@ -107,7 +104,7 @@ const STRUCTURE = {
           'file2': '\\1.contracts?.ts'
         }
       },
-      'types': {
+      types: {
         file: '(.*).types?(.d)?.ts'
       }
     },
