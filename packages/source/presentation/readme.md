@@ -1,1 +1,16 @@
 ## @sa-frontend/presentation
+
+```js
+.
+└─ services
+   ├─ Fetch
+   │  ├─ Fetch.service.ts
+   │  └─ Fetch.utilities.ts
+   ├─ LocalStorage
+   │  └─ LocalStorage.service.ts
+   ├─ ServiceWorker
+   │  └─ ServiceWorker.ts
+   ├─ SessionStorage
+   │  └─ SessionStorage.service.ts
+   └─ index.ts
+```
