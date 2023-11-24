@@ -32,7 +32,7 @@ export const webpackCommonConfig = (params) => {
           loader: 'esbuild-loader',
           options: {
             loader: 'tsx',
-            target: 'es2020'
+            target: 'es2022'
           }
         },
         {
@@ -73,7 +73,7 @@ export const webpackCommonConfig = (params) => {
               loader: 'esbuild-loader',
               options: {
                 loader: 'jsx',
-                target: 'es2020'
+                target: 'es2022'
               }
             },
             '@sa-frontend/bundling/loaders/namedSVGExport.loader.js',
