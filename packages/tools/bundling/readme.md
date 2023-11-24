@@ -4,11 +4,12 @@
 
 Файл `compiler/compile.js`
 
-- Генерация d.ts для css, svg, png:
+- Генерация d.ts для css, svg, png, binary:
 ```ts
 function generateCSSDeclarations(folders: Array<string>): Promise<void>;
 function generateSVGDeclarations(folders: Array<string>): Promise<void>; 
 function generatePNGDeclarations(folders: Array<string>): Promise<void>;  
+function generateBINDeclarations(folders: Array<string>): Promise<void>;  
 ```
 
 - start, build:
