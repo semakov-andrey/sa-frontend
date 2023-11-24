@@ -1,9 +1,14 @@
 {
   "name": "@sa-frontend/infrastructure",
   "author": "Semakov Andrey",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "version:up": "npm version minor",
+    "push:it": "npm publish",
+    "publish:source": "run-s version:up push:it"
   },
   "dependencies": {
     "@sa-frontend/application": "^1.10.0"

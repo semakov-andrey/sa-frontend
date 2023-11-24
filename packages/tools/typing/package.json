@@ -1,10 +1,15 @@
 {
   "name": "@sa-frontend/typing",
   "author": "Semakov Andrey",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "version:up": "npm version minor",
+    "push:it": "npm publish",
+    "publish:tools": "run-s version:up push:it"
   },
   "dependencies": {
     "typescript": "^5.1.6"

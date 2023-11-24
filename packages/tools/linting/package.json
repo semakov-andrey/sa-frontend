@@ -1,9 +1,14 @@
 {
   "name": "@sa-frontend/linting",
   "author": "Semakov Andrey",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "version:up": "npm version minor",
+    "push:it": "npm publish",
+    "publish:tools": "run-s version:up push:it"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^6.6.0",

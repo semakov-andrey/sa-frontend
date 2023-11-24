@@ -4,5 +4,10 @@
   "version": "1.12.0",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "version:up": "npm version minor",
+    "push:it": "npm publish",
+    "publish:source": "run-s version:up push:it"
   }
 }
