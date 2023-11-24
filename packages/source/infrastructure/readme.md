@@ -9,7 +9,7 @@
    ├─ LocalStorage
    │  └─ LocalStorage.service.ts
    ├─ ServiceWorker
-   │  └─ ServiceWorker.ts
+   │  └─ ServiceWorker.service.ts
    ├─ SessionStorage
    │  └─ SessionStorage.service.ts
    └─ index.ts
