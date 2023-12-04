@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "1.36.0",
+  "version": "1.37.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -12,6 +12,7 @@
     "publish:tools": "run-s version:up push:it"
   },
   "dependencies": {
+    "@csstools/postcss-global-data": "^2.1.0",
     "@fastify/middie": "^8.1.0",
     "autoprefixer": "^10.4.14",
     "circular-dependency-plugin": "^5.2.2",

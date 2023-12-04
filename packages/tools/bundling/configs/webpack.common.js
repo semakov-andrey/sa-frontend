@@ -1,5 +1,6 @@
 import path from 'path';
 
+import postcssGlobalData from '@csstools/postcss-global-data';
 import autoprefixer from 'autoprefixer';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -16,7 +17,8 @@ export const webpackCommonConfig = (params) => {
     directories: {
       source,
       assets = initialDirectories.assets
-    }
+    },
+    postcssGlobalDataFiles
   } = params;
 
   return {
@@ -56,7 +58,13 @@ export const webpackCommonConfig = (params) => {
               options: {
                 sourceMap: true,
                 postcssOptions: {
-                  plugins: [ postcssNested, postcssCustomMedia, autoprefixer() ]
+                  plugins: [
+                    postcssNested,
+                    ...Array.isArray(postcssGlobalDataFiles) && postcssGlobalDataFiles.every((file) => typeof file === 'string')
+                      ? [ postcssGlobalData({ files: postcssGlobalDataFiles }), postcssCustomMedia ]
+                      : [],
+                    autoprefixer()
+                  ]
                 }
               }
             }

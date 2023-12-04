@@ -34,11 +34,12 @@ interface Params {
     production: string;
     source: string;
   }; // Набор директорий для сборки проекта
-  port?: number; // Порт для webpack dev server
+  port?: number; // Порт для webpack dev server, без порта - watch + сборка в папку
   copyPatterns?: Array<{ from: string; to: string }>; // Паттерны для CopyWebpackPlugin
   isHTML?: boolean; // Использовать HTMLWebpackPlugin; default: true
   isCleanDirectory?: boolean; // Очистить директорию перед сборкой; default: true
   isAnalyzeBundle?: boolean // Проанализировать bundle; default: true
   analyzeStatsFilename?: string; // Название файла с результатами анализа; default: 'stats.json'
+  postcssGlobalDataFiles?: Array<string>; // Пути к файлам с глобальными переменными для postcss
 };
 ```
