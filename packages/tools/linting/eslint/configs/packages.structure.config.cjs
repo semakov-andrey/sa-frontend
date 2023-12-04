@@ -4,11 +4,11 @@ const REACT_APP_COMMON_STRUCTURE = {
     file2: '(.*).asset.png.d.ts'
   },
   constants: {
-    file: '(.*).constants?.ts'
+    file: '(.*).constants?.tsx?'
   },
   contexts: {
     '(.*).context': {
-      file1: '\\1.constants?.ts',
+      file1: '\\1.constants?.tsx?',
       file2: '\\1.context.ts',
       file3: '\\1.types?.ts'
     },
@@ -16,7 +16,7 @@ const REACT_APP_COMMON_STRUCTURE = {
   },
   hooks: {
     'use(.*).hook': {
-      file1: 'use\\1.constants?.ts',
+      file1: 'use\\1.constants?.tsx?',
       file2: 'use\\1.hook.ts',
       file3: 'use\\1.store.ts',
       file4: 'use\\1.types?.ts'
@@ -25,7 +25,7 @@ const REACT_APP_COMMON_STRUCTURE = {
   },
   stores: {
     '(.*).store': {
-      file1: '\\1.constants?.ts',
+      file1: '\\1.constants?.tsx?',
       file2: '\\1.store.ts',
       file3: '\\1.types?.ts'
     },
@@ -115,14 +115,16 @@ const STRUCTURE = {
           ...REACT_APP_INNER_STRUCTURE,
           file1: '\\4.asset.svg.d.ts',
           file2: '\\4.asset.png.d.ts',
-          file3: '\\4.constants?.ts',
+          file3: '\\4.constants?.tsx?',
           file4: '\\4.contexts?.ts',
           file5: '\\4.hooks?.ts',
-          file6: '\\4.stor(y|ies).tsx?',
-          file7: '\\4.styles?.css.d.ts',
-          file8: '\\4.tests?.tsx?',
-          file9: '\\4.utilit(y|ies).ts',
-          file10: '\\4.tsx?'
+          file6: '\\4.stores?.ts',
+          file7: '\\4.stor(y|ies).tsx?',
+          file8: '\\4.styles?.css.d.ts',
+          file9: '\\4.tests?.tsx?',
+          file10: '\\4.types?.tsx?',
+          file11: '\\4.utilit(y|ies).ts',
+          file12: '\\4.tsx?'
         }
       },
       'file1': 'index.html',
