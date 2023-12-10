@@ -89,3 +89,19 @@ type UnionToTuple<T, K = T> = [T] extends [never]
 type ClassConstructor<T> = {
   new (...args: Array<unknown>): T
 };
+
+type Tuple<Item = unknown, Count extends number = 0, Internal extends Array<unknown> = []> =
+  Count extends 0
+    ? [Item, ...Array<Item>]
+    : Internal extends { length: Count } ? Internal : Tuple<Item, Count, [...Internal, Item]>;
+
+type TupleIndices<Count extends number, C extends Array<unknown> = [], R = 0> =
+  C['length'] extends Count ? R : TupleIndices<Count, [...C, 0], C['length'] | R>;
+
+type TupleIndicesByArray<T extends Tuple> =
+  Extract<keyof T, `${ number }`> extends `${ infer N extends number }` ? N : never;
+
+type TupleLength<T extends Tuple> =
+  T extends { length: infer L } ? L : never;
+
+type IsTuple<T> = T extends Tuple ? true : false;

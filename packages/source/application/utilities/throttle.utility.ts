@@ -1,9 +1,9 @@
 import { isTypeNumber } from './typeGuards.utilities';
 
-export type TTrottleFunction<T> = (...args: Array<T>) => void;
-export type TTrottleReturn<T> = (...args: Array<T>) => void;
+export type TrottleFunction<T> = (...args: Array<T>) => void;
+export type TrottleReturn<T> = (...args: Array<T>) => void;
 
-export const throttle = <T>(fn: TTrottleFunction<T>, timeout: number): TTrottleReturn<T> => {
+export const throttle = <T>(fn: TrottleFunction<T>, timeout: number): TrottleReturn<T> => {
   let timer: number | undefined;
 
   return (...args: Array<T>): void => {
