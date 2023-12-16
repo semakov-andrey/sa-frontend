@@ -67,7 +67,7 @@ interface ReadonlyArray<T> {
 
 type Modify<T, R> = Omit<T, KeyOf<R>> & R;
 
-type PromiseResolve<T> = (value: T) => void;
+type PromiseResolve<T = undefined> = (value: T) => void;
 
 type PromiseReject<T = undefined> = (reason?: T) => void;
 
