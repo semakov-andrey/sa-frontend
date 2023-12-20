@@ -67,9 +67,9 @@ interface ReadonlyArray<T> {
 
 type Modify<T, R> = Omit<T, KeyOf<R>> & R;
 
-type PromiseResolve<T> = (value: T) => void;
+type PromiseResolve<T = undefined> = (value: T) => void;
 
-type PromiseReject<T> = (reason?: T) => void;
+type PromiseReject<T = undefined> = (reason?: T) => void;
 
 type UnionToIntersection<U> =
   (U extends unknown ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
