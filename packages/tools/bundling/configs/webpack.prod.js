@@ -80,7 +80,7 @@ export const webpackProdConfig = (config, params) => {
       minimize: true,
       minimizer: [
         new ESBuildMinifyPlugin({
-          target: 'es2022',
+          target: 'esnext',
           legalComments: 'none',
           css: true,
           minifyWhitespace: true,

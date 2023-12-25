@@ -34,7 +34,7 @@ export const webpackCommonConfig = (params) => {
           loader: 'esbuild-loader',
           options: {
             loader: 'tsx',
-            target: 'es2022'
+            target: 'esnext'
           }
         },
         {
@@ -81,7 +81,7 @@ export const webpackCommonConfig = (params) => {
               loader: 'esbuild-loader',
               options: {
                 loader: 'jsx',
-                target: 'es2022'
+                target: 'esnext'
               }
             },
             '@sa-frontend/bundling/loaders/namedSVGExport.loader.js',
