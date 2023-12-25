@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect } from 'react';
 
-export const useEvent = <T extends (...args: Array<never>) => unknown>(fn: T): T => {
+export const useEvent = <T extends (...args: never[]) => unknown>(fn: T): T => {
   const ref = useRef<[T, T]>(
     [
       fn,

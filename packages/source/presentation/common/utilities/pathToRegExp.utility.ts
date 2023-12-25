@@ -9,7 +9,7 @@ const rxForSegment = (repeat: boolean, optional: boolean, prefix: 0 | 1): string
 };
 
 export interface PathToRegexpReturn {
-  keys: Array<string>;
+  keys: string[];
   regexp: RegExp;
 }
 
@@ -18,7 +18,7 @@ export const pathToRegexp = (path: string): PathToRegexpReturn => {
 
   let match: RegExpExecArray | null = groupRx.exec(path);
   let lastIndex = 0;
-  const keys: Array<string> = [];
+  const keys: string[] = [];
   let result = '';
 
   while (match !== null) {

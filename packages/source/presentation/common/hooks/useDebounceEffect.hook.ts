@@ -4,7 +4,7 @@ export type UpdateCallback = () => (void | (() => void));
 
 export const useDebounceEffect = (
   callback: UpdateCallback,
-  deps: Array<unknown>,
+  deps: unknown[],
   timeout: number
 ): void => {
   useUpdateEffect(() => {

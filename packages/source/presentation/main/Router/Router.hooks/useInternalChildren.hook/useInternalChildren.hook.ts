@@ -11,9 +11,9 @@ export interface UseInternalChildrenParams {
   location: string;
 }
 
-export const useInternalChildren = (params: UseInternalChildrenParams): Array<ExistElement> => {
+export const useInternalChildren = (params: UseInternalChildrenParams): ExistElement[] => {
   const { children, location } = params;
-  const [ childrenArray, setChildrenArray ] = useState<Array<ExistElement>>([]);
+  const [ childrenArray, setChildrenArray ] = useState<ExistElement[]>([]);
 
   useEffect(() => {
     let matched = false;

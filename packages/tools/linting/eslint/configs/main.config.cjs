@@ -444,7 +444,7 @@ module.exports = {
         'valid-typeof': 'off',
 
         '@typescript-eslint/adjacent-overload-signatures': 'error',
-        '@typescript-eslint/array-type': [ 'error', { default: 'generic', readonly: 'generic' } ],
+        '@typescript-eslint/array-type': [ 'error', { default: 'array', readonly: 'array' } ],
         '@typescript-eslint/await-thenable': 'error',
         '@typescript-eslint/ban-ts-comment': [
           'error',

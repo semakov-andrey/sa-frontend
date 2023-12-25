@@ -1,4 +1,4 @@
-export const getAdditionalCondition = (keys: Array<string>, event: KeyboardEvent): boolean => {
+export const getAdditionalCondition = (keys: string[], event: KeyboardEvent): boolean => {
   if (keys.length === 1) {
     return !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
   }

@@ -14,5 +14,5 @@ export class FetchError implements TransferError {
   public message = '';
 }
 
-export const isInReadonlyArray = <T, A extends T>(array: ReadonlyArray<A>, item: T): item is A =>
+export const isInReadonlyArray = <T, A extends T>(array: readonly A[], item: T): item is A =>
   array.includes(item as A);

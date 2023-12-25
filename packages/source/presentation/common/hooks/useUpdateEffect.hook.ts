@@ -4,7 +4,7 @@ import { isTypeFunction } from '@sa-frontend/application/utilities/typeGuards.ut
 
 export type UpdateCallback = () => (void | (() => void));
 
-export const useUpdateEffect = (callback: UpdateCallback, deps: Array<unknown>): void => {
+export const useUpdateEffect = (callback: UpdateCallback, deps: unknown[]): void => {
   const inited = useRef(false);
   const unmount = useRef((): void => undefined);
 

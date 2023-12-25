@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export const useAsyncEffect = (
   func: (isMounted: () => boolean) => Promise<void>,
-  deps: Array<unknown>
+  deps: unknown[]
 ): void => {
   useEffect(() => {
     let isMounted = true;

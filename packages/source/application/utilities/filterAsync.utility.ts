@@ -1,8 +1,8 @@
 export const filterAsync = async <Item>(
-  list: Array<Item>,
-  callback: (item: Item, index: number, array: Array<Item>) => Promise<boolean>
-): Promise<Array<Item>> => {
-  const result: Array<Item> = [];
+  list: Item[],
+  callback: (item: Item, index: number, array: Item[]) => Promise<boolean>
+): Promise<Item[]> => {
+  const result: Item[] = [];
 
   for await (const [ index, item ] of list.entries()) {
     const filterResult = await callback(item, index, list);

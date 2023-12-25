@@ -10,7 +10,7 @@ export const isexists = <T>(u?: T | null): u is T =>
 export const isTypeObject = (u: unknown): u is Record<ObjectKey, unknown> =>
   typeof u === 'object' && u !== null && !Array.isArray(u);
 
-export const isTypeArray = (u: unknown): u is Array<unknown> =>
+export const isTypeArray = (u: unknown): u is unknown[] =>
   Array.isArray(u);
 
 export const isTypeFunction = (u: unknown): u is Function =>
@@ -43,7 +43,7 @@ export const isEmptyBoolean = (u: unknown): boolean =>
 export const isFilledObject = (u: unknown): boolean =>
   isTypeObject(u) && !isEmptyObject(u);
 
-export const isNonEmptyArray = <T>(array: Array<T>): array is NonEmptyArray<T> =>
+export const isNonEmptyArray = <T>(array: T[]): array is NonEmptyArray<T> =>
   array.length !== 0;
 
 export const isFilledArray = (u: unknown): boolean =>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, type EffectCallback } from 'react';
 
-export const useCheckEffect = (callback: EffectCallback, deps: Array<unknown>): void => {
+export const useCheckEffect = (callback: EffectCallback, deps: unknown[]): void => {
   const previousDeps = useRef(deps);
 
   useEffect(() => {

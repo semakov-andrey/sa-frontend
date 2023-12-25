@@ -1,4 +1,4 @@
-type FunctionType<T = unknown, R = unknown> = (...args: Array<T>) => R;
+type FunctionType<T = unknown, R = unknown> = (...args: T[]) => R;
 
 type ObjectKey = string | number | symbol;
 
@@ -18,11 +18,11 @@ type NonNullable<T> = T extends null ? never : T;
 
 type NonAbsent<T> = T extends null | undefined ? never : T;
 
-type OneOrMore<T> = T | Array<T>;
+type OneOrMore<T> = T | T[];
 
-type ArrayInnerType<T> = T extends Array<infer R> ? R : never;
+type ArrayInnerType<T> = T extends (infer R)[] ? R : never;
 
-type NonEmptyArray<T> = [T, ...Array<T>];
+type NonEmptyArray<T> = [T, ...T[]];
 
 type KeyOf<T> = keyof T;
 
@@ -31,13 +31,13 @@ type ValueOf<T> = T[KeyOf<T>];
 type EntryOf<T> = { [K in KeyOf<T>]: [K, T[K]] }[KeyOf<T>];
 
 interface ObjectConstructor {
-  keys<T>(o: T): T extends Array<unknown> ? string : Array<KeyOf<T>>;
+  keys<T>(o: T): T extends unknown[] ? string : KeyOf<T>[];
 
-  values<T>(o: T): T extends Array<infer R> ? R : Array<T[KeyOf<T>]>;
+  values<T>(o: T): T extends (infer R)[] ? R : T[KeyOf<T>][];
 
-  entries<T>(o: T): T extends Array<infer R> ? Array<[ string, R ]> : Array<EntryOf<T>>;
+  entries<T>(o: T): T extends (infer R)[] ? [ string, R ][] : EntryOf<T>[];
 
-  fromEntries<T>(entries: Array<EntryOf<T>>): T;
+  fromEntries<T>(entries: EntryOf<T>[]): T;
 }
 
 interface Array<T> {
@@ -53,7 +53,7 @@ interface Array<T> {
     callbackfn: (
       previousValue: NonEmptyArray<U>, currentValue: T, currentIndex: number, array: NonEmptyArray<T>
     ) => NonEmptyArray<U>,
-    initialValue: Array<U>
+    initialValue: U[]
   ): NonEmptyArray<U>;
 
   flat<D extends NonEmptyArray<T>>(
@@ -87,15 +87,15 @@ type UnionToTuple<T, K = T> = [T] extends [never]
     : [];
 
 type ClassConstructor<T> = {
-  new (...args: Array<unknown>): T
+  new (...args: unknown[]): T
 };
 
-type Tuple<Item = unknown, Count extends number = 0, Internal extends Array<unknown> = []> =
+type Tuple<Item = unknown, Count extends number = 0, Internal extends unknown[] = []> =
   Count extends 0
-    ? [Item, ...Array<Item>]
+    ? [Item, ...Item[]]
     : Internal extends { length: Count } ? Internal : Tuple<Item, Count, [...Internal, Item]>;
 
-type TupleIndices<Count extends number, C extends Array<unknown> = [], R = 0> =
+type TupleIndices<Count extends number, C extends unknown[] = [], R = 0> =
   C['length'] extends Count ? R : TupleIndices<Count, [...C, 0], C['length'] | R>;
 
 type TupleIndicesByArray<T extends Tuple> =

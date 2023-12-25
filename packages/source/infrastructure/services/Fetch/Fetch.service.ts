@@ -78,8 +78,8 @@ export class Fetch implements Transfer {
     return query.length > 0 ? `?${ query.join('&') }` : '';
   };
 
-  private serialize = (body: OneOrMore<object>, prefix?: string | number): Array<string> => {
-    const params: Array<string> = [];
+  private serialize = (body: OneOrMore<object>, prefix?: string | number): string[] => {
+    const params: string[] = [];
     Object.entries(body).forEach(([ key, value ]: [ string, object | unknown]): void => {
       if (!isexists(value) && !isset(prefix)) {
         return;
