@@ -20,9 +20,9 @@ type NonAbsent<T> = T extends null | undefined ? never : T;
 
 type OneOrMore<T> = T | T[];
 
-type ArrayInnerType<T> = T extends (infer R)[] ? R : never;
+type Item<List extends unknown[]> = List extends (infer Item)[] ? Item : never;
 
-type NonEmptyArray<T> = [T, ...T[]];
+type NonEmpty<List extends unknown[]> = [Item<List>, ...Item<List>[]];
 
 type KeyOf<T> = keyof T;
 
@@ -43,20 +43,20 @@ interface ObjectConstructor {
 interface Array<T> {
   includes<U>(searchElement: U, fromIndex?: number): U extends T ? boolean : false;
 
-  map<D extends NonEmptyArray<T>, U>(
+  map<D extends NonEmpty<T[]>, U>(
     this: D,
-    callbackfn: (value: T, index: number, array: NonEmptyArray<T>) => U
-  ): NonEmptyArray<U>;
+    callbackfn: (value: T, index: number, array: NonEmpty<T[]>) => U
+  ): NonEmpty<U[]>;
 
-  reduce<D extends NonEmptyArray<T>, U>(
+  reduce<D extends NonEmpty<T[]>, U>(
     this: D,
     callbackfn: (
-      previousValue: NonEmptyArray<U>, currentValue: T, currentIndex: number, array: NonEmptyArray<T>
-    ) => NonEmptyArray<U>,
+      previousValue: NonEmpty<U[]>, currentValue: T, currentIndex: number, array: NonEmpty<T[]>
+    ) => NonEmpty<U[]>,
     initialValue: U[]
-  ): NonEmptyArray<U>;
+  ): NonEmpty<U[]>;
 
-  flat<D extends NonEmptyArray<T>>(
+  flat<D extends NonEmpty<T[]>>(
     this: D
   ): T;
 }

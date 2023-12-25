@@ -43,7 +43,7 @@ export const isEmptyBoolean = (u: unknown): boolean =>
 export const isFilledObject = (u: unknown): boolean =>
   isTypeObject(u) && !isEmptyObject(u);
 
-export const isNonEmptyArray = <T>(array: T[]): array is NonEmptyArray<T> =>
+export const isNonEmptyArray = <T>(array: T[]): array is NonEmpty<T[]> =>
   array.length !== 0;
 
 export const isFilledArray = (u: unknown): boolean =>
