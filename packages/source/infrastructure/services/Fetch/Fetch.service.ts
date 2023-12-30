@@ -31,7 +31,7 @@ export class Fetch implements Transfer {
   private parseDates;
 
   public go = async <T>(settings: TransferSettings): TransferResponseOrError<T> => {
-    const { method, url, body, headers } = settings;
+    const { method = TRANSFER_METHODS.GET, url, body, headers } = settings;
     const data = this.getData(method, body, headers);
     const query = method === TRANSFER_METHODS.GET ? this.getQuery(body) : '';
 

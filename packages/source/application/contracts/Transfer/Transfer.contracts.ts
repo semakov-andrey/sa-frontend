@@ -14,7 +14,7 @@ export interface TransferOptions {
 }
 
 export interface TransferSettings {
-  method: TransferMethods;
+  method?: TransferMethods;
   url: string;
   body?: TransferBody;
   headers?: object;
