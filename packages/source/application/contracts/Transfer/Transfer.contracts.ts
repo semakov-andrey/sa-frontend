@@ -4,7 +4,7 @@ export interface TransferConstructor {
 
 export interface Transfer {
   go: <T>(settings: TransferSettings) => TransferResponseOrError<T>;
-  getData: (method: TransferMethods, body?: TransferBody, headers?: object) => RequestInit;
+  getData: (settings: TransferSettings) => RequestInit;
   getQuery: (body?: TransferBody) => string;
   isTransferError: <T>(u: T | TransferError) => u is TransferError;
 }
@@ -18,6 +18,9 @@ export interface TransferSettings {
   url: string;
   body?: TransferBody;
   headers?: object;
+  options?: {
+    readAsArrayBuffer?: boolean
+  };
 }
 
 export type TransferBody = OneOrMore<object> | FormData;

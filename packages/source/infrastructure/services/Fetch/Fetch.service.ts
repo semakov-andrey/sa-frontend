@@ -13,7 +13,6 @@ import { FetchError, isInReadonlyArray } from './fetch.utilities';
 
 import type {
   TransferError,
-  TransferMethods,
   TransferResponseOrError,
   Transfer,
   TransferBody,
@@ -31,8 +30,8 @@ export class Fetch implements Transfer {
   private parseDates;
 
   public go = async <T>(settings: TransferSettings): TransferResponseOrError<T> => {
-    const { method = TRANSFER_METHODS.GET, url, body, headers } = settings;
-    const data = this.getData(method, body, headers);
+    const { method = TRANSFER_METHODS.GET, url, body, options } = settings;
+    const data = this.getData(settings);
     const query = method === TRANSFER_METHODS.GET ? this.getQuery(body) : '';
 
     try {
@@ -44,31 +43,38 @@ export class Fetch implements Transfer {
       }
 
       return !isInReadonlyArray(TRANSFER_ERROR_STATUSES, status)
-        ? await this.transformData(response, status === TRANSFER_STATUSES.NO_CONTENT)
+        ? await this.transformData(response, options, status === TRANSFER_STATUSES.NO_CONTENT)
         : await this.transformError(response, status);
     } catch (e: unknown) {
       return new FetchError({ statusCode: TRANSFER_STATUSES.UNKNOWN_ERROR });
     }
   };
 
-  public getData = (method: TransferMethods, body?: TransferBody, headers?: object): RequestInit => ({
-    method,
-    ...!(body instanceof FormData)
-      ? {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': method !== TRANSFER_METHODS.PATCH ? 'application/json' : 'application/json-patch+json',
-          ...headers
+  public getData = (settings: TransferSettings): RequestInit => {
+    const { method, body, headers, options } = settings;
+    return {
+      method,
+      ...!(body instanceof FormData)
+        ? {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': Boolean(options?.readAsArrayBuffer)
+              ? 'application/octet-stream'
+              : method !== TRANSFER_METHODS.PATCH
+                ? 'application/json'
+                : 'application/json-patch+json',
+            ...headers
+          }
         }
-      }
-      : {},
-    mode: 'cors',
-    ...body instanceof FormData
-      ? { body }
-      : method !== TRANSFER_METHODS.GET && (isTypeObject(body) || Array.isArray(body))
-        ? { body: JSON.stringify(body) }
-        : {}
-  });
+        : {},
+      mode: 'cors',
+      ...body instanceof FormData
+        ? { body }
+        : method !== TRANSFER_METHODS.GET && (isTypeObject(body) || Array.isArray(body))
+          ? { body: JSON.stringify(body) }
+          : {}
+    };
+  };
 
   public getQuery = (body?: TransferBody): string => {
     if (!isset(body) || body instanceof FormData) return '';
@@ -105,12 +111,15 @@ export class Fetch implements Transfer {
   private statusTypeCheck = (status: number): status is TransferSuccessStatus | TransferErrorStatus =>
     Object.values(TRANSFER_STATUSES).includes(status);
 
-  private transformData = async <T>(response: Response, is204: boolean = false): TransferResponseOrError<T> => {
+  private transformData = async <T>(response: Response, options: TransferSettings['options'], is204: boolean = false): TransferResponseOrError<T> => {
     if (is204) return '' as unknown as T;
 
     try {
-      const text = await response.text();
+      if (Boolean(options?.readAsArrayBuffer)) {
+        return await response.arrayBuffer() as T;
+      }
 
+      const text = await response.text();
       return JSON.parse(text, isset(this.parseDates) ? this.parseDates : undefined) as T;
     } catch {
       return new FetchError({ statusCode: TRANSFER_STATUSES.UNKNOWN_ERROR });
