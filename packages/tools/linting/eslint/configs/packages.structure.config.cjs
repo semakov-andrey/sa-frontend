@@ -148,7 +148,8 @@ const STRUCTURE = {
               'file1': '\\3.constants?.ts',
               'file2': '\\3.types?.ts',
               'file3': '\\3.utilit(y|ies).ts',
-              'file4': '\\3.\\2.ts'
+              'file4': '\\3.\\2.ts',
+              'file5': '\\3.(.*).ts'
             },
             'file': '(.*).\\2s?.ts'
           },
