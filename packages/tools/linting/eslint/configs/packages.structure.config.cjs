@@ -135,7 +135,7 @@ const STRUCTURE = {
       services: {
         '(.*)': {
           '\\1.(.*?)s': {
-            '(.*)': {
+            '(.*).\\2': {
               '\\3.constants': {
                 file: '(.*).constants?.ts'
               },
