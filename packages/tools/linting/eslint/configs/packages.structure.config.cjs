@@ -101,7 +101,8 @@ const STRUCTURE = {
             file: '(.*).constants?.ts'
           },
           'file1': '\\1.constants?.ts',
-          'file2': '\\1.contracts?.ts'
+          'file2': '\\1.contracts?.ts',
+          'file3': '\\1.utilit(y|ies).ts'
         }
       },
       types: {
@@ -134,28 +135,37 @@ const STRUCTURE = {
       services: {
         '(.*)': {
           '\\1.(.*?)s': {
-            '(.*)': {
+            '(.*).\\2': {
               '\\3.constants': {
                 file: '(.*).constants?.ts'
+              },
+              '\\3.types': {
+                file: '(.*).types?.ts'
               },
               '\\3.utilities': {
                 file: '(.*).utilit(y|ies).ts'
               },
               'file1': '\\3.constants?.ts',
-              'file2': '\\3.utilit(y|ies).ts',
-              'file3': '\\3.\\2.ts'
+              'file2': '\\3.types?.ts',
+              'file3': '\\3.utilit(y|ies).ts',
+              'file4': '\\3.\\2.ts',
+              'file5': '\\3.(.*).ts'
             },
             'file': '(.*).\\2s?.ts'
           },
           '\\1.constants': {
             file: '(.*).constants?.ts'
           },
+          '\\1.types': {
+            file: '(.*).types?.ts'
+          },
           '\\1.utilities': {
             file: '(.*).utilit(y|ies).ts'
           },
           'file1': '\\1.constants?.ts',
-          'file2': '\\1.utilit(y|ies).ts',
-          'file3': '\\1.service.ts'
+          'file2': '\\1.service.ts',
+          'file3': '\\1.types?.ts',
+          'file4': '\\1.utilit(y|ies).ts'
         },
         'file': 'index.ts'
       }
