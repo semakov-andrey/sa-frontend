@@ -8,6 +8,6 @@ export const useHistory = (): UseHistoryReturn => ({
     window.dispatchEvent(new CustomEvent('history-push', { detail: path }));
   },
   back: (): void => {
-    window.dispatchEvent(new CustomEvent('history-back'));
+    window.dispatchEvent(new CustomEvent('history-back', { detail: 'back' }));
   }
 });
