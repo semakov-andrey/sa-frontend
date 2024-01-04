@@ -2,19 +2,13 @@ import { isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 const escapeRx = (str: string): string => str.replace(/([.+*?=^!:${}[\]/\\])/gu, '\\$1');
 
-const rxForSegment = (repeat: boolean, optional: boolean, prefix: 0 | 1): string => {
-  let capture = repeat ? '((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*)' : '';
-  if (optional && prefix) capture = `(?:\\/${ capture })`;
-  return capture + (optional ? '?' : '');
-};
-
 export interface PathToRegexpReturn {
   keys: string[];
   regexp: RegExp;
 }
 
 export const pathToRegexp = (path: string): PathToRegexpReturn => {
-  const groupRx = /:([A-Za-z0-9_]+)([?+*]?)/gu;
+  const groupRx = /\/:([A-Za-z0-9_]+)(\([A-Za-z0-9|]+\))?/gu;
 
   let match: RegExpExecArray | null = groupRx.exec(path);
   let lastIndex = 0;
@@ -22,21 +16,19 @@ export const pathToRegexp = (path: string): PathToRegexpReturn => {
   let result = '';
 
   while (match !== null) {
-    const [ , segment, mod ] = match;
+    const [ , segment, choices ] = match;
 
-    const repeat = mod === '+' || mod === '*';
-    const optional = mod === '?' || mod === '*';
-    const prefix = optional && path[match.index - 1] === '/' ? 1 : 0;
-
+    const prefix = path[match.index - 1] === '/' ? 1 : 0;
     const prev = path.substring(lastIndex, match.index - prefix);
 
     if (isset(segment)) keys.push(segment);
     lastIndex = groupRx.lastIndex;
 
-    result += `${ escapeRx(prev) }${ rxForSegment(repeat, optional, prefix) }`;
+    const newRegExp = `/([A-Za-z0-9_]+)${ isset(choices) ? choices : '' }`;
+    result += `${ escapeRx(prev) }${ newRegExp }`;
     match = groupRx.exec(path);
   }
 
   result += escapeRx(path.substring(lastIndex));
-  return { keys, regexp: new RegExp(`^${ result }(?:\\/)?$`, 'iu') };
+  return { keys, regexp: new RegExp(`^${ result }$`, 'iu') };
 };
