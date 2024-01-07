@@ -47,6 +47,22 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     window.history.pushState(null, '', newLocation);
   });
 
+  const replaceRoute = useEvent((event: Event) => {
+    if (!isCustomEvent(event)) return;
+
+    const newLocation = event.detail;
+    const newLocationHistory = [ ...locationHistory.slice(0, -1), newLocation ];
+    setLocation(newLocation);
+    setLocationHistory(newLocationHistory);
+    if (isMemory) {
+      sessionStorage.set(SS_KEY, newLocation);
+      sessionStorage.set(SS_HISTORY_KEY, newLocationHistory);
+      return;
+    }
+
+    window.history.replaceState(null, '', newLocation);
+  });
+
   const goToPreviousRoute = useEvent((event: Event): void => {
     if (!isCustomEvent(event)) return;
 
@@ -67,10 +83,12 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
 
   useEffect(() => {
     window.addEventListener('history-push', determineRoute);
+    window.addEventListener('history-replace', replaceRoute);
     window.addEventListener('history-back', goToPreviousRoute);
 
     return (): void => {
       window.removeEventListener('history-push', determineRoute);
+      window.removeEventListener('history-replace', replaceRoute);
       window.removeEventListener('history-back', goToPreviousRoute);
     };
   }, []);
