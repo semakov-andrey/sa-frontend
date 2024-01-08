@@ -14,7 +14,6 @@ import { useInject } from './useInject.hook';
 import { useUpdateEffect } from './useUpdateEffect.hook';
 
 export interface UseGamesNavigationParams {
-  container: HTMLElement | null;
   amount?: number;
   localStorageKey?: string;
   sessionStorageKey?: string;
@@ -25,7 +24,8 @@ export interface UseGamesNavigationParams {
   skip?: boolean;
 }
 
-export interface UseGamesNavigationReturn {
+export interface UseGamesNavigationReturn<T> {
+  ref: React.RefObject<T>;
   selected: number;
   setSelected: (selected: number) => void;
   setSelectedNotChangingVisible: (selected: number) => void;
@@ -33,9 +33,8 @@ export interface UseGamesNavigationReturn {
   setSelectedVisible: (isSelectedVisible: boolean) => void;
 }
 
-export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGamesNavigationReturn => {
+export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNavigationParams): UseGamesNavigationReturn<T> => {
   const {
-    container,
     amount,
     localStorageKey,
     sessionStorageKey,
@@ -45,6 +44,8 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     scrollIntoView = false,
     skip
   } = params;
+
+  const ref = useRef<T>(null);
 
   const localStorage = useInject(localStorageUnique);
   const sessionStorage = useInject(sessionStorageUnique);
@@ -71,13 +72,13 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     setSelected(selected);
   });
 
-  const getAmount = useEvent(() => amount ?? container?.children.length ?? 0);
+  const getAmount = useEvent(() => amount ?? ref.current?.children.length ?? 0);
 
   const getItemsInRow = useEvent(() => {
-    const firstChild = container?.firstChild;
-    if (!iswritten(container) || !(firstChild instanceof HTMLElement)) return 1;
+    const firstChild = ref.current?.firstChild;
+    if (!iswritten(ref.current) || !(firstChild instanceof HTMLElement)) return 1;
 
-    const { paddingLeft, paddingRight, columnGap } = window.getComputedStyle(container);
+    const { paddingLeft, paddingRight, columnGap } = window.getComputedStyle(ref.current);
     const { width } = window.getComputedStyle(firstChild);
     const paddingLeftNumbered = parseInt(paddingLeft, 10);
     const paddingRightNumbered = parseInt(paddingRight, 10);
@@ -86,7 +87,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
 
     const amount = getAmount();
     const itemsInRow = Math.floor(
-      (container.clientWidth + columnGapNumbered - paddingLeftNumbered - paddingRightNumbered) / (widthNumbered + columnGapNumbered)
+      (ref.current.clientWidth + columnGapNumbered - paddingLeftNumbered - paddingRightNumbered) / (widthNumbered + columnGapNumbered)
     );
     return amount > itemsInRow ? itemsInRow : amount;
   });
@@ -94,7 +95,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   const activeInactiveSwitch = useEvent((enable: boolean): (() => void) => {
     if (enable) {
       if (scrollIntoView) {
-        container?.children[selected]?.scrollIntoView({ block: 'center' });
+        ref.current?.children[selected]?.scrollIntoView({ block: 'center' });
       }
       setSelectedVisible(true);
     }
@@ -163,7 +164,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
   }, { skip, timeout: 100 });
 
   useKeyboardEvent(KEYBOARD_KEYS.ENTER, () => {
-    const element = container?.children[selected];
+    const element = ref.current?.children[selected];
     if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
 
@@ -183,7 +184,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
 
   useEffect(() => {
     const handler = (event: MouseEvent): void => {
-      const elements = Array.from(container?.children ?? []);
+      const elements = Array.from(ref.current?.children ?? []);
       const index = elements
         .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
       const element = elements[index];
@@ -193,14 +194,15 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
         onClick?.(element);
       }
     };
-    container?.addEventListener('click', handler);
+    ref.current?.addEventListener('click', handler);
 
     return () => {
-      container?.removeEventListener('click', handler);
+      ref.current?.removeEventListener('click', handler);
     };
-  }, [ container ]);
+  }, [ ref ]);
 
   return {
+    ref,
     selected,
     setSelected,
     setSelectedNotChangingVisible,
