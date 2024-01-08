@@ -39,7 +39,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
     amount,
     localStorageKey,
     sessionStorageKey,
-    onPressEnter,
+    onPressEnter = (element: HTMLElement): void => { element.click(); },
     onClick,
     timeToInactive,
     scrollIntoView = false,
@@ -164,7 +164,7 @@ export const useKeyboardNavigation = (params: UseGamesNavigationParams): UseGame
 
   useKeyboardEvent(KEYBOARD_KEYS.ENTER, () => {
     const element = container?.children[selected];
-    if (isTypeHTMLElement(element)) onPressEnter?.(element);
+    if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
 
   useEffect(() => {
