@@ -80,9 +80,13 @@ const STRUCTURE = {
           '\\1.utilities': {
             file: '(.*).utilit(y|ies).ts'
           },
+          '\\1.types': {
+            file: '(.*).types?.ts'
+          },
           'file1': '\\1.constants?.ts',
           'file2': '\\1.utilit(y|ies).ts',
-          'file3': '\\1.entit(y|ies).ts'
+          'file3': '\\1.types?.ts',
+          'file4': '\\1.entit(y|ies).ts'
         }
       }
     },
