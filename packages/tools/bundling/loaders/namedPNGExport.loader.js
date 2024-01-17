@@ -12,6 +12,6 @@ export default function loader(code) {
 
   writePNGDeclarationFile(filePath, content); // Async function without waiting here
 
-  return code.replace('export default __webpack_public_path__ + "', `export const ${ imageName } = "/`);
+  return code.replace('export default __webpack_public_path__ + "', `export const ${ imageName } = __webpack_public_path__ + "`);
 };
 
