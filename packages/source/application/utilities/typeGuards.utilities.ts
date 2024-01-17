@@ -7,6 +7,9 @@ export const iswritten = <T>(u: T | null): u is T =>
 export const isexists = <T>(u?: T | null): u is T =>
   isset(u) && iswritten(u);
 
+export const isTypeObjectOrArray = (u: unknown): u is Record<ObjectKey, unknown> | unknown[] =>
+  typeof u === 'object' && u !== null;
+
 export const isTypeObject = (u: unknown): u is Record<ObjectKey, unknown> =>
   typeof u === 'object' && u !== null && !Array.isArray(u);
 
