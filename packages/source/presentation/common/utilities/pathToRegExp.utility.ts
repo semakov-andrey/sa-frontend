@@ -8,7 +8,7 @@ export interface PathToRegexpReturn {
 }
 
 export const pathToRegexp = (path: string): PathToRegexpReturn => {
-  const groupRx = /\/:([A-Za-z0-9_]+)(\([A-Za-z0-9|]+\))?(\?)?/gu;
+  const groupRx = /\/:([A-Za-z0-9_]+)(\([A-Za-z0-9|]+\))?(\?)?(\+)?/gu;
 
   let match: RegExpExecArray | null = groupRx.exec(path);
   let lastIndex = 0;
@@ -16,7 +16,7 @@ export const pathToRegexp = (path: string): PathToRegexpReturn => {
   let result = '';
 
   while (match !== null) {
-    const [ , segment, choices, optional ] = match;
+    const [ , segment, choices, optional, rest ] = match;
 
     const prefix = path[match.index - 1] === '/' ? 1 : 0;
     const prev = path.substring(lastIndex, match.index - prefix);
@@ -28,7 +28,9 @@ export const pathToRegexp = (path: string): PathToRegexpReturn => {
       ? `/([A-Za-z0-9_]+)${ choices }`
       : isset(optional)
         ? '/?([A-Za-z0-9_]+)?'
-        : '/([A-Za-z0-9_]+)';
+        : isset(rest)
+          ? '/([A-Za-z0-9_\\-\\/\\.]+)'
+          : '/([A-Za-z0-9_]+)';
     result += `${ escapeRx(prev) }${ newRegExp }`;
     match = groupRx.exec(path);
   }
