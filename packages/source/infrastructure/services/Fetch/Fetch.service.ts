@@ -121,7 +121,7 @@ export class Fetch implements Transfer {
 
       const text = await response.text();
       const contentType = response.headers.get('Content-Type');
-      if (Boolean(contentType?.includes('text/plain'))) return text as T;
+      if (!Boolean(contentType?.includes('application/json'))) return text as T;
 
       return JSON.parse(text, isset(this.parseDates) ? this.parseDates : undefined) as T;
     } catch {
