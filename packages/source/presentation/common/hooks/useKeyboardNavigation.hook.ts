@@ -97,6 +97,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
       if (scrollIntoView) {
         ref.current?.children[selected]?.scrollIntoView({ block: 'center' });
       }
+      console.log(2);
       setSelectedVisible(true);
     }
     window.clearTimeout(visibilityTimeout.current);
@@ -182,22 +183,46 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
   }, [ selected, timeToInactive ]);
 
+
+  const getElement = useEvent((event: MouseEvent): Element | undefined => {
+    const elements = Array.from(ref.current?.children ?? []);
+    const index = elements
+      .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
+    const element = elements[index];
+    if (isTypeHTMLElement(element)) {
+      dontChangeVisibleState.current = true;
+      setSelected(index);
+    }
+    return element;
+  });
+
+  const clickHandler = useEvent((event: MouseEvent): void => {
+    const element = getElement(event);
+    if (!isTypeHTMLElement(element)) return;
+    onClick?.(element);
+  });
+
+  const mouseEnterHandler = useEvent((event: MouseEvent): void => {
+    const element = getElement(event);
+    if (!isTypeHTMLElement(element)) return;
+    setSelectedVisible(true);
+  });
+
+  const mouseLeaveHandler = useEvent((event: MouseEvent): void => {
+    const element = getElement(event);
+    if (!isTypeHTMLElement(element)) return;
+    setSelectedVisible(false);
+  });
+
   useEffect(() => {
-    const handler = (event: MouseEvent): void => {
-      const elements = Array.from(ref.current?.children ?? []);
-      const index = elements
-        .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
-      const element = elements[index];
-      if (isTypeHTMLElement(element)) {
-        dontChangeVisibleState.current = true;
-        setSelected(index);
-        onClick?.(element);
-      }
-    };
-    ref.current?.addEventListener('click', handler);
+    ref.current?.addEventListener('click', clickHandler);
+    ref.current?.addEventListener('mouseenter', mouseEnterHandler, true);
+    ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
 
     return () => {
-      ref.current?.removeEventListener('click', handler);
+      ref.current?.removeEventListener('click', clickHandler);
+      ref.current?.removeEventListener('mouseenter', mouseEnterHandler, true);
+      ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
     };
   }, [ ref ]);
 
