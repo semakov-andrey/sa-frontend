@@ -97,7 +97,6 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
       if (scrollIntoView) {
         ref.current?.children[selected]?.scrollIntoView({ block: 'center' });
       }
-      console.log(2);
       setSelectedVisible(true);
     }
     window.clearTimeout(visibilityTimeout.current);
