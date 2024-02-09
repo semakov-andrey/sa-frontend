@@ -21,6 +21,7 @@ export interface UseGamesNavigationParams {
   onClick?: (element: HTMLElement) => void;
   timeToInactive?: number;
   scrollIntoView?: boolean;
+  isHandleHover?: boolean;
   skip?: boolean;
 }
 
@@ -42,6 +43,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     onClick,
     timeToInactive,
     scrollIntoView = false,
+    isHandleHover = false,
     skip
   } = params;
 
@@ -182,7 +184,6 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
   }, [ selected, timeToInactive ]);
 
-
   const getElement = useEvent((event: MouseEvent): Element | undefined => {
     const elements = Array.from(ref.current?.children ?? []);
     const index = elements
@@ -215,13 +216,17 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
 
   useEffect(() => {
     ref.current?.addEventListener('click', clickHandler);
-    ref.current?.addEventListener('mouseenter', mouseEnterHandler, true);
-    ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
+    if (isHandleHover) {
+      ref.current?.addEventListener('mouseenter', mouseEnterHandler, true);
+      ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
+    }
 
     return () => {
       ref.current?.removeEventListener('click', clickHandler);
-      ref.current?.removeEventListener('mouseenter', mouseEnterHandler, true);
-      ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
+      if (isHandleHover) {
+        ref.current?.removeEventListener('mouseenter', mouseEnterHandler, true);
+        ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
+      }
     };
   }, [ ref ]);
 
