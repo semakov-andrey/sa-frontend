@@ -3,7 +3,7 @@ import { iswritten } from '@sa-frontend/application/utilities/typeGuards.utiliti
 import { pathToRegexp } from '../../../../../common/utilities/pathToRegExp.utility';
 import { toArray } from '../../../../../common/utilities/toArray.utility';
 
-import { isRouteElement } from './getChildren.utility';
+import { isRouteElement } from './isRouteElement.utility';
 
 export interface GetMatchParams {
   location: string;
