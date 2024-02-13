@@ -3,9 +3,9 @@ import '@sa-frontend/infrastructure/services';
 import React, { useMemo } from 'react';
 
 import { RouterContext } from './Router.context';
-import { useInternalChildren } from './Router.hooks/useInternalChildren.hook/useInternalChildren.hook';
 import { useInternalLocation } from './Router.hooks/useInternalLocation.hook/useInternalLocation.hook';
-import { useInternalMatch } from './Router.hooks/useInternalMatch.hook/useInternalMatch.hook';
+import { getChildren } from './Router.hooks/useInternalLocation.hook/useInternalLocation.utilities/getChildren.utility';
+import { getMatch } from './Router.hooks/useInternalLocation.hook/useInternalLocation.utilities/getMatch.utility';
 
 export interface RouterProps {
   children: OneOrMore<EntireElement>;
@@ -16,9 +16,11 @@ export const Router = (props: RouterProps): JSX.Element | null => {
   const { children, isMemory } = props;
 
   const location = useInternalLocation({ isMemory });
-  const matching = useInternalMatch({ location, children });
-  const jsx = useInternalChildren({ children, location });
-  const routerContextValue = useMemo(() => ({ location, matching }), [ location, matching ]);
+  const jsx = getChildren({ children, location });
+  const routerContextValue = useMemo(() => ({
+    location,
+    matching: getMatch({ location, children })
+  }), [ location, children ]);
 
   return (
     <RouterContext.Provider value={ routerContextValue }>

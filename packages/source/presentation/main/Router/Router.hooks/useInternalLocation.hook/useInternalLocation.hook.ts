@@ -7,7 +7,7 @@ import { useEvent } from '../../../../common/hooks/useEvent.hook';
 import { useInject } from '../../../../common/hooks/useInject.hook';
 
 import { SS_HISTORY_KEY, SS_KEY } from './useInternalLocation.constant';
-import { isCustomEvent } from './useInternalLocation.utility';
+import { isCustomEvent } from './useInternalLocation.utilities/isCustomEvent.utility';
 
 export interface UseInternalLocationParams {
   isMemory?: boolean;
