@@ -1,16 +1,16 @@
 import { iswritten } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
-import { pathToRegexp } from '../../../../../common/utilities/pathToRegExp.utility';
-import { toArray } from '../../../../../common/utilities/toArray.utility';
+import { pathToRegexp } from '../../../common/utilities/pathToRegExp.utility';
+import { toArray } from '../../../common/utilities/toArray.utility';
 
 import { isRouteElement } from './isRouteElement.utility';
 
-export interface GetMatchParams {
+export interface GetMatchingParams {
   location: string;
   children: OneOrMore<EntireElement>;
 }
 
-export const getMatch = (params: GetMatchParams): ObjectDefType<string, string> => {
+export const getMatching = (params: GetMatchingParams): ObjectDefType<string, string> => {
   const { location, children } = params;
 
   let matching: ObjectDefType<string, string> = {};
