@@ -6,9 +6,9 @@ module.exports = {
         'useInject',
         'useState',
         'useRef',
+        'useEffect',
         'useEvent',
-        'useCallback',
-        'useEffect'
+        'useCallback'
       ] }
     ]
   }

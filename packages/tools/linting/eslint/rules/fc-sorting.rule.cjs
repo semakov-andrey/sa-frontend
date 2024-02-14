@@ -1,8 +1,8 @@
 const DEFAULT_GROUPS = [
   'useState',
   'useRef',
-  'useCallback',
-  'useEffect'
+  'useEffect',
+  'useCallback'
 ];
 
 module.exports = {
