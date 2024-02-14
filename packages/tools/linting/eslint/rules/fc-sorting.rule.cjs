@@ -16,7 +16,7 @@ module.exports = {
           .filter(({ type, declaration }) =>
             type === 'ExportNamedDeclaration' && declaration.type === 'VariableDeclaration')
           .reduce((acc, node) => {
-            const declarations = node.declaration.declarations[0].init.body?.body;
+            const declarations = node.declaration.declarations[0].init?.body?.body;
             return declarations ? [ ...acc, declarations ] : [];
           }, []);
 
