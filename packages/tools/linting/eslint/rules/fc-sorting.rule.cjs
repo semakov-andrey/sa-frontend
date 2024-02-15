@@ -2,8 +2,8 @@ const DEFAULT_GROUPS = [
   'useSyncExternalStore',
   'useState',
   'useRef',
-  'useEffect',
-  'useCallback'
+  'useCallback',
+  'useEffect'
 ];
 
 module.exports = {

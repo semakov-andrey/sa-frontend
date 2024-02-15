@@ -5,11 +5,15 @@ module.exports = {
       { groups: [
         'useInject',
         'useSyncExternalStore',
+        'useStore',
         'useState',
         'useRef',
-        'useEffect',
         'useEvent',
-        'useCallback'
+        'useCallback',
+        'useEffect',
+        'useUpdateEffect',
+        'useAsyncEffect',
+        'useAsyncUpdateEffect'
       ] }
     ]
   }
