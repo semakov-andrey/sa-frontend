@@ -1,15 +1,7 @@
-const DEFAULT_GROUPS = [
-  'useSyncExternalStore',
-  'useState',
-  'useRef',
-  'useCallback',
-  'useEffect'
-];
-
 module.exports = {
   create: (ctx) => {
-    const options = ctx.options[0];
-    const groups = options?.groups ?? DEFAULT_GROUPS;
+    const { states = [], events = [], effects = [] } = ctx.options[0] ?? {};
+    const groups = [ ...states, ...events, ...effects ];
 
     return {
       Program({ body }) {
@@ -52,23 +44,34 @@ module.exports = {
               }
             })
             .filter(Boolean)
-            .filter((hook) => hook.name?.startsWith('use') && groups.includes(hook.name));
+            .filter((hook) => hook.name?.startsWith('use'));
 
           for (const hook of hooks) {
-            const findedHook = groups.indexOf(hook.name);
-            if (findedHook === -1 || findedHook === 0) {
+            if (groups.includes(hook.name)) {
+              const findedHook = groups.indexOf(hook.name);
+              if (findedHook === -1 || findedHook === 0) {
+                previousHooks.push(hook.name);
+                continue;
+              }
+              const hooksForChecking = groups.slice(findedHook + 1);
+              const intersectionHooks = hooksForChecking.filter((hookName) => previousHooks.includes(hookName));
+              if (intersectionHooks.length > 0) {
+                ctx.report(
+                  hook,
+                  `Non-matching declaration order. ${ hook.name } comes after ${ intersectionHooks.join(', ') }.`
+                );
+              }
               previousHooks.push(hook.name);
-              continue;
+            } else {
+              const hooksForChecking = [ ...events, ...effects ];
+              const intersectionHooks = hooksForChecking.filter((hookName) => previousHooks.includes(hookName));
+              if (intersectionHooks.length > 0) {
+                ctx.report(
+                  hook,
+                  `Non-matching declaration order. ${ hook.name } comes after ${ groups.join(', ') }.`
+                );
+              }
             }
-            const hooksForChecking = groups.slice(findedHook + 1);
-            const intersectionHooks = hooksForChecking.filter((hookName) => previousHooks.includes(hookName));
-            if (intersectionHooks.length > 0) {
-              ctx.report(
-                hook,
-                `Non-matching declaration order. ${ hook.name } comes after ${ intersectionHooks.join(', ') }.`
-              );
-            }
-            previousHooks.push(hook.name);
           }
         }
       }
