@@ -18,7 +18,7 @@ export const Router = (props: RouterProps): JSX.Element | null => {
   const location = useInternalLocation({ isMemory });
   const routerContextValue = useMemo(() => ({
     location,
-    matching: getMatching({ location, children })
+    ...getMatching({ location, children })
   }), [ location, children ]);
   const jsx = getChildren({ location, children });
 

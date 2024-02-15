@@ -10,10 +10,16 @@ export interface GetMatchingParams {
   children: OneOrMore<EntireElement>;
 }
 
-export const getMatching = (params: GetMatchingParams): ObjectDefType<string, string> => {
+export interface GetMatchingReturnType {
+  matching: ObjectDefType<string, string>;
+  route: string;
+}
+
+export const getMatching = (params: GetMatchingParams): GetMatchingReturnType => {
   const { location, children } = params;
 
   let matching: ObjectDefType<string, string> = {};
+  let route = '';
 
   for (const element of toArray(children)) {
     if (!isRouteElement(element)) continue;
@@ -23,8 +29,9 @@ export const getMatching = (params: GetMatchingParams): ObjectDefType<string, st
     if (!iswritten(out)) continue;
 
     matching = Object.fromEntries(keys.map((key: string, index: number) => [ key, out[index + 1] ?? '' ]));
+    route = element.props.path;
     break;
   }
 
-  return matching;
+  return { matching, route };
 };
