@@ -111,6 +111,36 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     };
   });
 
+  const getElement = useEvent((event: MouseEvent): Element | undefined => {
+    const elements = Array.from(ref.current?.children ?? []);
+    const index = elements
+      .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
+    const element = elements[index];
+    if (isTypeHTMLElement(element)) {
+      dontChangeVisibleState.current = true;
+      setSelected(index);
+    }
+    return element;
+  });
+
+  const clickHandler = useEvent((event: MouseEvent): void => {
+    const element = getElement(event);
+    if (!isTypeHTMLElement(element)) return;
+    onClick?.(element);
+  });
+
+  const mouseEnterHandler = useEvent((event: MouseEvent): void => {
+    const element = getElement(event);
+    if (!isTypeHTMLElement(element)) return;
+    setSelectedVisible(true);
+  });
+
+  const mouseLeaveHandler = useEvent((event: MouseEvent): void => {
+    const element = getElement(event);
+    if (!isTypeHTMLElement(element)) return;
+    setSelectedVisible(false);
+  });
+
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
@@ -169,36 +199,6 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     const element = ref.current?.children[selected];
     if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
-
-  const getElement = useEvent((event: MouseEvent): Element | undefined => {
-    const elements = Array.from(ref.current?.children ?? []);
-    const index = elements
-      .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
-    const element = elements[index];
-    if (isTypeHTMLElement(element)) {
-      dontChangeVisibleState.current = true;
-      setSelected(index);
-    }
-    return element;
-  });
-
-  const clickHandler = useEvent((event: MouseEvent): void => {
-    const element = getElement(event);
-    if (!isTypeHTMLElement(element)) return;
-    onClick?.(element);
-  });
-
-  const mouseEnterHandler = useEvent((event: MouseEvent): void => {
-    const element = getElement(event);
-    if (!isTypeHTMLElement(element)) return;
-    setSelectedVisible(true);
-  });
-
-  const mouseLeaveHandler = useEvent((event: MouseEvent): void => {
-    const element = getElement(event);
-    if (!isTypeHTMLElement(element)) return;
-    setSelectedVisible(false);
-  });
 
   useEffect(() => {
     if (isset(localStorageKey)) localStorage.set(localStorageKey, selected);

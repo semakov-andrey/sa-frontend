@@ -7,14 +7,26 @@ module.exports = {
         'useSyncExternalStore',
         'useStore',
         'useState',
+        'useStateWithCallback',
+        'useStateRef',
+        'useBoolean',
         'useRef',
+        'useHistory',
+        'useLocation',
+        'useMatch',
+        'useRoute',
         'useEvent',
         'useCallback',
+        'useKeyboardNavigation',
+        'useKeyboardEvent',
         'useEffect',
         'useUpdateEffect',
         'useAsyncEffect',
-        'useAsyncUpdateEffect'
+        'useAsyncUpdateEffect',
+        'useCheckEffect',
+        'useDebounceEffect'
       ] }
     ]
   }
 };
+
