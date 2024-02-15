@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 
-export const useAsyncUpdateEffect = (
-  func: (isMounted: () => boolean) => Promise<void>,
-  deps: unknown[]
-): void => {
+export type IsMounted = () => boolean;
+export type Setup = (isMounted: IsMounted) => Promise<void>;
+
+export const useAsyncUpdateEffect = (func: Setup, deps: unknown[]): void => {
   const inited = useRef(false);
 
   useEffect(() => {
@@ -11,8 +11,7 @@ export const useAsyncUpdateEffect = (
       inited.current = true;
     } else {
       let isMounted = true;
-      const maybePromise = func(() => isMounted);
-      Promise.resolve(maybePromise);
+      func(() => isMounted);
 
       return () => {
         isMounted = false;

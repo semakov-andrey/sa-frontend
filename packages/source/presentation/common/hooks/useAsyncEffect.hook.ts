@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 
-export const useAsyncEffect = (
-  func: (isMounted: () => boolean) => Promise<void>,
-  deps: unknown[]
-): void => {
+export type IsMounted = () => boolean;
+export type Setup = (isMounted: IsMounted) => Promise<void>;
+
+export const useAsyncEffect = (func: Setup, deps: unknown[]): void => {
   useEffect(() => {
     let isMounted = true;
-    const maybePromise = func(() => isMounted);
-    Promise.resolve(maybePromise);
+    func(() => isMounted);
 
     return () => {
       isMounted = false;
