@@ -47,8 +47,6 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     skip
   } = params;
 
-  const ref = useRef<T>(null);
-
   const localStorage = useInject(localStorageUnique);
   const sessionStorage = useInject(sessionStorageUnique);
 
@@ -66,6 +64,8 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
 
   const [ selected, setSelected ] = useState(initialSelected);
   const [ isSelectedVisible, setSelectedVisible ] = useState(false);
+
+  const ref = useRef<T>(null);
   const dontChangeVisibleState = useRef(false);
   const visibilityTimeout = useRef(0);
 
@@ -170,20 +170,6 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
 
-  useEffect(() => {
-    if (isset(localStorageKey)) localStorage.set(localStorageKey, selected);
-    if (isset(sessionStorageKey)) sessionStorage.set(sessionStorageKey, selected);
-  }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
-
-  useUpdateEffect(() => {
-    if (dontChangeVisibleState.current) {
-      dontChangeVisibleState.current = false;
-      return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
-    }
-
-    return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
-  }, [ selected, timeToInactive ]);
-
   const getElement = useEvent((event: MouseEvent): Element | undefined => {
     const elements = Array.from(ref.current?.children ?? []);
     const index = elements
@@ -215,6 +201,11 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
   });
 
   useEffect(() => {
+    if (isset(localStorageKey)) localStorage.set(localStorageKey, selected);
+    if (isset(sessionStorageKey)) sessionStorage.set(sessionStorageKey, selected);
+  }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
+
+  useEffect(() => {
     ref.current?.addEventListener('click', clickHandler);
     if (isHandleHover) {
       ref.current?.addEventListener('mouseenter', mouseEnterHandler, true);
@@ -229,6 +220,15 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
       }
     };
   }, [ ref ]);
+
+  useUpdateEffect(() => {
+    if (dontChangeVisibleState.current) {
+      dontChangeVisibleState.current = false;
+      return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
+    }
+
+    return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
+  }, [ selected, timeToInactive ]);
 
   return {
     ref,
