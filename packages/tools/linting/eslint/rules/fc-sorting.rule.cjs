@@ -1,4 +1,5 @@
 const DEFAULT_GROUPS = [
+  'useSyncExternalStore',
   'useState',
   'useRef',
   'useEffect',

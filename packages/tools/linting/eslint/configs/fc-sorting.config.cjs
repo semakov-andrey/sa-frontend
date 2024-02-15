@@ -4,6 +4,7 @@ module.exports = {
       'error',
       { groups: [
         'useInject',
+        'useSyncExternalStore',
         'useState',
         'useRef',
         'useEffect',
