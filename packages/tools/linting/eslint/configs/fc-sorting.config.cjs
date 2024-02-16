@@ -17,7 +17,8 @@ module.exports = {
           'useMatch',
           'useRoute'
         ],
-        events: [
+        computingAndEvents: [
+          'useMemo',
           'useEvent',
           'useCallback'
         ],

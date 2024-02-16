@@ -1,16 +1,23 @@
 module.exports = {
   create: (ctx) => {
-    const { states = [], events = [], effects = [] } = ctx.options[0] ?? {};
-    const groups = [ ...states, ...events, ...effects ];
+    const { states = [], computingAndEvents = [], effects = [] } = ctx.options[0] ?? {};
+    const groups = [ ...states, ...computingAndEvents, ...effects ];
+
+    const showError = (hook, intersectionHooks) => {
+      ctx.report(
+        hook,
+        `Non-matching declaration order. ${ hook.name } comes after ${ intersectionHooks.join(', ') }.`
+      );
+    };
 
     const checkHook = (hook, hooksForChecking, previousHooks) => {
       const intersectionHooks = hooksForChecking.filter((hookName) => previousHooks.includes(hookName));
-      if (intersectionHooks.length > 0) {
-        ctx.report(
-          hook,
-          `Non-matching declaration order. ${ hook.name } comes after ${ intersectionHooks.join(', ') }.`
-        );
-      }
+      if (intersectionHooks.length > 0) showError(hook, intersectionHooks);
+    };
+
+    const checkStateHook = (hook, groups, previousHooks) => {
+      const intersectionHooks = previousHooks.filter((hook) => !groups.includes(hook));
+      if (intersectionHooks.length > 0) showError(hook, intersectionHooks);
     };
 
     return {
@@ -59,15 +66,19 @@ module.exports = {
           for (const hook of hooks) {
             if (groups.includes(hook.name)) {
               const findedHook = groups.indexOf(hook.name);
+              const findedHookInStates = states.indexOf(hook.name);
               if (findedHook === -1 || findedHook === 0) {
                 previousHooks.push(hook.name);
                 continue;
               }
+              if (findedHookInStates !== -1 && findedHookInStates !== 0) {
+                checkStateHook(hook, groups, previousHooks);
+              }
               checkHook(hook, groups.slice(findedHook + 1), previousHooks);
-              previousHooks.push(hook.name);
             } else {
-              checkHook(hook, [ ...events, ...effects ], previousHooks);
+              checkHook(hook, [ ...computingAndEvents, ...effects ], previousHooks);
             }
+            previousHooks.push(hook.name);
           }
         }
       }
