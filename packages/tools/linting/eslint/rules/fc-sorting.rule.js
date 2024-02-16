@@ -1,6 +1,8 @@
-module.exports = {
+import { fcSortingParams } from '../configs/fc-sorting.config.js';
+
+export const eslintRuleFcSorting = {
   create: (ctx) => {
-    const { states = [], computingAndEvents = [], effects = [] } = ctx.options[0] ?? {};
+    const { states = [], computingAndEvents = [], effects = [] } = ctx.options[0] ?? fcSortingParams;
     const groups = [ ...states, ...computingAndEvents, ...effects ];
 
     const showError = (hook, intersectionHooks) => {
@@ -49,15 +51,15 @@ module.exports = {
             .filter((node) => node.length === 2)
             .map(([ type, declaration ]) => {
               switch (type) {
-              case 'MemberExpression':
-                return declaration.property;
-              case 'CallExpression':
-                return declaration.type === 'MemberExpression'
-                  ? declaration.property
-                  : declaration.callee ?? declaration;
-              case 'VariableDeclarator':
-              default:
-                return declaration?.callee?.property ?? declaration?.callee;
+                case 'MemberExpression':
+                  return declaration.property;
+                case 'CallExpression':
+                  return declaration.type === 'MemberExpression'
+                    ? declaration.property
+                    : declaration.callee ?? declaration;
+                case 'VariableDeclarator':
+                default:
+                  return declaration?.callee?.property ?? declaration?.callee;
               }
             })
             .filter(Boolean)

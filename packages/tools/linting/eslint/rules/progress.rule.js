@@ -1,11 +1,11 @@
-const fg = require('fast-glob');
-const logUpdate = require('log-update');
+import fg from 'fast-glob';
+import logUpdate from 'log-update';
 
 let glob;
 let files;
 const fullPercents = 100;
 
-module.exports = {
+export const eslintRuleProgress = {
   create(context) {
     if (!glob && process && Array.isArray(process.argv) && typeof process.argv[2] === 'string') {
       try {

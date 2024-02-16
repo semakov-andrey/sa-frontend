@@ -193,18 +193,20 @@ const processDir = (obj, prefix) =>
     return [];
   }).flat();
 
-module.exports = {
-  overrides: [
-    {
-      files: [ '*.ts', '*.tsx' ],
-      parserOptions: {
-        project: [ './packages/*/tsconfig.json' ]
-      },
-      rules: {
-        'rulesdir/structure': [ 'error', {
-          rules: processDir(STRUCTURE)
-        } ]
-      }
-    }
-  ]
-};
+export const structureParams = processDir(STRUCTURE);
+
+// module.exports = {
+//   overrides: [
+//     {
+//       files: [ '*.ts', '*.tsx' ],
+//       parserOptions: {
+//         project: [ './packages/*/tsconfig.json' ]
+//       },
+//       rules: {
+//         'rulesdir/structure': [ 'error', {
+//           rules: processDir(STRUCTURE)
+//         } ]
+//       }
+//     }
+//   ]
+// };

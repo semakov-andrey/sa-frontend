@@ -1,6 +1,8 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
+import { structureParams } from '../configs/structure.config.js';
+
+export const eslintRuleStructure = {
   meta: {
     type: 'suggestion',
     schema: [ {
@@ -17,8 +19,8 @@ module.exports = {
     } ]
   },
   create(context) {
-    const rules = context.options[0].rules;
-    const root = path.resolve(__dirname).split('node_modules')[0];
+    const rules = context.options[0] ?? structureParams;
+    const root = path.resolve(import.meta.dirname).split('node_modules')[0];
     const filePath = context.filename.replace(root, '');
 
     let matched = false;
