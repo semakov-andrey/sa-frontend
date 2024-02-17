@@ -1,4 +1,4 @@
-module.exports = {
+export const config = {
   defaultSeverity: 'error',
   rules: {
     'at-rule-name-case': 'lower',

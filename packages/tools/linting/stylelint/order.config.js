@@ -1,4 +1,4 @@
-module.exports = {
+export const config = {
   plugins: [ 'stylelint-order' ],
   rules: {
     'order/properties-order': [
