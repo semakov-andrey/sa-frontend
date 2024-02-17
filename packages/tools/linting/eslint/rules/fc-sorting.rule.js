@@ -78,7 +78,7 @@ export const eslintRuleFcSorting = {
               }
               checkHook(hook, groups.slice(findedHook + 1), previousHooks);
             } else {
-              checkHook(hook, [ ...computingAndEvents, ...effects ], previousHooks);
+              checkHook(hook, effects, previousHooks);
             }
             previousHooks.push(hook.name);
           }
