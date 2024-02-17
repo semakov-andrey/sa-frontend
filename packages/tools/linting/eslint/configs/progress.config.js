@@ -1,11 +1,10 @@
 import { eslintPluginSaRules } from '../rules/index.js';
 
-export const config = [ {
-  files: [ 'src/**/*.ts', 'src/**/*.tsx' ],
+export const config = (ignores) => [ {
   plugins: {
     saRules: eslintPluginSaRules
   },
   rules: {
-    'saRules/structure': 'warn'
+    'saRules/progress': [ 'warn', ignores ]
   }
 } ];

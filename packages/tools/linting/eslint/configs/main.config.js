@@ -592,10 +592,6 @@ export const reactTsxFormatRules = {
   ]
 };
 
-export const progressRules = {
-  'saRules/progress': 'error'
-};
-
 export const commonConfig = {
   languageOptions: {
     ...languageOptions,
@@ -656,14 +652,8 @@ export const reactConfig = {
   }
 };
 
-export const progressConfig = {
-  plugins,
-  rules: progressRules
-};
-
 export const config = [
   commonConfig,
   reactConfig,
-  typescriptConfig,
-  progressConfig
+  typescriptConfig
 ];

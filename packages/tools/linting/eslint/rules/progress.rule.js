@@ -13,7 +13,7 @@ export const eslintRuleProgress = {
         if (glob) {
           files = fg.sync(glob, {
             absolute: true,
-            ignore: [ '**/node_modules/**', '**/build/**' ]
+            ignore: [ '**/node_modules/**', ...context.options[0] ?? [] ]
           }).sort();
         }
       } catch (error) {
