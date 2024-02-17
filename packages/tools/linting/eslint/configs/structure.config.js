@@ -8,11 +8,11 @@ export const rules = {
   'saRules/structure': 'warn'
 };
 
-export const config = {
+export const config = [ {
   files: [ 'src/**/*.ts', 'src/**/*.tsx' ],
   plugins,
   rules
-};
+} ];
 
 // module.exports = {
 //   overrides: [
