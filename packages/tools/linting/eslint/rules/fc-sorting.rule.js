@@ -69,7 +69,7 @@ export const eslintRuleFcSorting = {
             if (groups.includes(hook.name)) {
               const findedHook = groups.indexOf(hook.name);
               const findedHookInStates = states.indexOf(hook.name);
-              if (findedHook === -1 || findedHook === 0) {
+              if (findedHook === -1) {
                 previousHooks.push(hook.name);
                 continue;
               }
