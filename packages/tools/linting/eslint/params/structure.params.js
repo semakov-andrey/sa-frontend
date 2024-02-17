@@ -104,6 +104,9 @@ const STRUCTURE = {
           '\\1.constants': {
             file: '(.*).constants?.ts'
           },
+          '\\1.utilities': {
+            file: '(.*).utilit(y|ies).ts'
+          },
           'file1': '\\1.constants?.ts',
           'file2': '\\1.contracts?.ts',
           'file3': '\\1.utilit(y|ies).ts'

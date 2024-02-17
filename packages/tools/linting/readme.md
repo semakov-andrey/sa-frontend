@@ -2,29 +2,43 @@
 
 ### Подключение eslint конфига
 
-Файл `.eslintrc.cjs`
+Файл `eslint.config.js`
 
 ```js
-module.exports = {
-  extends: [
-    './node_modules/@sa-frontend/linting/eslint/configs/main.config.cjs',
-    './node_modules/@sa-frontend/linting/eslint/configs/progress.config.cjs',
-    './node_modules/@sa-frontend/linting/eslint/configs/structure.config.cjs'
-  ]
-};
+import { config as main } from '@sa-frontend/linting/eslint/configs/main.config.js';
+import { config as progress } from '@sa-frontend/linting/eslint/configs/progress.config.js';
+import { config as structure } from '@sa-frontend/linting/eslint/configs/structure.config.js';
+
+export const ignores = [];
+
+export const config = [
+  { ignores },
+  ...main,
+  ...structure,
+  ...progress(ignores)
+];
+
+export default config;
 ```
 
 ### Подключение stylelint конфига
 
-Файл `.stylelintrc.cjs`
+Файл `stylelint.config.js`
 
 ```js
-module.exports = {
-  extends: [
-    './node_modules/@sa-frontend/linting/stylelint/main.config.cjs',
-    './node_modules/@sa-frontend/linting/stylelint/order.config.cjs'
-  ]
+import { config as main } from '@sa-frontend/linting/stylelint/main.config.js';
+import { config as order } from '@sa-frontend/linting/stylelint/order.config.js';
+
+export const ignoreFiles = [];
+
+export const config = {
+  ignoreFiles,
+  ...main,
+  ...order
 };
+
+export default config;
+
 ```
 
 ### Линтинг структуры проекта
@@ -44,19 +58,22 @@ module.exports = {
 │  │     ├─ {ContractB}.constant.ts
 │  │     ├─ {ContractB}.contract.ts
 │  │     └─ {ContractB}.utility.ts
-│  ├─ entities
-│  │  ├─ {EntityA}
-│  │  └─ {EntityB}
-│  │     ├─ {EntityB}.constants
-│  │     │  ├─ {constantX}.constant.ts
-│  │     │  └─ {constantY}.constant.ts
-│  │     ├─ {EntityB}.utilities.ts
-│  │     │  ├─ {utilityX}.utility.ts
-│  │     │  └─ {utilityY}.utility.ts
-│  │     ├─ {EntityB}.constant.ts
-│  │     ├─ {EntityB}.entity.ts
-│  │     └─ {EntityB}.utility.ts
-│  └─ useCases
+│  └─ entities
+│     ├─ {EntityA}
+│     └─ {EntityB}
+│        ├─ {EntityB}.constants
+│        │  ├─ {constantX}.constant.ts
+│        │  └─ {constantY}.constant.ts
+│        ├─ {EntityB}.types
+│        │  ├─ {TypeX}.type.ts
+│        │  └─ {TypeY}.type.ts
+│        ├─ {EntityB}.utilities.ts
+│        │  ├─ {utilityX}.utility.ts
+│        │  └─ {utilityY}.utility.ts
+│        ├─ {EntityB}.constant.ts
+│        ├─ {EntityB}.entity.ts
+│        ├─ {EntityB}.type.ts
+│        └─ {EntityB}.utility.ts
 ├─ application
 │  ├─ components
 │  │  ├─ {ComponentA}
@@ -68,8 +85,12 @@ module.exports = {
 │  │     ├─ {ContractB}.constants
 │  │     │  ├─ {constantX}.constant.ts
 │  │     │  └─ {constantY}.constant.ts
+│  │     ├─ {ContractB}.utilities.ts
+│  │     │  ├─ {utilityX}.utility.ts
+│  │     │  └─ {utilityY}.utility.ts
 │  │     ├─ {ContractB}.constant.ts
-│  │     └─ {ContractB}.contract.ts
+│  │     ├─ {ContractB}.contract.ts
+│  │     └─ {ContractB}.utility.ts
 │  ├─ types
 │  │  ├─ {TypeX}.type.ts
 │  │  └─ {TypeY}.type.ts
@@ -126,6 +147,7 @@ module.exports = {
 │  │     │  ├─ use{HookY}
 │  │     │  │  ├─ use{HookY}.constant.ts
 │  │     │  │  ├─ use{HookY}.hook.ts
+│  │     │  │  ├─ use{HookY}.store.ts
 │  │     │  │  └─ use{HookY}.type.ts
 │  │     │  └─ use{HookZ}.ts
 │  │     ├─ {ComponentB}.stores
