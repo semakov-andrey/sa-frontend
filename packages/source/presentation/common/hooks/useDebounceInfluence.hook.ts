@@ -1,13 +1,13 @@
-import { useUpdateEffect } from './useUpdateEffect.hook';
+import { useUpdateInfluence } from './useUpdateInfluence.hook';
 
 export type UpdateCallback = () => (void | (() => void));
 
-export const useDebounceEffect = (
+export const useDebounceInfluence = (
   callback: UpdateCallback,
   deps: unknown[],
   timeout: number
 ): void => {
-  useUpdateEffect(() => {
+  useUpdateInfluence(() => {
     const handler = window.setTimeout(() => {
       callback();
     }, timeout);

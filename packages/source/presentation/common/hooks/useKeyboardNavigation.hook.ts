@@ -11,7 +11,7 @@ import { useKeyboardEvent } from '@sa-frontend/presentation/common/hooks/useKeyb
 import { isTypeHTMLElement, isTypeNode } from '../utilities/typeGuards.utilities';
 
 import { useInject } from './useInject.hook';
-import { useUpdateEffect } from './useUpdateEffect.hook';
+import { useUpdateEffect } from './useUpdateInfluence.hook';
 
 export interface UseGamesNavigationParams {
   amount?: number;

@@ -490,7 +490,7 @@ export const reactHookRules = {
   'react-hooks/exhaustive-deps': [
     'warn',
     {
-      additionalHooks: '(useUpdateEffect|useAsyncEffect|useAsyncUpdateEffect)'
+      additionalHooks: '(useInfluence|useUpdateInfluence|useAsyncInfluence|useAsyncUpdateInfluence)'
     }
   ]
 };

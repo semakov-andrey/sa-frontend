@@ -1,14 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import { isTypeFunction } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
+import { useInfluence } from './useInfluence.hook';
+
 export type UpdateCallback = () => (void | (() => void));
 
-export const useUpdateEffect = (callback: UpdateCallback, deps: unknown[]): void => {
+export const useUpdateInfluence = (callback: UpdateCallback, deps: unknown[]): void => {
   const inited = useRef(false);
   const unmount = useRef((): void => undefined);
 
-  useEffect(() => {
+  useInfluence(() => {
     if (!inited.current) {
       inited.current = true;
     } else {
