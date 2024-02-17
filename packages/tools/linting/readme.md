@@ -148,7 +148,8 @@ export default config;
 │  │     │  │  ├─ use{HookY}.constant.ts
 │  │     │  │  ├─ use{HookY}.hook.ts
 │  │     │  │  ├─ use{HookY}.store.ts
-│  │     │  │  └─ use{HookY}.type.ts
+│  │     │  │  ├─ use{HookY}.type.ts
+│  │     │  │  └─ use{HookY}.utility.ts
 │  │     │  └─ use{HookZ}.ts
 │  │     ├─ {ComponentB}.stores
 │  │     │  ├─ {storeX}

@@ -19,7 +19,8 @@ const REACT_APP_COMMON_STRUCTURE = {
       file1: 'use\\1.constants?.tsx?',
       file2: 'use\\1.hook.ts',
       file3: 'use\\1.store.ts',
-      file4: 'use\\1.types?.ts'
+      file4: 'use\\1.types?.ts',
+      file5: 'use\\1.utilit(y|ies).ts'
     },
     'file': 'use(.*).hook.ts'
   },
