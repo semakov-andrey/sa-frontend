@@ -19,8 +19,6 @@ export const fcSortingParams = {
     'useCallback'
   ],
   effects: [
-    'useKeyboardNavigation',
-    'useKeyboardEvent',
     'useEffect',
     'useInfluence',
     'useUpdateInfluence',
