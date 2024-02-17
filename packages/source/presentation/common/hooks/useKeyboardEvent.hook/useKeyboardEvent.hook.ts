@@ -33,5 +33,5 @@ export const useKeyboardEvent = (
     return (): void => {
       document.documentElement.removeEventListener('keydown', callback);
     };
-  }, [ skip ]);
+  }, [ fn, combination, skip, timeout ]);
 };

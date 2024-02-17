@@ -91,7 +91,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
       window.removeEventListener('history-replace', replaceRoute);
       window.removeEventListener('history-back', goToPreviousRoute);
     };
-  }, []);
+  }, [ determineRoute, replaceRoute, goToPreviousRoute ]);
 
   return location;
 };

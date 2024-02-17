@@ -1,6 +1,6 @@
 import '@sa-frontend/infrastructure/services';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { localStorageUnique, sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isTypeNumber, isset, iswritten } from '@sa-frontend/application/utilities/typeGuards.utilities';
@@ -10,8 +10,9 @@ import { useKeyboardEvent } from '@sa-frontend/presentation/common/hooks/useKeyb
 
 import { isTypeHTMLElement, isTypeNode } from '../utilities/typeGuards.utilities';
 
+import { useInfluence } from './useInfluence.hook';
 import { useInject } from './useInject.hook';
-import { useUpdateEffect } from './useUpdateInfluence.hook';
+import { useUpdateInfluence } from './useUpdateInfluence.hook';
 
 export interface UseGamesNavigationParams {
   amount?: number;
@@ -200,12 +201,12 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
 
-  useEffect(() => {
+  useInfluence(() => {
     if (isset(localStorageKey)) localStorage.set(localStorageKey, selected);
     if (isset(sessionStorageKey)) sessionStorage.set(sessionStorageKey, selected);
   }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
 
-  useEffect(() => {
+  useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
     if (isHandleHover) {
       ref.current?.addEventListener('mouseenter', mouseEnterHandler, true);
@@ -219,16 +220,16 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
         ref.current?.addEventListener('mouseleave', mouseLeaveHandler, true);
       }
     };
-  }, [ ref ]);
+  }, [ ref, isHandleHover, clickHandler, mouseEnterHandler, mouseLeaveHandler ]);
 
-  useUpdateEffect(() => {
+  useUpdateInfluence(() => {
     if (dontChangeVisibleState.current) {
       dontChangeVisibleState.current = false;
       return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
     }
 
     return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
-  }, [ selected, timeToInactive ]);
+  }, [ selected, timeToInactive, activeInactiveSwitch, dontChangeVisibleState ]);
 
   return {
     ref,
