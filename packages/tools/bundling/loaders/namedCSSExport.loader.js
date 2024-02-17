@@ -4,7 +4,6 @@ import {
   writeCSSDeclarationFile
 } from '../utilities/generateCSSDeclarations.utility.js';
 
-/* eslint-disable import/no-default-export */
 export default async function loader(code) {
   const filePath = `${ this.resourcePath }.d.ts`;
   const styleName = getCSSDeclarationName(this.resourcePath);

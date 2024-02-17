@@ -6,7 +6,6 @@ import {
   writeBINDeclarationFile
 } from '../utilities/generateBINDeclarations.utility.js';
 
-/* eslint-disable import/no-default-export */
 export default async function loader() {
   const filePath = `${ this.resourcePath }.d.ts`;
   const binaryName = getBINDeclarationName(this.resourcePath);

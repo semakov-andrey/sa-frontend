@@ -4,7 +4,6 @@ import {
   writeSVGDeclarationFile
 } from '../utilities/generateSVGDeclarations.utility.js';
 
-/* eslint-disable import/no-default-export */
 export default function loader(code) {
   const filePath = `${ this.resourcePath }.d.ts`;
   const iconName = getSVGDeclarationName(this.resourcePath);

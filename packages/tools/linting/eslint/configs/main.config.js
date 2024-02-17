@@ -11,22 +11,23 @@ import globals from 'globals';
 const INDENT = 2;
 const MAX_CLASSES_PER_FILE = 5;
 
-export const getLanguageOptions = (project = null) => ({
-  ecmaVersion: 'latest',
-  sourceType: 'module',
+export const languageOptions = {
   globals: {
     ...globals.builtin,
     ...globals.browser,
     ...globals.node
-  },
+  }
+};
+
+export const typescriptOptions = {
   parser: eslintParserTypescript,
   parserOptions: {
     ecmaVersion: 'latest',
     ecmaFeatures: { jsx: true },
     sourceType: 'module',
-    project
+    project: './tsconfig.json'
   }
-});
+};
 
 export const plugins = {
   'import': eslintPluginImport,
@@ -42,14 +43,19 @@ export const reactSettings = {
   react: { version: 'detect' }
 };
 
-export const importSettings = {
+export const importJsSettings = {
   'import/parsers': {
-    'espree': [ '.cjs', '.js', '.jsx' ],
+    espree: [ '.cjs', '.js', '.jsx' ]
+  }
+};
+
+export const importTsSettings = {
+  'import/parsers': {
     '@typescript-eslint/parser': [ '.ts', '.tsx' ]
   }
 };
 
-export const commonLintRules = {
+export const lintRules = {
   'accessor-pairs': [ 'error', { enforceForClassMembers: true } ],
   'array-callback-return': 'error',
   'arrow-body-style': [ 'error', 'as-needed' ],
@@ -59,15 +65,12 @@ export const commonLintRules = {
     { allow: [ 'short_name', 'theme_color', 'background_color', 'start_url' ] }
   ],
   'consistent-this': [ 'error', 'self' ],
-  'constructor-super': 'error',
   'curly': [ 'error', 'multi-line' ],
   'default-case': 'error',
-  'default-param-last': 'error',
   'dot-notation': 'error',
   'eqeqeq': 'error',
   'for-direction': 'error',
   'func-name-matching': [ 'error', { considerPropertyDescriptor: true } ],
-  'getter-return': 'error',
   'grouped-accessor-pairs': [ 'error', 'getBeforeSet' ],
   'guard-for-in': 'error',
   'max-classes-per-file': [ 'warn', MAX_CLASSES_PER_FILE ],
@@ -76,7 +79,6 @@ export const commonLintRules = {
   'max-params': [ 'error', { max: 10 } ],
   'new-cap': [ 'error', { capIsNew: false } ],
   'no-alert': 'error',
-  'no-array-constructor': 'error',
   'no-async-promise-executor': 'error',
   'no-await-in-loop': 'error',
   'no-caller': 'error',
@@ -85,21 +87,16 @@ export const commonLintRules = {
   'no-compare-neg-zero': 'error',
   'no-cond-assign': [ 'error', 'always' ],
   'no-console': [ 'error', { allow: [ 'info', 'warn', 'error' ] } ],
-  'no-const-assign': 'error',
   'no-constant-condition': 'error',
   'no-control-regex': 'error',
   'no-constructor-return': 'error',
   'no-debugger': 'error',
   'no-delete-var': 'error',
-  'no-dupe-args': 'error',
   'no-dupe-else-if': 'error',
-  'no-dupe-keys': 'error',
-  'no-dupe-class-members': 'error',
   'no-duplicate-case': 'error',
   'no-else-return': [ 'error', { allowElseIf: false } ],
   'no-empty': [ 'error', { allowEmptyCatch: true } ],
   'no-empty-character-class': 'error',
-  'no-empty-function': 'error',
   'no-empty-pattern': 'error',
   'no-eq-null': 'error',
   'no-eval': 'error',
@@ -108,12 +105,9 @@ export const commonLintRules = {
   'no-extra-bind': 'error',
   'no-extra-label': 'error',
   'no-fallthrough': 'error',
-  'no-func-assign': 'error',
   'no-global-assign': 'error',
   'no-implicit-coercion': 'error',
   'no-implicit-globals': 'error',
-  'no-implied-eval': 'error',
-  'no-import-assign': 'error',
   'no-inner-declarations': [ 'error', 'both' ],
   'no-invalid-regexp': 'error',
   'no-irregular-whitespace': [
@@ -124,56 +118,35 @@ export const commonLintRules = {
   'no-label-var': 'error',
   'no-lone-blocks': 'error',
   'no-lonely-if': 'error',
-  'no-loop-func': 'error',
-  'no-loss-of-precision': 'error',
   'no-misleading-character-class': 'error',
   'no-multi-assign': 'error',
   'no-new-func': 'error',
   'no-new-object': 'error',
-  'no-new-symbol': 'error',
   'no-new-wrappers': 'error',
   'no-nonoctal-decimal-escape': 'error',
-  'no-obj-calls': 'error',
   'no-octal': 'error',
   'no-octal-escape': 'error',
   'no-param-reassign': 'error',
   'no-promise-executor-return': 'error',
   'no-proto': 'error',
   'no-prototype-builtins': 'error',
-  'no-redeclare': 'error',
   'no-regex-spaces': 'error',
   'no-return-assign': [ 'error', 'always' ],
   'no-script-url': 'error',
   'no-self-assign': 'error',
   'no-self-compare': 'error',
   'no-sequences': 'error',
-  'no-setter-return': 'error',
   'no-shadow-restricted-names': 'error',
   'no-sparse-arrays': 'error',
   'no-template-curly-in-string': 'error',
-  'no-this-before-super': 'error',
-  'no-throw-literal': 'error',
-  'no-undef': 'error',
   'no-undef-init': 'error',
   'no-underscore-dangle': [ 'error', { allow: [ '_handle' ] } ],
   'no-unexpected-multiline': 'error',
   'no-unneeded-ternary': 'error',
-  'no-unreachable': 'error',
   'no-unreachable-loop': 'error',
   'no-unsafe-finally': 'error',
-  'no-unsafe-negation': [ 'error', { enforceForOrderingRelations: true } ],
   'no-unsafe-optional-chaining': [ 'error', { disallowArithmeticOperators: true } ],
   'no-unused-labels': 'error',
-  'no-unused-vars': [
-    'error',
-    {
-      args: 'after-used',
-      varsIgnorePattern: 'React',
-      argsIgnorePattern: '_',
-      ignoreRestSiblings: true,
-      caughtErrors: 'none'
-    }
-  ],
   'no-useless-backreference': 'error',
   'no-useless-call': 'error',
   'no-useless-catch': 'error',
@@ -199,16 +172,14 @@ export const commonLintRules = {
   'prefer-template': 'error',
   'radix': [ 'error', 'always' ],
   'require-atomic-updates': 'error',
-  'require-await': 'error',
   'require-unicode-regexp': 'error',
   'require-yield': 'error',
   'symbol-description': 'error',
   'use-isnan': [ 'error', { enforceForIndexOf: true } ],
-  'valid-typeof': [ 'error', { requireStringLiterals: true } ],
   'vars-on-top': 'error'
 };
 
-export const commonFormatRules = {
+export const formatRules = {
   '@stylistic/array-bracket-newline': [ 'error', 'consistent' ],
   '@stylistic/array-bracket-spacing': [ 'error', 'always', { singleValue: true, objectsInArrays: true, arraysInArrays: true } ],
   '@stylistic/array-element-newline': [ 'error', 'consistent' ],
@@ -304,7 +275,7 @@ export const commonFormatRules = {
   '@stylistic/yield-star-spacing': [ 'error', { before: false, after: true } ]
 };
 
-export const commonImportRules = {
+export const importRules = {
   'import/export': 'error',
   'import/first': 'error',
   'import/newline-after-import': 'error',
@@ -339,141 +310,47 @@ export const commonImportRules = {
   'unused-imports/no-unused-imports': 'error'
 };
 
-export const reactJsLintRules = {
-  'jam3/no-sanitizer-with-danger': 'error',
-  'react/button-has-type': 'error',
-  'react/no-access-state-in-setstate': 'error',
-  'react/no-array-index-key': 'warn',
-  'react/no-children-prop': 'error',
-  'react/no-danger-with-children': 'error',
-  'react/no-deprecated': 'error',
-  'react/no-did-mount-set-state': 'error',
-  'react/no-did-update-set-state': 'error',
-  'react/no-direct-mutation-state': 'error',
-  'react/no-redundant-should-component-update': 'error',
-  'react/no-render-return-value': 'error',
-  'react/no-string-refs': 'error',
-  'react/no-this-in-sfc': 'error',
-  'react/no-typos': 'error',
-  'react/no-unescaped-entities': 'error',
-  'react/no-unknown-property': 'error',
-  'react/no-unsafe': 'error',
-  'react/no-unused-state': 'error',
-  'react/no-will-update-set-state': 'error',
-  'react/react-in-jsx-scope': 'error',
-  'react/self-closing-comp': 'error',
-  'react/sort-comp': [
+export const jsLintRules = {
+  'constructor-super': 'error',
+  'default-param-last': 'error',
+  'getter-return': 'error',
+  'no-array-constructor': 'error',
+  'no-const-assign': 'error',
+  'no-dupe-args': 'error',
+  'no-dupe-class-members': 'error',
+  'no-dupe-keys': 'error',
+  'no-func-assign': 'error',
+  'no-empty-function': 'error',
+  'no-implied-eval': 'error',
+  'no-import-assign': 'error',
+  'no-loop-func': 'error',
+  'no-loss-of-precision': 'error',
+  'no-new-symbol': 'error',
+  'no-obj-calls': 'error',
+  'no-redeclare': 'error',
+  'no-setter-return': 'error',
+  'no-this-before-super': 'error',
+  'no-throw-literal': 'error',
+  'no-undef': 'error',
+  'no-unreachable': 'error',
+  'no-unsafe-negation': [ 'error', { enforceForOrderingRelations: true } ],
+  'no-unused-vars': [
     'error',
     {
-      order: [
-        'static-variables',
-        'static-methods',
-        'lifecycle',
-        'instance-variables',
-        'instance-methods',
-        'everything-else',
-        '/^render.+$/'
-      ],
-      groups: {
-        rendering: [
-          'render',
-          '/^render.+$/'
-        ]
-      }
+      args: 'after-used',
+      varsIgnorePattern: 'React',
+      argsIgnorePattern: '_',
+      ignoreRestSiblings: true,
+      caughtErrors: 'none'
     }
   ],
-  'react/state-in-constructor': [ 'error', 'never' ],
-  'react/style-prop-object': 'error',
-  'react/void-dom-elements-no-children': 'error',
-  'react-hooks/rules-of-hooks': 'warn',
-  'react-hooks/exhaustive-deps': [
-    'warn',
-    {
-      additionalHooks: '(useUpdateEffect|useAsyncEffect|useAsyncUpdateEffect)'
-    }
-  ]
+  'require-await': 'error',
+  'valid-typeof': [ 'error', { requireStringLiterals: true } ]
 };
 
-export const reactJsxLintRules = {
-  'react/jsx-boolean-value': [ 'error', 'never' ],
-  'react/jsx-filename-extension': [ 'error', { extensions: [ '.tsx' ] } ],
-  'react/jsx-fragments': [ 'error', 'element' ],
-  'react/jsx-key': [ 'error', { checkFragmentShorthand: true } ],
-  'react/jsx-max-depth': [ 'error', { max: 10 } ],
-  'react/jsx-no-bind': [ 'error', { ignoreDOMComponents: true } ],
-  'react/jsx-no-comment-textnodes': 'error',
-  'react/jsx-no-constructed-context-values': 'error',
-  'react/jsx-no-duplicate-props': 'error',
-  'react/jsx-no-script-url': 'error',
-  'react/jsx-no-target-blank': [ 'error', { warnOnSpreadAttributes: true } ],
-  'react/jsx-no-undef': [ 'error', { allowGlobals: true } ],
-  'react/jsx-no-useless-fragment': 'error',
-  'react/jsx-uses-react': 'error',
-  'react/jsx-uses-vars': 'error'
-};
-
-export const reactJsxFormatRules = {
-  '@stylistic/jsx-closing-bracket-location': 'error',
-  '@stylistic/jsx-closing-tag-location': 'error',
-  '@stylistic/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'ignore' } ],
-  '@stylistic/jsx-curly-newline': [ 'error', 'consistent' ],
-  '@stylistic/jsx-curly-spacing': [ 'error', { when: 'always', children: true } ],
-  '@stylistic/jsx-equals-spacing': [ 'error', 'never' ],
-  '@stylistic/jsx-first-prop-new-line': [ 'error', 'multiline-multiprop' ],
-  '@stylistic/jsx-indent': [ 'error', INDENT, { checkAttributes: true } ],
-  '@stylistic/jsx-indent-props': [ 'error', INDENT ],
-  '@stylistic/jsx-max-props-per-line': [ 'error', { maximum: 4 } ],
-  '@stylistic/jsx-pascal-case': 'error',
-  '@stylistic/jsx-props-no-multi-spaces': 'error',
-  '@stylistic/jsx-tag-spacing': [
-    'error',
-    { closingSlash: 'never', beforeSelfClosing: 'always', afterOpening: 'never', beforeClosing: 'never' }
-  ],
-  '@stylistic/jsx-wrap-multilines': [
-    'error',
-    {
-      declaration: 'parens-new-line',
-      assignment: 'parens-new-line',
-      return: 'parens-new-line',
-      arrow: 'parens-new-line',
-      condition: 'parens-new-line',
-      logical: 'parens-new-line',
-      prop: 'parens-new-line'
-    }
-  ]
-};
+export const jsFormatRules = {};
 
 export const tsLintRules = {
-  'constructor-super': 'off',
-  'default-param-last': 'off',
-  'getter-return': 'off',
-  'no-array-constructor': 'off',
-  'no-const-assign': 'off',
-  'no-dupe-args': 'off',
-  'no-dupe-class-members': 'off',
-  'no-dupe-keys': 'off',
-  'no-func-assign': 'off',
-  'no-empty-function': 'off',
-  'no-implied-eval': 'off',
-  'no-import-assign': 'off',
-  'no-loop-func': 'off',
-  'no-loss-of-precision': 'off',
-  'no-new-symbol': 'off',
-  'no-obj-calls': 'off',
-  'no-redeclare': 'off',
-  'no-setter-return': 'off',
-  'no-this-before-super': 'off',
-  'no-throw-literal': 'off',
-  'no-undef': 'off',
-  'no-unreachable': 'off',
-  'no-unsafe-negation': 'off',
-  'no-unused-vars': 'off',
-  'no-var': 'error',
-  'prefer-const': 'error',
-  'prefer-rest-params': 'error',
-  'prefer-spread': 'error',
-  'require-await': 'off',
-  'valid-typeof': 'off',
   '@typescript-eslint/adjacent-overload-signatures': 'error',
   '@typescript-eslint/array-type': [ 'error', { default: 'array', readonly: 'array' } ],
   '@typescript-eslint/await-thenable': 'error',
@@ -590,12 +467,6 @@ export const tsLintRules = {
 };
 
 export const tsFormatRules = {
-  '@stylistic/comma-dangle': [ 'error', 'never' ],
-  '@stylistic/comma-spacing': [ 'error', { before: false, after: true } ],
-  '@stylistic/func-call-spacing': [ 'error', 'never' ],
-  '@stylistic/indent': [ 'error', INDENT ],
-  '@stylistic/keyword-spacing': 'error',
-  '@stylistic/lines-between-class-members': [ 'error', 'always' ],
   '@stylistic/member-delimiter-style': [
     'error',
     {
@@ -604,55 +475,168 @@ export const tsFormatRules = {
       overrides: { interface: { multiline: { delimiter: 'semi', requireLast: true } } }
     }
   ],
-  '@stylistic/no-extra-parens': [
-    'error',
-    'all',
-    {
-      ignoreJSX: 'multi-line',
-      enforceForNewInMemberExpressions: false,
-      enforceForFunctionPrototypeMethods: false
-    }
-  ],
-  '@stylistic/quotes': [ 'error', 'single', { avoidEscape: true } ],
-  '@stylistic/semi': [ 'error', 'always', { omitLastInOneLineBlock: false } ],
-  '@stylistic/space-before-function-paren': [
-    'error',
-    { anonymous: 'always', named: 'never', asyncArrow: 'always' }
-  ],
-  '@stylistic/space-infix-ops': 'error',
   '@stylistic/type-annotation-spacing': 'error'
 };
 
-export const commonConfig = {
-  languageOptions: getLanguageOptions(),
-  plugins,
-  settings: importSettings,
-  rules: {
-    ...commonLintRules,
-    ...commonFormatRules,
-    ...commonImportRules
-  }
+export const reactJsLintRules = {
+  'jam3/no-sanitizer-with-danger': 'error',
+  'react/button-has-type': 'error',
+  'react/no-access-state-in-setstate': 'error',
+  'react/no-array-index-key': 'warn',
+  'react/no-children-prop': 'error',
+  'react/no-danger-with-children': 'error',
+  'react/no-deprecated': 'error',
+  'react/no-did-mount-set-state': 'error',
+  'react/no-did-update-set-state': 'error',
+  'react/no-direct-mutation-state': 'error',
+  'react/no-redundant-should-component-update': 'error',
+  'react/no-render-return-value': 'error',
+  'react/no-string-refs': 'error',
+  'react/no-this-in-sfc': 'error',
+  'react/no-typos': 'error',
+  'react/no-unescaped-entities': 'error',
+  'react/no-unknown-property': 'error',
+  'react/no-unsafe': 'error',
+  'react/no-unused-state': 'error',
+  'react/no-will-update-set-state': 'error',
+  'react/react-in-jsx-scope': 'error',
+  'react/self-closing-comp': 'error',
+  'react/sort-comp': [
+    'error',
+    {
+      order: [
+        'static-variables',
+        'static-methods',
+        'lifecycle',
+        'instance-variables',
+        'instance-methods',
+        'everything-else',
+        '/^render.+$/'
+      ],
+      groups: {
+        rendering: [
+          'render',
+          '/^render.+$/'
+        ]
+      }
+    }
+  ],
+  'react/state-in-constructor': [ 'error', 'never' ],
+  'react/style-prop-object': 'error',
+  'react/void-dom-elements-no-children': 'error',
+  'react-hooks/rules-of-hooks': 'warn',
+  'react-hooks/exhaustive-deps': [
+    'warn',
+    {
+      additionalHooks: '(useUpdateEffect|useAsyncEffect|useAsyncUpdateEffect)'
+    }
+  ]
 };
 
-export const reactConfig = {
-  languageOptions: getLanguageOptions('./tsconfig.json'),
-  files: [ '*.tsx' ],
+export const reactJsxLintRules = {
+  'react/jsx-boolean-value': [ 'error', 'never' ],
+  'react/jsx-filename-extension': [ 'error', { extensions: [ '.tsx' ] } ],
+  'react/jsx-fragments': [ 'error', 'element' ],
+  'react/jsx-key': [ 'error', { checkFragmentShorthand: true } ],
+  'react/jsx-max-depth': [ 'error', { max: 10 } ],
+  'react/jsx-no-bind': [ 'error', { ignoreDOMComponents: true } ],
+  'react/jsx-no-comment-textnodes': 'error',
+  'react/jsx-no-constructed-context-values': 'error',
+  'react/jsx-no-duplicate-props': 'error',
+  'react/jsx-no-script-url': 'error',
+  'react/jsx-no-target-blank': [ 'error', { warnOnSpreadAttributes: true } ],
+  'react/jsx-no-undef': [ 'error', { allowGlobals: true } ],
+  'react/jsx-no-useless-fragment': 'error',
+  'react/jsx-uses-react': 'error',
+  'react/jsx-uses-vars': 'error'
+};
+
+export const reactJsxFormatRules = {
+  '@stylistic/jsx-closing-bracket-location': 'error',
+  '@stylistic/jsx-closing-tag-location': 'error',
+  '@stylistic/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'ignore' } ],
+  '@stylistic/jsx-curly-newline': [ 'error', 'consistent' ],
+  '@stylistic/jsx-curly-spacing': [ 'error', { when: 'always', children: true } ],
+  '@stylistic/jsx-equals-spacing': [ 'error', 'never' ],
+  '@stylistic/jsx-first-prop-new-line': [ 'error', 'multiline-multiprop' ],
+  '@stylistic/jsx-indent': [ 'error', INDENT, { checkAttributes: true } ],
+  '@stylistic/jsx-indent-props': [ 'error', INDENT ],
+  '@stylistic/jsx-max-props-per-line': [ 'error', { maximum: 4 } ],
+  '@stylistic/jsx-pascal-case': 'error',
+  '@stylistic/jsx-props-no-multi-spaces': 'error',
+  '@stylistic/jsx-tag-spacing': [
+    'error',
+    { closingSlash: 'never', beforeSelfClosing: 'always', afterOpening: 'never', beforeClosing: 'never' }
+  ],
+  '@stylistic/jsx-wrap-multilines': [
+    'error',
+    {
+      declaration: 'parens-new-line',
+      assignment: 'parens-new-line',
+      return: 'parens-new-line',
+      arrow: 'parens-new-line',
+      condition: 'parens-new-line',
+      logical: 'parens-new-line',
+      prop: 'parens-new-line'
+    }
+  ]
+};
+
+export const commonConfig = {
+  languageOptions: {
+    ...languageOptions,
+    parserOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    }
+  },
+  files: [ '**/*.js', '**/*.jsx', '**/*.cjs' ],
   plugins,
-  settings: reactSettings,
+  settings: {
+    ...importJsSettings
+  },
   rules: {
-    ...reactJsLintRules,
-    ...reactJsxLintRules,
-    ...reactJsxFormatRules
+    ...lintRules,
+    ...formatRules,
+    ...importRules,
+    ...jsLintRules,
+    ...jsFormatRules
   }
 };
 
 export const typescriptConfig = {
-  languageOptions: getLanguageOptions('./tsconfig.json'),
-  files: [ '*.ts', '*.tsx' ],
+  languageOptions: {
+    ...languageOptions,
+    ...typescriptOptions
+  },
+  files: [ '**/*.ts', '**/*.tsx' ],
   plugins,
+  settings: {
+    ...importTsSettings
+  },
   rules: {
+    ...lintRules,
+    ...formatRules,
+    ...importRules,
     ...tsLintRules,
     ...tsFormatRules
+  }
+};
+
+export const reactConfig = {
+  languageOptions: {
+    ...languageOptions,
+    ...typescriptOptions
+  },
+  files: [ '**/*.tsx' ],
+  plugins,
+  settings: {
+    ...reactSettings
+  },
+  rules: {
+    ...reactJsLintRules,
+    ...reactJsxLintRules,
+    ...reactJsxFormatRules
   }
 };
 
