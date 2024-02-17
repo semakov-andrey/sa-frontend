@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { structureParams } from '../configs/structure.config.js';
+import { structureParams } from '../params/structure.params.js';
 
 export const eslintRuleStructure = {
   meta: {

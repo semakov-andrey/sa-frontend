@@ -1,4 +1,4 @@
-import { fcSortingParams } from '../configs/fc-sorting.config.js';
+import { fcSortingParams } from '../params/fc-sorting.params.js';
 
 export const eslintRuleFcSorting = {
   create: (ctx) => {
