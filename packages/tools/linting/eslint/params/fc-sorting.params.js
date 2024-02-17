@@ -22,10 +22,11 @@ export const fcSortingParams = {
     'useKeyboardNavigation',
     'useKeyboardEvent',
     'useEffect',
-    'useUpdateEffect',
-    'useAsyncEffect',
-    'useAsyncUpdateEffect',
-    'useCheckEffect',
-    'useDebounceEffect'
+    'useInfluence',
+    'useUpdateInfluence',
+    'useAsyncInfluence',
+    'useAsyncUpdateInfluence',
+    'useCheckInfluence',
+    'useDebounceInfluence'
   ]
 };
