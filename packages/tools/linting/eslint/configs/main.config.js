@@ -8,6 +8,8 @@ import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginUnusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 
+import { eslintPluginSaRules } from '../rules/index.js';
+
 const INDENT = 2;
 const MAX_CLASSES_PER_FILE = 5;
 
@@ -36,7 +38,8 @@ export const plugins = {
   'react-hooks': eslintPluginReactHooks,
   'unused-imports': eslintPluginUnusedImports,
   '@typescript-eslint': eslintPluginTypescript,
-  '@stylistic': eslintPluginStylistic
+  '@stylistic': eslintPluginStylistic,
+  'saRules': eslintPluginSaRules
 };
 
 export const reactSettings = {
@@ -350,6 +353,10 @@ export const jsLintRules = {
 
 export const jsFormatRules = {};
 
+export const saRules = {
+  'saRules/fc-sorting': 'error'
+};
+
 export const tsLintRules = {
   '@typescript-eslint/adjacent-overload-signatures': 'error',
   '@typescript-eslint/array-type': [ 'error', { default: 'array', readonly: 'array' } ],
@@ -478,7 +485,17 @@ export const tsFormatRules = {
   '@stylistic/type-annotation-spacing': 'error'
 };
 
-export const reactJsLintRules = {
+export const reactHookRules = {
+  'react-hooks/rules-of-hooks': 'warn',
+  'react-hooks/exhaustive-deps': [
+    'warn',
+    {
+      additionalHooks: '(useUpdateEffect|useAsyncEffect|useAsyncUpdateEffect)'
+    }
+  ]
+};
+
+export const reactLintRules = {
   'jam3/no-sanitizer-with-danger': 'error',
   'react/button-has-type': 'error',
   'react/no-access-state-in-setstate': 'error',
@@ -523,17 +540,10 @@ export const reactJsLintRules = {
   ],
   'react/state-in-constructor': [ 'error', 'never' ],
   'react/style-prop-object': 'error',
-  'react/void-dom-elements-no-children': 'error',
-  'react-hooks/rules-of-hooks': 'warn',
-  'react-hooks/exhaustive-deps': [
-    'warn',
-    {
-      additionalHooks: '(useUpdateEffect|useAsyncEffect|useAsyncUpdateEffect)'
-    }
-  ]
+  'react/void-dom-elements-no-children': 'error'
 };
 
-export const reactJsxLintRules = {
+export const reactTsxLintRules = {
   'react/jsx-boolean-value': [ 'error', 'never' ],
   'react/jsx-filename-extension': [ 'error', { extensions: [ '.tsx' ] } ],
   'react/jsx-fragments': [ 'error', 'element' ],
@@ -551,7 +561,7 @@ export const reactJsxLintRules = {
   'react/jsx-uses-vars': 'error'
 };
 
-export const reactJsxFormatRules = {
+export const reactTsxFormatRules = {
   '@stylistic/jsx-closing-bracket-location': 'error',
   '@stylistic/jsx-closing-tag-location': 'error',
   '@stylistic/jsx-curly-brace-presence': [ 'error', { props: 'never', children: 'ignore' } ],
@@ -618,8 +628,10 @@ export const typescriptConfig = {
     ...lintRules,
     ...formatRules,
     ...importRules,
+    ...saRules,
     ...tsLintRules,
-    ...tsFormatRules
+    ...tsFormatRules,
+    ...reactHookRules
   }
 };
 
@@ -634,9 +646,9 @@ export const reactConfig = {
     ...reactSettings
   },
   rules: {
-    ...reactJsLintRules,
-    ...reactJsxLintRules,
-    ...reactJsxFormatRules
+    ...reactLintRules,
+    ...reactTsxLintRules,
+    ...reactTsxFormatRules
   }
 };
 

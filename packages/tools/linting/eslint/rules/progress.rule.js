@@ -3,7 +3,7 @@ import logUpdate from 'log-update';
 
 let glob;
 let files;
-const fullPercents = 100;
+let counter = 0;
 
 export const eslintRuleProgress = {
   create(context) {
@@ -22,14 +22,15 @@ export const eslintRuleProgress = {
         return {};
       }
     }
-    if (!files) return {};
+    if (!Array.isArray(files) || files.length === 0) return {};
 
     const filePath = context.filename;
     const index = files.findIndex((file) => file === filePath);
     if (index === -1) return {};
 
-    const progress = Math.ceil((index + 1) * fullPercents / files.length);
-    logUpdate(`Linting progress: ${ fullPercents !== progress ? `${ progress }%` : 'done' }`);
+    counter++;
+    const progress = Math.ceil(counter / files.length * 100);
+    logUpdate(`Linting progress: ${ progress !== 100 ? `${ progress }%` : 'done' }`);
 
     return {};
   }
