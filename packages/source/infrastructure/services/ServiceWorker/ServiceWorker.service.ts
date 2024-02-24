@@ -1,4 +1,4 @@
-export const register = async (url: string = '/sw.js'): Promise<void> => {
+export const registerServiceWorker = async (url: string = '/sw.js'): Promise<void> => {
   if (!('serviceWorker' in navigator)) return;
 
   try {
@@ -8,7 +8,7 @@ export const register = async (url: string = '/sw.js'): Promise<void> => {
   }
 };
 
-export const unregister = async (): Promise<void> => {
+export const unregisterServiceWorker = async (): Promise<void> => {
   if (!('serviceWorker' in navigator)) return;
   const registration = await navigator.serviceWorker.ready;
   await registration.unregister();
