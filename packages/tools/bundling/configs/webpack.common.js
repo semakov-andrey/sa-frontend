@@ -8,6 +8,7 @@ import postcssCustomMedia from 'postcss-custom-media';
 import postcssNested from 'postcss-nested';
 import webpack from 'webpack';
 
+import { ServiceWorkerPlugin } from '../plugins/serviceWorker.plugin.js';
 import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
 
 export const webpackCommonConfig = (params) => {
@@ -131,7 +132,8 @@ export const webpackCommonConfig = (params) => {
           context: path.resolve(rootDirectory)
         }
       }),
-      new webpack.ProgressPlugin({ percentBy: 'entries' })
+      new webpack.ProgressPlugin({ percentBy: 'entries' }),
+      new ServiceWorkerPlugin()
     ],
     resolve: {
       extensions: [ '.js', '.jsx', '.ts', '.tsx' ],

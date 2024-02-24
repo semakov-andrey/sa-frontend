@@ -1,7 +1,7 @@
 const numeralSystem = 36;
 const hashLength = 5;
-const hash = Math.random().toString(numeralSystem).replace(/[^a-z]+/gu, '').substr(0, hashLength);
-const CACHE_NAME = `sa-life-${ hash }`;
+const hash = Math.random().toString(numeralSystem).replace(/[^a-z]+/gu, '').substring(0, hashLength);
+const CACHE_NAME = `sa-frontend-${ hash }`;
 const isMac = /(Mac|iPhone|iPod|iPad)/iu.test(navigator.platform);
 const isWin = /Win/iu.test(navigator.platform);
 
