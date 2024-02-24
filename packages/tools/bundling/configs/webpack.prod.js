@@ -7,6 +7,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 
+import { ServiceWorkerPlugin } from '../plugins/serviceWorker.plugin.js';
 import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
 
 import { webpackCommonConfig } from './webpack.common.js';
@@ -23,7 +24,8 @@ export const webpackProdConfig = (config, params) => {
     copyPatterns,
     isHTML = true,
     isAnalyzeBundle = true,
-    analyzeStatsFilename = 'stats.json'
+    analyzeStatsFilename = 'stats.json',
+    isServiceWorker = false
   } = params;
 
   return merge(webpackCommonConfig(params), {
@@ -58,7 +60,15 @@ export const webpackProdConfig = (config, params) => {
       ...Array.isArray(copyPatterns)
         ? [
           new CopyWebpackPlugin({
-            patterns: copyPatterns
+            patterns: [
+              ...copyPatterns,
+              ...isServiceWorker
+                ? [ {
+                  from: path.resolve(source, '../node_modules/@sa-frontend/infrastructure/sw.js'),
+                  to: 'sw.js'
+                } ]
+                : []
+            ]
           })
         ]
         : [],
@@ -74,6 +84,9 @@ export const webpackProdConfig = (config, params) => {
             statsFilename: analyzeStatsFilename
           })
         ]
+        : [],
+      ...isServiceWorker
+        ? [ new ServiceWorkerPlugin() ]
         : []
     ],
     optimization: {
