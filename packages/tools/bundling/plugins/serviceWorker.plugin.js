@@ -3,6 +3,7 @@ export class ServiceWorkerPlugin {
 
   constructor(options) {
     this.filename = options?.filename ?? 'sw.js';
+    this.publicPath = options?.publicPath ?? '/';
   };
 
   apply(compiler) {
@@ -12,10 +13,11 @@ export class ServiceWorkerPlugin {
           return;
         }
         const code = String(compilation.assets[this.filename].source());
+        const slash = this.publicPath !== 'auto' ? '/' : '';
         const assets = Object.keys(compilation.assets)
           .filter((asset) =>
             typeof asset === 'string' && asset !== this.filename)
-          .map((asset) => `/${ asset.replace('\\', '/') }`);
+          .map((asset) => `${ slash }${ asset.replace('\\', '/') }`);
 
         const source = compiler.options.mode === 'production'
           ? `self.assets=${ JSON.stringify(assets) };${ code }`

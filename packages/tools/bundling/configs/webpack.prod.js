@@ -25,8 +25,10 @@ export const webpackProdConfig = (config, params) => {
     isHTML = true,
     isAnalyzeBundle = true,
     analyzeStatsFilename = 'stats.json',
-    isServiceWorker = false
+    isServiceWorker = false,
+    serviceWorkerName = 'sw.js'
   } = params;
+  const publicPath = config.output?.publicPath ?? '/';
 
   return merge(webpackCommonConfig(params), {
     mode: 'production',
@@ -65,7 +67,7 @@ export const webpackProdConfig = (config, params) => {
               ...isServiceWorker
                 ? [ {
                   from: path.resolve(source, '../node_modules/@sa-frontend/infrastructure/sw.js'),
-                  to: 'sw.js'
+                  to: serviceWorkerName
                 } ]
                 : []
             ]
@@ -86,7 +88,7 @@ export const webpackProdConfig = (config, params) => {
         ]
         : [],
       ...isServiceWorker
-        ? [ new ServiceWorkerPlugin() ]
+        ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath }) ]
         : []
     ],
     optimization: {
