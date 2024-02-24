@@ -12,5 +12,6 @@
    │  └─ ServiceWorker.service.ts
    ├─ SessionStorage
    │  └─ SessionStorage.service.ts
-   └─ index.ts
+   ├─ index.ts
+   └─ sw.js
 ```
