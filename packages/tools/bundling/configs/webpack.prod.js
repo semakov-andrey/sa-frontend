@@ -34,7 +34,7 @@ export const webpackProdConfig = (config, params) => {
       path.resolve(source, 'index.ts')
     ],
     output: {
-      filename: `${ assets }/index.[name].[contenthash:8].js`,
+      filename: `index.[name].[contenthash:8].js`,
       path: production,
       assetModuleFilename: `${ assets }/[name].[contenthash:8].[ext]`
     },
@@ -73,7 +73,7 @@ export const webpackProdConfig = (config, params) => {
         ]
         : [],
       new MiniCssExtractPlugin({
-        filename: `${ assets }/index.[name].[contenthash:8].css`
+        filename: `index.[name].[contenthash:8].css`
       }),
       ...isAnalyzeBundle
         ? [
