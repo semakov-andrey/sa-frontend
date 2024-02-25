@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "1.44.0",
+  "version": "1.45.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -14,6 +14,7 @@
   "dependencies": {
     "@csstools/postcss-global-data": "^2.1.0",
     "@fastify/middie": "^8.1.0",
+    "@principalstudio/html-webpack-inject-preload": "^1.2.7",
     "autoprefixer": "^10.4.14",
     "circular-dependency-plugin": "^5.2.2",
     "copy-webpack-plugin": "^11.0.0",

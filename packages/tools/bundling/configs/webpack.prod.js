@@ -1,5 +1,6 @@
 import path from 'path';
 
+import HtmlWebpackInjectPreload from '@principalstudio/html-webpack-inject-preload';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { ESBuildMinifyPlugin } from 'esbuild-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -23,6 +24,7 @@ export const webpackProdConfig = (config, params) => {
     },
     copyPatterns,
     isHTML = true,
+    isPreloadFonts = false,
     isAnalyzeBundle = true,
     analyzeStatsFilename = 'stats.json',
     isServiceWorker = false,
@@ -56,6 +58,16 @@ export const webpackProdConfig = (config, params) => {
               removeAttributeQuotes: true,
               removeOptionalTags: false
             }
+          })
+        ]
+        : [],
+      ...isHTML && isPreloadFonts
+        ? [
+          new HtmlWebpackInjectPreload({
+            files: [ {
+              match: /.*\.woff2$/u,
+              attributes: { as: 'font', type: 'font/woff2', crossOrigin: true }
+            } ]
           })
         ]
         : [],

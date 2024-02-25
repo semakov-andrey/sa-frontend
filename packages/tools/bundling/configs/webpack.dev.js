@@ -1,5 +1,6 @@
 import path from 'path';
 
+import HtmlWebpackInjectPreload from '@principalstudio/html-webpack-inject-preload';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
@@ -24,7 +25,8 @@ export const webpackDevConfig = (config, params) => {
       source
     },
     copyPatterns,
-    isHTML = true
+    isHTML = true,
+    isPreloadFonts = false
   } = params;
 
   return merge(webpackCommonConfig(params), {
@@ -45,6 +47,16 @@ export const webpackDevConfig = (config, params) => {
           new HtmlWebpackPlugin({
             inject: 'head',
             template: path.resolve(presentation, 'index.html')
+          })
+        ]
+        : [],
+      ...isHTML && isPreloadFonts
+        ? [
+          new HtmlWebpackInjectPreload({
+            files: [ {
+              match: /.*\.woff2$/u,
+              attributes: { as: 'font', type: 'font/woff2', crossOrigin: true }
+            } ]
           })
         ]
         : [],
