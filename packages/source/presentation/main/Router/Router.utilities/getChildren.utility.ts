@@ -13,20 +13,19 @@ export interface GetChildrenParams {
 export const getChildren = (params: GetChildrenParams): ExistElement[] => {
   const { children, location } = params;
 
-  let matched = false;
+  let matchedRoute = false;
   const childrenArray: ExistElement[] = toArray(children)
     .map((element: ExistElement) =>
       isRouteElement(element) ? { ...element, key: element.props.path } : element)
     .filter((element: ExistElement) => {
+      if (!isRouteElement(element) && !isRedirectElement(element)) return true;
+      if (matchedRoute) return false;
       if (isRouteElement(element)) {
-        if (matched) return false;
         const { regexp } = pathToRegexp(element.props.path);
         const out = regexp.exec(location);
         if (!iswritten(out)) return false;
-        matched = true;
-        return true;
       }
-      if (isRedirectElement(element)) return !matched;
+      matchedRoute = true;
       return true;
     });
 

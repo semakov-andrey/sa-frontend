@@ -8,6 +8,10 @@ export interface PathToRegexpReturn {
 }
 
 export const pathToRegexp = (path: string): PathToRegexpReturn => {
+  if (path === '*') {
+    return { keys: [], regexp: /.*/iu };
+  }
+
   const groupRx = /\/:([A-Za-z0-9_]+)(\([A-Za-z0-9|]+\))?(\?)?/gu;
 
   let match: RegExpExecArray | null = groupRx.exec(path);
