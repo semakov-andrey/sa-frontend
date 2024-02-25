@@ -66,7 +66,7 @@ export const webpackProdConfig = (config, params) => {
           new HtmlWebpackInjectPreload({
             files: [ {
               match: /.*\.woff2$/u,
-              attributes: { as: 'font', type: 'font/woff2', crossOrigin: true }
+              attributes: { as: 'font', type: 'font/woff2' }
             } ]
           })
         ]
