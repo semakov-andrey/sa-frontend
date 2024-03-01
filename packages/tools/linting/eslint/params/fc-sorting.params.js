@@ -1,17 +1,17 @@
 export const fcSortingParams = {
   states: [
     'useInject',
+    'useHistory',
+    'useLocation',
+    'useMatch',
+    'useRoute',
     'useSyncExternalStore',
     'useStore',
     'useState',
     'useStateWithCallback',
     'useStateRef',
     'useBoolean',
-    'useRef',
-    'useHistory',
-    'useLocation',
-    'useMatch',
-    'useRoute'
+    'useRef'
   ],
   computingAndEvents: [
     'useMemo',
