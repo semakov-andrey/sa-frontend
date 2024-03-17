@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isFilledString, isTypeString, isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
@@ -81,7 +81,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     window.history.back();
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.addEventListener('history-push', determineRoute);
     window.addEventListener('history-replace', replaceRoute);
     window.addEventListener('history-back', goToPreviousRoute);
