@@ -77,12 +77,7 @@ export const webpackCommonConfig = (params) => {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: true,
-                modules: {
-                  mode: 'local',
-                  localIdentName: '[local]--[hash:base64:5]',
-                  exportLocalsConvention: 'camelCase'
-                }
+                sourceMap: true
               }
             },
             {
