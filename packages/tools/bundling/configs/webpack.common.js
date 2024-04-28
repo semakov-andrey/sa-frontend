@@ -38,7 +38,7 @@ export const webpackCommonConfig = (params) => {
           }
         },
         {
-          test: /\.styles?\.css$/u,
+          test: (path) => path.endsWith('.style.css') || path.endsWith('.styles.css'),
           use: [
             '@sa-frontend/bundling/loaders/namedCSSExport.loader.js',
             MiniCssExtractPlugin.loader,
@@ -65,6 +65,32 @@ export const webpackCommonConfig = (params) => {
                       : [],
                     autoprefixer()
                   ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          test: (path) => !path.endsWith('.style.css') && !path.endsWith('.styles.css') && path.endsWith('.css'),
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: {
+                  mode: 'local',
+                  localIdentName: '[local]--[hash:base64:5]',
+                  exportLocalsConvention: 'camelCase'
+                }
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                postcssOptions: {
+                  plugins: [ autoprefixer() ]
                 }
               }
             }
