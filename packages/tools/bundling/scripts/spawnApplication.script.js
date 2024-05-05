@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 
 import { deleteAsync } from 'del';
 
-import { isset } from '@sa-frontend/bundling/utilities/typeGuards.utility.js';
+import { isset } from '../utilities/typeGuards.utility.js';
 
 let electron;
 
