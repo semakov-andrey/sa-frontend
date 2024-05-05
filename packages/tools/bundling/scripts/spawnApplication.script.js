@@ -14,11 +14,12 @@ export const spawnApplication = async (name, appPath, isWatch, isWindows) => {
     return;
   }
 
-  await deleteAsync(`${ name }-win32-x64`);
-  await deleteAsync(`${ name }-darwin-arm64`);
+  const appName = getAppName(name, isWindows);
+  await deleteAsync(`${ appName }-win32-x64`);
+  await deleteAsync(`${ appName }-darwin-arm64`);
   electron = spawn('electron-packager', [
     appPath,
-    name,
+    appName,
     `--icon=${ appPath }/icon.icns`,
     '--overwrite'
   ], { shell: isWindows });
