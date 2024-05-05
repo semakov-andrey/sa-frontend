@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 
 import { deleteAsync } from 'del';
 
+import { getAppName } from '../utilities/getAppName.utility.js';
 import { isset } from '../utilities/typeGuards.utility.js';
 
 let electron;
