@@ -1,0 +1,21 @@
+.text {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+
+.text::before {
+  display: table;
+  margin-bottom: var(--margin-top);
+  content: '';
+}
+
+.text::after {
+  display: table;
+  margin-top: var(--margin-bottom);
+  content: '';
+}
+
+.text:empty {
+  display: none;
+}

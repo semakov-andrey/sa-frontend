@@ -1,0 +1,4 @@
+.text-row {
+  display: flex;
+  align-items: var(--align-items);
+}
