@@ -9,19 +9,14 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 
 import { ServiceWorkerPlugin } from '../plugins/serviceWorker.plugin.js';
-import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
+import { getDirectories } from '../utilities/getDirectories.utility.js';
 
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackProdConfig = (config, params) => {
-  const initialDirectories = getInitialDirectories(params);
   const {
-    directories: {
-      assets = initialDirectories.assets,
-      presentation = initialDirectories.presentation,
-      production,
-      source
-    },
+    rootDirectory,
+    directories,
     copyPatterns,
     isHTML = true,
     isPreloadFonts = false,
@@ -32,22 +27,29 @@ export const webpackProdConfig = (config, params) => {
   } = params;
   const publicPath = config.output?.publicPath ?? '/';
 
+  const {
+    sourceDirectory,
+    htmlFileDirectory,
+    assetsDirectory,
+    productionDirectory
+  } = getDirectories(rootDirectory, directories);
+
   return merge(webpackCommonConfig(params), {
     mode: 'production',
     entry: [
-      path.resolve(source, 'index.ts')
+      path.resolve(sourceDirectory, 'index.ts')
     ],
     output: {
       filename: `index.[name].[contenthash:8].js`,
-      path: production,
-      assetModuleFilename: `${ assets }/[name].[contenthash:8].[ext]`
+      path: productionDirectory,
+      assetModuleFilename: `${ assetsDirectory }/[name].[contenthash:8].[ext]`
     },
     plugins: [
       ...isHTML
         ? [
           new HtmlWebpackPlugin({
             inject: 'head',
-            template: path.resolve(presentation, 'index.html'),
+            template: path.resolve(htmlFileDirectory, 'index.html'),
             minify: {
               removeComments: true,
               collapseWhitespace: true,
@@ -78,7 +80,7 @@ export const webpackProdConfig = (config, params) => {
               ...copyPatterns,
               ...isServiceWorker
                 ? [ {
-                  from: path.resolve(source, '../node_modules/@sa-frontend/infrastructure/sw.js'),
+                  from: path.resolve(rootDirectory, 'node_modules/@sa-frontend/infrastructure/sw.js'),
                   to: serviceWorkerName
                 } ]
                 : []

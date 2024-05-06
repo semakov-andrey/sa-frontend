@@ -248,6 +248,7 @@ export const formatRules = {
       ':': 'before',
       '&&': 'before',
       '||': 'before',
+      '??': 'before',
       '+': 'before',
       '-': 'before',
       '=': 'after'

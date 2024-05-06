@@ -9,44 +9,45 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import { TSErrorsCounterWebpackPlugin } from '@sa-frontend/bundling/plugins/tsErrorsCounterWebpack.plugin.js';
-
-import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
+import { TSErrorsCounterWebpackPlugin } from '../plugins/tsErrorsCounterWebpack.plugin.js';
+import { getDirectories } from '../utilities/getDirectories.utility.js';
 
 import { webpackCommonConfig } from './webpack.common.js';
 
 export const webpackDevConfig = (config, params) => {
-  const initialDirectories = getInitialDirectories(params);
   const {
-    directories: {
-      assets = initialDirectories.assets,
-      development,
-      presentation = initialDirectories.presentation,
-      source
-    },
+    rootDirectory,
+    directories,
     copyPatterns,
     isHTML = true,
     isPreloadFonts = false
   } = params;
+
+  const {
+    sourceDirectory,
+    htmlFileDirectory,
+    assetsDirectory,
+    developmentDirectory
+  } = getDirectories(rootDirectory, directories);
 
   return merge(webpackCommonConfig(params), {
     mode: 'development',
     devtool: 'source-map',
     entry: [
       'webpack-hot-middleware/client?reload=true',
-      path.resolve(source, 'index.ts')
+      path.resolve(sourceDirectory, 'index.ts')
     ],
     output: {
       filename: 'index.js',
-      path: development,
-      assetModuleFilename: `${ assets }/[name].[ext]`
+      path: developmentDirectory,
+      assetModuleFilename: `${ assetsDirectory }/[name].[ext]`
     },
     plugins: [
       ...isHTML
         ? [
           new HtmlWebpackPlugin({
             inject: 'head',
-            template: path.resolve(presentation, 'index.html')
+            template: path.resolve(htmlFileDirectory, 'index.html')
           })
         ]
         : [],

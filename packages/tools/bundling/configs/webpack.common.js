@@ -8,18 +8,19 @@ import postcssCustomMedia from 'postcss-custom-media';
 import postcssNested from 'postcss-nested';
 import webpack from 'webpack';
 
-import { getInitialDirectories } from '../utilities/getInitialDirectories.utility.js';
+import { getDirectories } from '../utilities/getDirectories.utility.js';
 
 export const webpackCommonConfig = (params) => {
-  const initialDirectories = getInitialDirectories(params);
   const {
     rootDirectory,
-    directories: {
-      source,
-      assets = initialDirectories.assets
-    },
+    directories,
     postcssGlobalDataFiles
   } = params;
+
+  const {
+    sourceDirectory,
+    assetsDirectory
+  } = getDirectories(rootDirectory, directories);
 
   return {
     target: 'web',
@@ -130,7 +131,7 @@ export const webpackCommonConfig = (params) => {
             {
               loader: 'file-loader',
               options: {
-                name: `${ assets }/[name].[contenthash:8].[ext]`
+                name: `${ assetsDirectory }/[name].[contenthash:8].[ext]`
               }
             }
           ]
@@ -157,7 +158,7 @@ export const webpackCommonConfig = (params) => {
     resolve: {
       extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
       alias: {
-        '@': source
+        '@': sourceDirectory
       }
     }
   };
