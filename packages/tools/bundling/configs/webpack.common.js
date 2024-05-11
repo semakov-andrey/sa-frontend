@@ -143,6 +143,10 @@ export const webpackCommonConfig = (params) => {
         {
           test: /\.asset\.woff2$/u,
           type: 'asset/resource'
+        },
+        {
+          test: /\.asset\.wav$/u,
+          type: 'asset/resource'
         }
       ]
     },
