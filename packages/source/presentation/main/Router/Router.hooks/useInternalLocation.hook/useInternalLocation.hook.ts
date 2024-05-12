@@ -8,7 +8,8 @@ import { useInject } from '@sa-frontend/presentation/common/hooks/useInject.hook
 import { useHistory } from '../useHistory.hook/useHistory.hook';
 
 import { SS_HISTORY_KEY, SS_KEY } from './useInternalLocation.constant';
-import { isCustomEvent } from './useInternalLocation.utility';
+
+import type { HistoryEvent } from '../useHistory.hook/useHistory.types';
 
 export interface UseInternalLocationParams {
   isMemory?: boolean;
@@ -33,10 +34,8 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
       : [ location ]
   );
 
-  const makeOnNextRoute = useEvent((event: Event) => {
-    if (!isCustomEvent(event)) return;
-
-    const newLocation = event.detail;
+  const makeOnNextRoute = useEvent((event: HistoryEvent) => {
+    const newLocation = event.detail.path ?? '/';
     const newLocationHistory = [ ...locationHistory, newLocation ];
     setLocation(newLocation);
     setLocationHistory(newLocationHistory);
@@ -49,10 +48,8 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     window.history.pushState(null, '', newLocation);
   });
 
-  const makeOnReplacedRoute = useEvent((event: Event) => {
-    if (!isCustomEvent(event)) return;
-
-    const newLocation = event.detail;
+  const makeOnReplacedRoute = useEvent((event: HistoryEvent) => {
+    const newLocation = event.detail.path ?? '/';
     const newLocationHistory = [ ...locationHistory.slice(0, -1), newLocation ];
     setLocation(newLocation);
     setLocationHistory(newLocationHistory);
@@ -65,9 +62,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     window.history.replaceState(null, '', newLocation);
   });
 
-  const makeOnPreviousRoute = useEvent((event: Event): void => {
-    if (!isCustomEvent(event)) return;
-
+  const makeOnPreviousRoute = useEvent((): void => {
     const newLocationHistory = locationHistory.slice(0, -1);
     const newLocation = newLocationHistory.at(-1);
     if (!isset(newLocation)) return;

@@ -1,5 +1,7 @@
-export const HISTORY_PUSH = 'history:push';
+export const HISTORY_EVENT = 'sa:history';
 
-export const HISTORY_REPLACE = 'history:replace';
-
-export const HISTORY_BACK = 'history:back';
+export const HISTORY_TYPES = {
+  PUSH: 'push',
+  REPLACE: 'replace',
+  BACK: 'back'
+};
