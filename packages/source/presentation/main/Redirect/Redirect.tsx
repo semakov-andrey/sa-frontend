@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useHistory } from '../Router/Router.hooks/useHistory.hook';
+import { useHistory } from '../Router/Router.hooks/useHistory.hook/useHistory.hook';
 
 export interface RedirectProps {
   to: string;

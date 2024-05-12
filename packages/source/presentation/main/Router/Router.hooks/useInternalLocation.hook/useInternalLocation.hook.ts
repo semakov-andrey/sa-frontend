@@ -2,9 +2,10 @@ import { useLayoutEffect, useState } from 'react';
 
 import { sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isFilledString, isTypeString, isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
+import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
+import { useInject } from '@sa-frontend/presentation/common/hooks/useInject.hook';
 
-import { useEvent } from '../../../../common/hooks/useEvent.hook';
-import { useInject } from '../../../../common/hooks/useInject.hook';
+import { useHistory } from '../useHistory.hook/useHistory.hook';
 
 import { SS_HISTORY_KEY, SS_KEY } from './useInternalLocation.constant';
 import { isCustomEvent } from './useInternalLocation.utility';
@@ -20,6 +21,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
   const lsLocation = sessionStorage.get(SS_KEY);
   const lsLocationHistory = sessionStorage.get(SS_HISTORY_KEY);
 
+  const history = useHistory();
   const [ location, setLocation ] = useState<string>(isMemory
     ? isFilledString(lsLocation) ? lsLocation : '/'
     : window.location.pathname);
@@ -31,7 +33,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
       : [ location ]
   );
 
-  const determineRoute = useEvent((event: Event) => {
+  const makeOnNextRoute = useEvent((event: Event) => {
     if (!isCustomEvent(event)) return;
 
     const newLocation = event.detail;
@@ -47,7 +49,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     window.history.pushState(null, '', newLocation);
   });
 
-  const replaceRoute = useEvent((event: Event) => {
+  const makeOnReplacedRoute = useEvent((event: Event) => {
     if (!isCustomEvent(event)) return;
 
     const newLocation = event.detail;
@@ -63,7 +65,7 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
     window.history.replaceState(null, '', newLocation);
   });
 
-  const goToPreviousRoute = useEvent((event: Event): void => {
+  const makeOnPreviousRoute = useEvent((event: Event): void => {
     if (!isCustomEvent(event)) return;
 
     const newLocationHistory = locationHistory.slice(0, -1);
@@ -82,16 +84,14 @@ export const useInternalLocation = (params: UseInternalLocationParams): string =
   });
 
   useLayoutEffect(() => {
-    window.addEventListener('history-push', determineRoute);
-    window.addEventListener('history-replace', replaceRoute);
-    window.addEventListener('history-back', goToPreviousRoute);
+    const unsubscribe = history.listen({
+      makeOnNextRoute,
+      makeOnReplacedRoute,
+      makeOnPreviousRoute
+    });
 
-    return (): void => {
-      window.removeEventListener('history-push', determineRoute);
-      window.removeEventListener('history-replace', replaceRoute);
-      window.removeEventListener('history-back', goToPreviousRoute);
-    };
-  }, [ determineRoute, replaceRoute, goToPreviousRoute ]);
+    return unsubscribe;
+  }, [ history, makeOnNextRoute, makeOnReplacedRoute, makeOnPreviousRoute ]);
 
   return location;
 };

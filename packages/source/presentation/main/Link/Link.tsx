@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { useHistory } from '../Router/Router.hooks/useHistory.hook';
+import { useHistory } from '../Router/Router.hooks/useHistory.hook/useHistory.hook';
 
 export interface LinkProps extends React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
   to: string;
