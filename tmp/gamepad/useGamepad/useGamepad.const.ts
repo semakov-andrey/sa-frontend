@@ -1,4 +1,4 @@
-import type { TButtonIndex, TButtonValue } from '@/types/gamepad';
+import { type TButtonIndex, type TButtonValue } from '@/types/gamepad';
 
 export const GAMEPAD_KEYS = {
   B: 'B',

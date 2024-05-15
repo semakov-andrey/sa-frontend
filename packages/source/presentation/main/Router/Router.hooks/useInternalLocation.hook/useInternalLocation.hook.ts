@@ -6,10 +6,9 @@ import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 import { useInject } from '@sa-frontend/presentation/common/hooks/useInject.hook';
 
 import { useHistory } from '../useHistory.hook/useHistory.hook';
+import { type HistoryEvent } from '../useHistory.hook/useHistory.types';
 
 import { SS_HISTORY_KEY, SS_KEY } from './useInternalLocation.constant';
-
-import type { HistoryEvent } from '../useHistory.hook/useHistory.types';
 
 export interface UseInternalLocationParams {
   isMemory?: boolean;

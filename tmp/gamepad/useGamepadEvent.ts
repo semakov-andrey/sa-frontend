@@ -5,7 +5,7 @@ import {
   removeGamepadEventListener
 } from '@/services/stores/gamepad/gamepadHandlers.store';
 
-import type { THandler } from '@/types/stores';
+import { type THandler } from '@/types/stores';
 
 export const useGamepadEvent = (button: string, handler: THandler, deps: Array<unknown>): void => {
   useEffect(() => {

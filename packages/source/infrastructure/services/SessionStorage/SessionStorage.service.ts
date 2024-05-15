@@ -1,4 +1,4 @@
-import type { ExternalStorage } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.contract';
+import { type ExternalStorage } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.contract';
 
 export class SessionStorage implements ExternalStorage {
   public get = (name: string): unknown => {

@@ -1,9 +1,8 @@
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 
 import { HISTORY_EVENT, HISTORY_TYPES } from './useHistory.constants';
+import { type HistoryEventDetail, type ListenParams, type UseHistoryReturn } from './useHistory.types';
 import { isHistoryEvent } from './useHistory.utility';
-
-import type { HistoryEventDetail, ListenParams, UseHistoryReturn } from './useHistory.types';
 
 export const useHistory = (): UseHistoryReturn => {
   const createEvent = useEvent((detail: HistoryEventDetail) =>

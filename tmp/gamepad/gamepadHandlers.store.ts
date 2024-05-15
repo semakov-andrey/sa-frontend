@@ -2,7 +2,7 @@ import { atom } from 'nanostores';
 
 import { isKeyOfObject, isset } from '@/utils/guards';
 
-import type { IGamepadHandlersStore, THandler } from '@/types/stores';
+import { type IGamepadHandlersStore, type THandler } from '@/types/stores';
 
 export const gamepadHandlersInitialValue = { current: {} };
 

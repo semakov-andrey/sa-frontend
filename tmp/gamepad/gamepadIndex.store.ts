@@ -1,6 +1,6 @@
 import { atom } from 'nanostores';
 
-import type { IGamepadStore } from '@/types/stores';
+import { type IGamepadStore } from '@/types/stores';
 
 export const gamepadInitialValue = { current: undefined };
 

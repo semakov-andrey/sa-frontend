@@ -1,4 +1,4 @@
-import type { TPokemonGenderDiffForm, TPokemonRegion } from '@/types/common';
+import { type TPokemonGenderDiffForm, type TPokemonRegion } from '@/types/common';
 
 export interface ISettingsModal {
   name: 'settings';

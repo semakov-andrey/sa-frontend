@@ -1,8 +1,7 @@
 import { isTypeObject, isTypeString, isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 import { HISTORY_TYPES } from './useHistory.constants';
-
-import type { HistoryEvent } from './useHistory.types';
+import { type HistoryEvent } from './useHistory.types';
 
 export const isHistoryEvent = (event?: Event): event is HistoryEvent =>
   isset(event)

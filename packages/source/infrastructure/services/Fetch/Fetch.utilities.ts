@@ -1,7 +1,10 @@
 import { TRANSFER_STATUSES } from '@sa-frontend/application/contracts/Transfer/Transfer.constants';
+import {
+  type TransferError,
+  type TransferErrorDetails,
+  type TransferErrorStatus
+} from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import { isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
-
-import type { TransferError, TransferErrorDetails, TransferErrorStatus } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 
 export class FetchError implements TransferError {
   constructor(details: TransferErrorDetails) {

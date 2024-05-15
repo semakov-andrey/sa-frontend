@@ -7,8 +7,8 @@ import { throttleButton } from '@/utils/throttle';
 
 import { GAMEPAD_BUTTONS } from './useGamepad.const';
 
-import type { TButtonIndex } from '@/types/gamepad';
-import type { THandler } from '@/types/stores';
+import { type TButtonIndex } from '@/types/gamepad';
+import { type THandler } from '@/types/stores';
 
 const throttledHandler = throttleButton((existHandlers: Array<THandler>) => {
   existHandlers.forEach((handler: THandler) => handler());

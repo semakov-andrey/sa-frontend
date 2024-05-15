@@ -1,4 +1,18 @@
-import { TRANSFER_ERROR_STATUSES, TRANSFER_METHODS, TRANSFER_STATUSES } from '@sa-frontend/application/contracts/Transfer/Transfer.constants';
+import {
+  TRANSFER_ERROR_STATUSES,
+  TRANSFER_METHODS,
+  TRANSFER_STATUSES
+} from '@sa-frontend/application/contracts/Transfer/Transfer.constants';
+import {
+  type TransferError,
+  type TransferResponseOrError,
+  type Transfer,
+  type TransferBody,
+  type TransferOptions,
+  type TransferSettings,
+  type TransferSuccessStatus,
+  type TransferErrorStatus
+} from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import {
   isexists,
   isset,
@@ -9,18 +23,7 @@ import {
   iswritten
 } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
-import { FetchError, isInReadonlyArray } from './fetch.utilities';
-
-import type {
-  TransferError,
-  TransferResponseOrError,
-  Transfer,
-  TransferBody,
-  TransferOptions,
-  TransferSettings,
-  TransferSuccessStatus,
-  TransferErrorStatus
-} from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
+import { FetchError, isInReadonlyArray } from './Fetch.utilities';
 
 export class Fetch implements Transfer {
   constructor(options: TransferOptions = {}) {
