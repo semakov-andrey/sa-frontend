@@ -58,6 +58,7 @@ type CompileParams {
     source?: string; // default: './main'
     production?: string; // default: './app'
   };
+  mainConfig?: () => webpack.config; // default () => ({})
   rendererDirectories?: {
     source?: string; // default: './src'
     production?: string; // default: './app/frontend'

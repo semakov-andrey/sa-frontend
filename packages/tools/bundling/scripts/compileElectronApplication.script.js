@@ -16,6 +16,7 @@ export const compileElectronApplication = async (params) => {
     appName,
     rootDirectory,
     mainDirectories,
+    mainConfig = () => ({}),
     rendererDirectories,
     rendererConfig = () => ({}),
     rendererParams: restRendererParams = {},
@@ -58,18 +59,27 @@ export const compileElectronApplication = async (params) => {
 
   await generateAllDeclarations([ rendererSourceDirectory ]);
 
+  const watchIt = async () => {
+    if (isCompileMain) {
+      await tryCatch(build({ ...webpackElectronMainProdConfig, ...mainConfig }, mainParams));
+    }
+    const compiler = await start(rendererConfig(), rendererParams, devMiddlewares);
+    compiler.hooks.afterDone.tap('electron', () => {
+      spawnApplication(appName, mainProductionDirectory, true, isWindows);
+    });
+  };
+
+  const buildIt = async () => {
+    if (isCompileMain) {
+      await build({ ...webpackElectronMainProdConfig, ...mainConfig }, mainParams);
+    }
+    await build({ ...webpackElectronRendererProdConfig, ...rendererConfig() }, rendererParams);
+    await spawnApplication(appName, mainProductionDirectory, false, isWindows);
+  };
+
   try {
-    if (isWatch) {
-      if (isCompileMain) await tryCatch(build(webpackElectronMainProdConfig, mainParams));
-      const compiler = await start(rendererConfig(), rendererParams, devMiddlewares);
-      compiler.hooks.afterDone.tap('electron', () => {
-        spawnApplication(appName, mainProductionDirectory, true, isWindows);
-      });
-    } else {
-      if (isCompileMain) await build(webpackElectronMainProdConfig, mainParams);
-      await build({ ...webpackElectronRendererProdConfig, ...rendererConfig() }, rendererParams);
-      await spawnApplication(appName, mainProductionDirectory, false, isWindows);
-    };
+    if (isWatch) watchIt();
+    else buildIt();
   } catch (error) {
     console.error(error);
   }

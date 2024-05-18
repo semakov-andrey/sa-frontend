@@ -147,6 +147,13 @@ export const webpackCommonConfig = (params) => {
         {
           test: /\.asset\.wav$/u,
           type: 'asset/resource'
+        },
+        {
+          test: /\.node$/u,
+          loader: 'node-loader',
+          options: {
+            name: '[name].[ext]'
+          }
         }
       ]
     },
