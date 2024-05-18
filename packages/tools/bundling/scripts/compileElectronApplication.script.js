@@ -61,7 +61,7 @@ export const compileElectronApplication = async (params) => {
 
   const watchIt = async () => {
     if (isCompileMain) {
-      await tryCatch(build({ ...webpackElectronMainProdConfig, ...mainConfig }, mainParams));
+      await tryCatch(build({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams));
     }
     const compiler = await start(rendererConfig(), rendererParams, devMiddlewares);
     compiler.hooks.afterDone.tap('electron', () => {
@@ -71,7 +71,7 @@ export const compileElectronApplication = async (params) => {
 
   const buildIt = async () => {
     if (isCompileMain) {
-      await build({ ...webpackElectronMainProdConfig, ...mainConfig }, mainParams);
+      await build({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams);
     }
     await build({ ...webpackElectronRendererProdConfig, ...rendererConfig() }, rendererParams);
     await spawnApplication(appName, mainProductionDirectory, false, isWindows);
