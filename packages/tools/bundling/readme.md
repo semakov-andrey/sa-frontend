@@ -45,6 +45,7 @@ interface Params {
   analyzeStatsFilename?: string; // Название файла с результатами анализа; default: 'stats.json'
   postcssGlobalDataFiles?: Array<string>; // Пути к файлам с глобальными переменными для postcss
   isServiceWorker?: boolean // Использовать service worker; default: false
+  tsConfigOverwrite?: ForkTsCheckerWebpackPlugin.TypeScriptConfigOverwrite // Переписать tsconfig, default: {}
 };
 ```
 

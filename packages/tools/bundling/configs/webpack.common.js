@@ -14,7 +14,8 @@ export const webpackCommonConfig = (params) => {
   const {
     rootDirectory,
     directories,
-    postcssGlobalDataFiles
+    postcssGlobalDataFiles,
+    tsConfigOverwrite = {}
   } = params;
 
   const {
@@ -161,7 +162,8 @@ export const webpackCommonConfig = (params) => {
       new ForkTsCheckerWebpackPlugin({
         typescript: {
           configFile: path.resolve(rootDirectory, 'tsconfig.json'),
-          context: path.resolve(rootDirectory)
+          context: path.resolve(rootDirectory),
+          configOverwrite: tsConfigOverwrite
         }
       }),
       new webpack.ProgressPlugin({ percentBy: 'entries' })

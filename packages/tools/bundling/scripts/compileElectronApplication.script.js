@@ -47,7 +47,14 @@ export const compileElectronApplication = async (params) => {
     isHTML: false,
     isSourceMap: false,
     isHMR: false,
-    isAnalyzeBundle: false
+    isAnalyzeBundle: false,
+    tsConfigOverwrite: {
+      include: [
+        './main/**/*',
+        './node_modules/@sa-frontend/application/types',
+        './node_modules/@sa-frontend/presentation/common/types'
+      ]
+    }
   };
 
   const rendererParams = {
@@ -57,6 +64,13 @@ export const compileElectronApplication = async (params) => {
       production: rendererProductionDirectory
     },
     isAnalyzeBundle: false,
+    tsConfigOverwrite: {
+      include: [
+        './src/**/*',
+        './node_modules/@sa-frontend/application/types',
+        './node_modules/@sa-frontend/presentation/common/types'
+      ]
+    },
     ...restRendererParams
   };
 
