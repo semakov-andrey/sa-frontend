@@ -6,6 +6,8 @@ import { webpackElectronRendererProdConfig } from '../configs/webpack.electron.r
 import { devMiddleware } from '../middlewares/devMiddleware.js';
 import { generateAllDeclarations } from '../utilities/generateAllDeclarations.utility.js';
 import { tryCatch, hasData } from '../utilities/tryCatch.utility.js';
+import { tryParseJSON } from '../utilities/tryParseJSON.utility.js';
+import { isset } from '../utilities/typeGuards.utility.js';
 
 import { build } from './build.script.js';
 import { spawnApplication, killApplication } from './electronApplication.script.js';
@@ -35,6 +37,9 @@ export const compileElectronApplication = async (params) => {
     ?? path.resolve(rootDirectory, 'app', 'frontend');
   const statsOfMainDirectory = await tryCatch(fs.stat(mainSourceDirectory));
   const isCompileMain = hasData(statsOfMainDirectory) && statsOfMainDirectory.data.isDirectory();
+  const tsConfig = await tryCatch(fs.readFile(path.resolve(rootDirectory, 'tsconfig.json')));
+  const tsConfigData = hasData(tsConfig) ? tryParseJSON(tsConfig.data) : undefined;
+  const tsConfigInclude = isset(tsConfigData) && hasData(tsConfigData) ? tsConfigData.data?.include : undefined;
 
   const mainParams = {
     rootDirectory,
@@ -49,11 +54,9 @@ export const compileElectronApplication = async (params) => {
     isHMR: false,
     isAnalyzeBundle: false,
     tsConfigOverwrite: {
-      include: [
-        './main/**/*',
-        './node_modules/@sa-frontend/application/types',
-        './node_modules/@sa-frontend/presentation/common/types'
-      ]
+      ...Array.isArray(tsConfigInclude)
+        ? { include: tsConfigInclude.filter((item) => !item.includes('./src/')) }
+        : {}
     }
   };
 
@@ -65,11 +68,9 @@ export const compileElectronApplication = async (params) => {
     },
     isAnalyzeBundle: false,
     tsConfigOverwrite: {
-      include: [
-        './src/**/*',
-        './node_modules/@sa-frontend/application/types',
-        './node_modules/@sa-frontend/presentation/common/types'
-      ]
+      ...Array.isArray(tsConfigInclude)
+        ? { include: tsConfigInclude.filter((item) => !item.includes('./main/')) }
+        : {}
     },
     ...restRendererParams
   };
