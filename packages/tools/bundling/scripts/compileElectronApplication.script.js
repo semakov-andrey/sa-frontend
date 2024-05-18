@@ -40,6 +40,7 @@ export const compileElectronApplication = async (params) => {
     rootDirectory,
     directories: {
       source: mainSourceDirectory,
+      development: mainProductionDirectory,
       production: mainProductionDirectory
     },
     isCleanDirectory: false,
