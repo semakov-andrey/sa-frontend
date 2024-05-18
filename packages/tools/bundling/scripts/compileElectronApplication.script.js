@@ -45,6 +45,7 @@ export const compileElectronApplication = async (params) => {
     },
     isCleanDirectory: false,
     isHTML: false,
+    isSourceMap: false,
     isAnalyzeBundle: false
   };
 
