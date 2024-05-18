@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "1.66.0",
+  "version": "1.67.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -20,6 +20,8 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "del": "^7.0.0",
+    "electron": "^23.1.4",
+    "electron-packager": "^17.1.1",
     "esbuild-loader": "2.21.0",
     "fastify": "^4.15.0",
     "file-loader": "6.2.0",
