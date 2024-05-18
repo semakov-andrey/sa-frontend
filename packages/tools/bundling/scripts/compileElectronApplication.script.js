@@ -8,7 +8,7 @@ import { generateAllDeclarations } from '../utilities/generateAllDeclarations.ut
 import { tryCatch, hasData } from '../utilities/tryCatch.utility.js';
 
 import { build } from './build.script.js';
-import { spawnApplication } from './spawnApplication.script.js';
+import { spawnApplication, killApplication } from './electronApplication.script.js';
 import { start } from './start.script.js';
 
 export const compileElectronApplication = async (params) => {
@@ -78,10 +78,14 @@ export const compileElectronApplication = async (params) => {
 
   const watchIt = async () => {
     if (isCompileMain) {
-      await tryCatch(start({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams));
+      const mainCompiler = await start({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams);
+      mainCompiler.hooks.afterDone.tap('electron-main', () => {
+        killApplication();
+        spawnApplication(appName, mainProductionDirectory, true, isWindows);
+      });
     }
-    const compiler = await start(rendererConfig(), rendererParams, devMiddlewares);
-    compiler.hooks.afterDone.tap('electron', () => {
+    const rendererCompiler = await start(rendererConfig(), rendererParams, devMiddlewares);
+    rendererCompiler.hooks.afterDone.tap('electron-renderer', () => {
       spawnApplication(appName, mainProductionDirectory, true, isWindows);
     });
   };

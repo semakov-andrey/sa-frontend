@@ -5,7 +5,7 @@ import { deleteAsync } from 'del';
 import { getAppName } from '../utilities/getAppName.utility.js';
 import { isset } from '../utilities/typeGuards.utility.js';
 
-let electron;
+export let electron;
 
 export const spawnApplication = async (name, appPath, isWatch, isWindows) => {
   if (isWatch) {
@@ -30,3 +30,9 @@ export const spawnApplication = async (name, appPath, isWatch, isWindows) => {
   await deleteAsync(`${ appPath }/frontend`);
   console.info('Application was spawned');
 };
+
+export const killApplication = () => {
+  if (!isset(electron)) return;
+  electron.kill();
+  electron = undefined;
+}
