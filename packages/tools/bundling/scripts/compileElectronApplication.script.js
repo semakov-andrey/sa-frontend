@@ -46,6 +46,7 @@ export const compileElectronApplication = async (params) => {
     isCleanDirectory: false,
     isHTML: false,
     isSourceMap: false,
+    isHMR: false,
     isAnalyzeBundle: false
   };
 
@@ -63,7 +64,7 @@ export const compileElectronApplication = async (params) => {
 
   const watchIt = async () => {
     if (isCompileMain) {
-      await tryCatch(build({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams));
+      await tryCatch(start({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams));
     }
     const compiler = await start(rendererConfig(), rendererParams, devMiddlewares);
     compiler.hooks.afterDone.tap('electron', () => {

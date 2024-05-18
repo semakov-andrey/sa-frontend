@@ -21,6 +21,7 @@ export const webpackDevConfig = (config, params) => {
     copyPatterns,
     isHTML = true,
     isSourceMap = true,
+    isHMR = true,
     isPreloadFonts = false
   } = params;
 
@@ -72,7 +73,7 @@ export const webpackDevConfig = (config, params) => {
       new MiniCssExtractPlugin({
         filename: 'index.css'
       }),
-      new webpack.HotModuleReplacementPlugin(),
+      ...isHMR ? [ new webpack.HotModuleReplacementPlugin() ] : [],
       new (TSErrorsCounterWebpackPlugin(ForkTsCheckerWebpackPlugin))(),
       new CircularDependencyPlugin({
         exclude: /node_modules/u,
