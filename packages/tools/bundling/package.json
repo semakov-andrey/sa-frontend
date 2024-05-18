@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "1.65.0",
+  "version": "1.66.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
