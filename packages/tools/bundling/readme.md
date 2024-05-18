@@ -39,6 +39,7 @@ interface Params {
   port?: number; // Порт для webpack dev server, без порта - watch + сборка в папку
   copyPatterns?: Array<{ from: string; to: string }>; // Паттерны для CopyWebpackPlugin
   isHTML?: boolean; // Использовать HTMLWebpackPlugin; default: true
+  isSourceMap?: boolean; // Использовать souce-map в development; default: true
   isCleanDirectory?: boolean; // Очистить директорию перед сборкой; default: true
   isAnalyzeBundle?: boolean // Проанализировать bundle; default: true
   analyzeStatsFilename?: string; // Название файла с результатами анализа; default: 'stats.json'

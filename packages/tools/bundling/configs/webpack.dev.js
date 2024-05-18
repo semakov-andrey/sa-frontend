@@ -20,6 +20,7 @@ export const webpackDevConfig = (config, params) => {
     directories,
     copyPatterns,
     isHTML = true,
+    isSourceMap = true,
     isPreloadFonts = false
   } = params;
 
@@ -32,7 +33,7 @@ export const webpackDevConfig = (config, params) => {
 
   return merge(webpackCommonConfig(params), {
     mode: 'development',
-    devtool: 'source-map',
+    ...isSourceMap ? { devtool: 'source-map' } : {},
     entry: [
       'webpack-hot-middleware/client?reload=true',
       path.resolve(sourceDirectory, 'index.ts')
