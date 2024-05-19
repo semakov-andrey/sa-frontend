@@ -46,6 +46,7 @@ interface Params {
   postcssGlobalDataFiles?: Array<string>; // Пути к файлам с глобальными переменными для postcss
   isServiceWorker?: boolean // Использовать service worker; default: false
   tsConfigOverwrite?: ForkTsCheckerWebpackPlugin.TypeScriptConfigOverwrite // Переписать tsconfig, default: {}
+  aliases?: Record<string, string> // Алиасы, default: { '@': directories.source }
 };
 ```
 

@@ -10,18 +10,17 @@ export const startElectron = async (params) => {
     serverParams,
     clientConfig,
     clientParams,
-    aliases,
     devMiddlewares
   } = params;
 
   if (isCompileServer) {
-    const serverCompiler = await start({ ...aliases, ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams);
+    const serverCompiler = await start({ ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams);
     serverCompiler.hooks.afterDone.tap('electron-main', () => {
       killApplication();
       startApplication();
     });
   }
-  const clientCompiler = await start({ ...aliases, ...clientConfig() }, clientParams, devMiddlewares);
+  const clientCompiler = await start(clientConfig(), clientParams, devMiddlewares);
   clientCompiler.hooks.afterDone.tap('electron-renderer', () => {
     startApplication();
   });

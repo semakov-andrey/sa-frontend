@@ -13,12 +13,11 @@ export const buildElectron = async (params) => {
     serverParams,
     clientConfig,
     clientParams,
-    aliases
   } = params;
 
   if (isCompileServer) {
-    await build({ ...aliases, ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams);
+    await build({ ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams);
   }
-  await build({ ...aliases, ...webpackElectronClientProdConfig, ...clientConfig() }, clientParams);
+  await build({ ...webpackElectronClientProdConfig, ...clientConfig() }, clientParams);
   await buildApplication(appName, serverProductionDirectory);
 };

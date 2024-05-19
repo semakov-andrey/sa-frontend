@@ -54,6 +54,10 @@ export const electron = async (params) => {
       ...Array.isArray(tsConfigInclude)
         ? { include: tsConfigInclude.filter((item) => !item.includes('./srcClient/')) }
         : {}
+    },
+    aliases: {
+      '@/srcClient': clientSourceDirectory,
+      '@/srcServer': serverSourceDirectory
     }
   };
 
@@ -68,6 +72,10 @@ export const electron = async (params) => {
       ...Array.isArray(tsConfigInclude)
         ? { include: tsConfigInclude.filter((item) => !item.includes('./srcServer/')) }
         : {}
+    },
+    aliases: {
+      '@/srcClient': clientSourceDirectory,
+      '@/srcServer': serverSourceDirectory
     },
     ...restClientParams
   };

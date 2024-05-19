@@ -9,13 +9,15 @@ import postcssNested from 'postcss-nested';
 import webpack from 'webpack';
 
 import { getDirectories } from '../utilities/getDirectories.utility.js';
+import { isset } from '../utilities/typeGuards.utility.js';
 
 export const webpackCommonConfig = (params) => {
   const {
     rootDirectory,
     directories,
     postcssGlobalDataFiles,
-    tsConfigOverwrite = {}
+    tsConfigOverwrite = {},
+    aliases
   } = params;
 
   const {
@@ -171,7 +173,11 @@ export const webpackCommonConfig = (params) => {
     resolve: {
       extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
       alias: {
-        '@': sourceDirectory
+        ...isset(aliases)
+          ? aliases
+          : {
+            '@': sourceDirectory
+          }
       }
     }
   };
