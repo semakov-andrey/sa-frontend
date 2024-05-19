@@ -7,10 +7,10 @@ import { isset } from '../utilities/typeGuards.utility.js';
 
 export let electron;
 
-export const spawnApplication = async (name, appPath, port, isWatch, isWindows) => {
+export const spawnApplication = async (name, appPath, isWatch, isWindows) => {
   if (isWatch) {
     if (!isset(electron)) {
-      electron = spawn('electron', [ '.', `--inspect=${ port ?? 9292 }` ], { shell: isWindows });
+      electron = spawn('electron', [ '.', '--inspect=9229' ], { shell: isWindows });
     }
     return;
   }
