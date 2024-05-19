@@ -73,8 +73,8 @@ export const electron = async (params) => {
         : {}
     },
     aliases: {
-      '@/srcClient': clientSourceDirectory,
-      '@/srcServer': serverSourceDirectory
+      '@/client': clientSourceDirectory,
+      '@/server': serverSourceDirectory
     },
     ...restClientParams
   };

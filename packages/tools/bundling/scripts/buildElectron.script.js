@@ -12,7 +12,7 @@ export const buildElectron = async (params) => {
     serverConfig,
     serverParams,
     clientConfig,
-    clientParams,
+    clientParams
   } = params;
 
   if (isCompileServer) {
