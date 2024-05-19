@@ -1,7 +1,7 @@
 import { webpackElectronMainProdConfig } from '../configs/webpack.electron.main.prod.js';
 
-import { startApplication, killApplication } from './application.script';
-import { start } from './start.script';
+import { startApplication, killApplication } from './application.script.js';
+import { start } from './start.script.js';
 
 export const startElectron = async (params) => {
   const {
