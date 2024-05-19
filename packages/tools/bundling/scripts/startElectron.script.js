@@ -1,4 +1,4 @@
-import { webpackElectronMainProdConfig } from '../configs/webpack.electron.main.prod';
+import { webpackElectronMainProdConfig } from '../configs/webpack.electron.main.prod.js';
 
 import { startApplication, killApplication } from './application.script';
 import { start } from './start.script';
