@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import { webpackElectronCommonConfig } from '../configs/webpack.electron.common.js';
 import { devMiddleware } from '../middlewares/devMiddleware.js';
 import { generateAllDeclarations } from '../utilities/generateAllDeclarations.utility.js';
 import { tryCatch, hasData } from '../utilities/tryCatch.utility.js';
@@ -80,8 +79,6 @@ export const electron = async (params) => {
     ...restClientParams
   };
 
-  const aliases = webpackElectronCommonConfig(serverParams.directories.source, clientParams.directories.source);
-
   await generateAllDeclarations([ clientSourceDirectory ]);
 
   try {
@@ -93,7 +90,6 @@ export const electron = async (params) => {
       serverParams,
       clientConfig,
       clientParams,
-      aliases,
       devMiddlewares
     };
     if (isWatch) startElectron(params);
