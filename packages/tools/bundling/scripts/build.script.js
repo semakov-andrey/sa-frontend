@@ -3,14 +3,13 @@ import webpack from 'webpack';
 
 import { webpackProdConfig } from '../configs/webpack.prod.js';
 import { STATS_OPTIONS } from '../constants/statsOptions.constant.js';
+import { tryCatch } from '../utilities/tryCatch.utility.js';
 
 export const build = async (config, params) => {
   const { directories, isCleanDirectory = true } = params;
 
   if (isCleanDirectory) {
-    try {
-      await deleteAsync(`${ directories.production }/**/*`);
-    } catch {}
+    await tryCatch(deleteAsync(`${ directories.production }/**/*`));
   }
 
   return await new Promise((resolve, reject) => {
