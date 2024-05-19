@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+import { webpackElectronCommonConfig } from '../configs/webpack.electron.common.js';
 import { devMiddleware } from '../middlewares/devMiddleware.js';
 import { generateAllDeclarations } from '../utilities/generateAllDeclarations.utility.js';
 import { tryCatch, hasData } from '../utilities/tryCatch.utility.js';
@@ -14,35 +15,35 @@ export const electron = async (params) => {
   const {
     appName,
     rootDirectory,
-    mainDirectories,
-    mainConfig = () => ({}),
-    rendererDirectories,
-    rendererConfig = () => ({}),
-    rendererParams: restRendererParams = {},
+    serverDirectories,
+    serverConfig = () => ({}),
+    clientDirectories,
+    clientConfig = () => ({}),
+    clientParams: restClientParams = {},
     devMiddlewares = [ devMiddleware ]
   } = params;
 
   const isWatch = process.argv[2] === '--watch';
-  const mainSourceDirectory = mainDirectories?.source
-    ?? path.resolve(rootDirectory, 'main');
-  const mainProductionDirectory = mainDirectories?.production
+  const serverSourceDirectory = serverDirectories?.source
+    ?? path.resolve(rootDirectory, 'srcServer');
+  const serverProductionDirectory = serverDirectories?.production
     ?? path.resolve(rootDirectory, 'app');
-  const rendererSourceDirectory = rendererDirectories?.source
-    ?? path.resolve(rootDirectory, 'src');
-  const rendererProductionDirectory = rendererDirectories?.production
+  const clientSourceDirectory = clientDirectories?.source
+    ?? path.resolve(rootDirectory, 'srcClient');
+  const clientProductionDirectory = clientDirectories?.production
     ?? path.resolve(rootDirectory, 'app', 'frontend');
-  const statsOfMainDirectory = await tryCatch(fs.stat(mainSourceDirectory));
-  const isCompileMain = hasData(statsOfMainDirectory) && statsOfMainDirectory.data.isDirectory();
+  const statsOfServerDirectory = await tryCatch(fs.stat(serverSourceDirectory));
+  const isCompileServer = hasData(statsOfServerDirectory) && statsOfServerDirectory.data.isDirectory();
   const tsConfig = await tryCatch(fs.readFile(path.resolve(rootDirectory, 'tsconfig.json')));
   const tsConfigData = hasData(tsConfig) ? tryParseJSON(tsConfig.data) : undefined;
   const tsConfigInclude = isset(tsConfigData) && hasData(tsConfigData) ? tsConfigData.data?.include : undefined;
 
-  const mainParams = {
+  const serverParams = {
     rootDirectory,
     directories: {
-      source: mainSourceDirectory,
-      development: mainProductionDirectory,
-      production: mainProductionDirectory
+      source: serverSourceDirectory,
+      development: serverProductionDirectory,
+      production: serverProductionDirectory
     },
     isCleanDirectory: false,
     isHTML: false,
@@ -51,37 +52,40 @@ export const electron = async (params) => {
     isAnalyzeBundle: false,
     tsConfigOverwrite: {
       ...Array.isArray(tsConfigInclude)
-        ? { include: tsConfigInclude.filter((item) => !item.includes('./src/')) }
+        ? { include: tsConfigInclude.filter((item) => !item.includes('./srcClient/')) }
         : {}
     }
   };
 
-  const rendererParams = {
+  const clientParams = {
     rootDirectory,
     directories: {
-      source: rendererSourceDirectory,
-      production: rendererProductionDirectory
+      source: clientSourceDirectory,
+      production: clientProductionDirectory
     },
     isAnalyzeBundle: false,
     tsConfigOverwrite: {
       ...Array.isArray(tsConfigInclude)
-        ? { include: tsConfigInclude.filter((item) => !item.includes('./main/')) }
+        ? { include: tsConfigInclude.filter((item) => !item.includes('./srcServer/')) }
         : {}
     },
-    ...restRendererParams
+    ...restClientParams
   };
 
-  await generateAllDeclarations([ rendererSourceDirectory ]);
+  const aliases = webpackElectronCommonConfig(serverParams.directories.source, clientParams.directories.source);
+
+  await generateAllDeclarations([ clientSourceDirectory ]);
 
   try {
     const params = {
       appName,
-      mainProductionDirectory,
-      isCompileMain,
-      mainConfig,
-      mainParams,
-      rendererConfig,
-      rendererParams,
+      serverProductionDirectory,
+      isCompileServer,
+      serverConfig,
+      serverParams,
+      clientConfig,
+      clientParams,
+      aliases,
       devMiddlewares
     };
     if (isWatch) startElectron(params);

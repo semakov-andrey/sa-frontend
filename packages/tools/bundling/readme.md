@@ -49,24 +49,24 @@ interface Params {
 };
 ```
 
-- compileElectronApplication:
+- electron:
 ```ts
-function compileElectronApplication(compileParams: CompileParams): Promise<void>;
+function electron(compileParams: CompileParams): Promise<void>;
 
 type CompileParams {
   appName: string;
   rootDirectory: string;
-  mainDirectories?: {
+  serverDirectories?: {
     source?: string; // default: './main'
     production?: string; // default: './app'
   };
-  mainConfig?: () => webpack.config; // default () => ({})
-  rendererDirectories?: {
+  serverConfig?: () => webpack.config; // default () => ({})
+  clientDirectories?: {
     source?: string; // default: './src'
     production?: string; // default: './app/frontend'
   };
-  rendererConfig?: () => webpack.config; // default () => ({})
-  rendererParams?: Partial<Params>; // default {}
+  clientConfig?: () => webpack.config; // default () => ({})
+  clientParams?: Partial<Params>; // default {}
   devMiddlewares?: ((server: Fastify.Server) => void)[] // default [ devMiddleware ]
 };
 ```

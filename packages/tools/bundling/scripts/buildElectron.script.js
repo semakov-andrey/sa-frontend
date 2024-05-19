@@ -1,5 +1,5 @@
-import { webpackElectronMainProdConfig } from '../configs/webpack.electron.main.prod.js';
-import { webpackElectronRendererProdConfig } from '../configs/webpack.electron.renderer.prod.js';
+import { webpackElectronClientProdConfig } from '../configs/webpack.electron.client.prod.js';
+import { webpackElectronServerProdConfig } from '../configs/webpack.electron.server.prod.js';
 
 import { buildApplication } from './application.script.js';
 import { build } from './build.script.js';
@@ -7,17 +7,18 @@ import { build } from './build.script.js';
 export const buildElectron = async (params) => {
   const {
     appName,
-    mainProductionDirectory,
-    isCompileMain,
-    mainConfig,
-    mainParams,
-    rendererConfig,
-    rendererParams
+    serverProductionDirectory,
+    isCompileServer,
+    serverConfig,
+    serverParams,
+    clientConfig,
+    clientParams,
+    aliases
   } = params;
 
-  if (isCompileMain) {
-    await build({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams);
+  if (isCompileServer) {
+    await build({ ...aliases, ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams);
   }
-  await build({ ...webpackElectronRendererProdConfig, ...rendererConfig() }, rendererParams);
-  await buildApplication(appName, mainProductionDirectory);
+  await build({ ...aliases, ...webpackElectronClientProdConfig, ...clientConfig() }, clientParams);
+  await buildApplication(appName, serverProductionDirectory);
 };

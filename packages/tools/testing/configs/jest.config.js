@@ -6,6 +6,6 @@ export const jestConfig = {
   transformIgnorePatterns: [],
   testMatch: [ '<rootDir>/**/*.test.{ts,tsx}' ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/source/(.*)$': '<rootDir>/src/$1'
   }
 };
