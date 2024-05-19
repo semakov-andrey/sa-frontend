@@ -23,7 +23,7 @@ export const build = async (config, params) => {
         return;
       }
 
-      console.info('Frontend was compiled');
+      console.info('Bundle was compiled');
       resolve();
     });
   });
