@@ -37,6 +37,11 @@ export const electron = async (params) => {
   const tsConfigData = hasData(tsConfig) ? tryParseJSON(tsConfig.data) : undefined;
   const tsConfigInclude = isset(tsConfigData) && hasData(tsConfigData) ? tsConfigData.data?.include : undefined;
 
+  const aliases = {
+    '@/client': clientSourceDirectory,
+    '@/server': serverSourceDirectory
+  };
+
   const serverParams = {
     rootDirectory,
     directories: {
@@ -54,10 +59,7 @@ export const electron = async (params) => {
         ? { include: tsConfigInclude.filter((item) => !item.includes('./srcClient/')) }
         : {}
     },
-    aliases: {
-      '@/client': clientSourceDirectory,
-      '@/server': serverSourceDirectory
-    }
+    aliases
   };
 
   const clientParams = {
@@ -72,10 +74,7 @@ export const electron = async (params) => {
         ? { include: tsConfigInclude.filter((item) => !item.includes('./srcServer/')) }
         : {}
     },
-    aliases: {
-      '@/client': clientSourceDirectory,
-      '@/server': serverSourceDirectory
-    },
+    aliases,
     ...restClientParams
   };
 
