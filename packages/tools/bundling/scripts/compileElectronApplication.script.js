@@ -78,16 +78,17 @@ export const compileElectronApplication = async (params) => {
   await generateAllDeclarations([ rendererSourceDirectory ]);
 
   const watchIt = async () => {
+    const inspectPort = (rendererParams.port ?? 0) + 1000;
     if (isCompileMain) {
       const mainCompiler = await start({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams);
       mainCompiler.hooks.afterDone.tap('electron-main', () => {
         killApplication();
-        spawnApplication(appName, mainProductionDirectory, true, isWindows);
+        spawnApplication(appName, mainProductionDirectory, inspectPort, true, isWindows);
       });
     }
     const rendererCompiler = await start(rendererConfig(), rendererParams, devMiddlewares);
     rendererCompiler.hooks.afterDone.tap('electron-renderer', () => {
-      spawnApplication(appName, mainProductionDirectory, true, isWindows);
+      spawnApplication(appName, mainProductionDirectory, inspectPort, true, isWindows);
     });
   };
 
@@ -96,7 +97,7 @@ export const compileElectronApplication = async (params) => {
       await build({ ...webpackElectronMainProdConfig, ...mainConfig() }, mainParams);
     }
     await build({ ...webpackElectronRendererProdConfig, ...rendererConfig() }, rendererParams);
-    await spawnApplication(appName, mainProductionDirectory, false, isWindows);
+    await spawnApplication(appName, mainProductionDirectory, undefined, false, isWindows);
   };
 
   try {
