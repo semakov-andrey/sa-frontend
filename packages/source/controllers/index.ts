@@ -17,7 +17,7 @@ export const initControllers = <T>(handler: ResponseTransfer, controllers: T): v
       return;
     }
 
-    const result = await (controllers[controller][method] as FunctionType)(...body as Parameters<FunctionType>);
+    const result = await (controllers[controller][method] as FunctionType)(...body);
     handler.response(data.id, result);
   });
 };

@@ -10,7 +10,7 @@ export interface TransferParameters {
   id: string;
   controller: string;
   method: string;
-  body: unknown;
+  body: unknown[];
 }
 
 export type TransferResponseOrError<Data> = Promise<Data | TransferError>;
