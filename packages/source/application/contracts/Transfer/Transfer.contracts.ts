@@ -31,7 +31,7 @@ export type TransferMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export type TransferStatusCodeSuccess = 200 | 201 | 204;
 
-export type TransferStatusCodeError = 400 | 401 | 403 | 404 | 409 | 500 | 520;
+export type TransferStatusCodeError = 400 | 401 | 403 | 404 | 409 | 500 | 504 | 520;
 
 export interface TransferError {
   code: TransferStatusCodeError;
