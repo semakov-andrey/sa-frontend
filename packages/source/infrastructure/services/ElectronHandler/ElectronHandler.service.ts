@@ -1,7 +1,9 @@
 import { ipcMain, BrowserWindow } from 'electron';
 
-import { TRANSFER_ERRORS, TRANSFER_EVENT } from '@sa-frontend/application/contracts/ResponseTransfer/ResponseTransfer.constants';
-import { type ResponseTransfer, type TransferError, type TransferListenCallback } from '@sa-frontend/application/contracts/ResponseTransfer/ResponseTransfer.contracts';
+import { TRANSFER_EVENT } from '@sa-frontend/application/contracts/ResponseTransfer/ResponseTransfer.constants';
+import { type ResponseTransfer, type TransferListenCallback } from '@sa-frontend/application/contracts/ResponseTransfer/ResponseTransfer.contracts';
+import { TRANSFER_STATUSES } from '@sa-frontend/application/contracts/Transfer/Transfer.constants';
+import { type TransferError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import { isKeyOfObject, isTypeObject, isTypeString } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 import { ElectronHandlerError, isTransferParameters } from './ElectronHandler.utility';
@@ -12,7 +14,7 @@ export class ElectronHandler implements ResponseTransfer {
       if (!isTypeObject(data) || !isKeyOfObject(data, 'id') || !isTypeString(data.id)) return;
 
       if (!isTransferParameters(data)) {
-        this.response(data.id, new ElectronHandlerError(TRANSFER_ERRORS.BAD_REQUEST));
+        this.response(data.id, new ElectronHandlerError(TRANSFER_STATUSES.BAD_REQUEST));
         return;
       }
 

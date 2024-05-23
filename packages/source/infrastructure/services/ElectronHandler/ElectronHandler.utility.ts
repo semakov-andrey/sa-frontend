@@ -1,10 +1,9 @@
-import { type TransferError, type TransferParameters } from '@sa-frontend/application/contracts/ResponseTransfer/ResponseTransfer.contracts';
+import { type TransferParameters } from '@sa-frontend/application/contracts/ResponseTransfer/ResponseTransfer.contracts';
+import { type TransferError, type TransferStatusCodeError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import { isKeyOfObject, isTypeObject, isTypeString } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 export class ElectronHandlerError implements TransferError {
-  constructor(public message: string) {}
-
-  public type = 'transferError' as const;
+  constructor(public code: TransferStatusCodeError, public message: string = '') {}
 }
 
 export const isTransferParameters = (data: unknown): data is TransferParameters => {

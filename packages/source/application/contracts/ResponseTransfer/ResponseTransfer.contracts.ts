@@ -1,3 +1,5 @@
+import { type TransferError } from '../Transfer/Transfer.contracts';
+
 export interface ResponseTransfer {
   listen: (callback: TransferListenCallback) => void;
   response: (id: string, data: unknown) => void;
@@ -11,11 +13,4 @@ export interface TransferParameters {
   controller: string;
   method: string;
   body: unknown[];
-}
-
-export type TransferResponseOrError<Data> = Promise<Data | TransferError>;
-
-export interface TransferError {
-  type: 'transferError';
-  message: string;
 }

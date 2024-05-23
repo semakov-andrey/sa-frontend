@@ -10,11 +10,12 @@ import {
   type TransferBody,
   type TransferOptions,
   type TransferSettings,
-  type TransferSuccessStatus,
-  type TransferErrorStatus
+  type TransferStatusCodeSuccess,
+  type TransferStatusCodeError
 } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import {
   isexists,
+  isInReadonlyArray,
   isset,
   isTypeBoolean,
   isTypeNumber,
@@ -23,7 +24,7 @@ import {
   iswritten
 } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
-import { FetchError, isInReadonlyArray } from './Fetch.utilities';
+import { FetchError } from './Fetch.utilities';
 
 export class Fetch implements Transfer {
   constructor(options: TransferOptions = {}) {
@@ -42,14 +43,14 @@ export class Fetch implements Transfer {
       const { status } = response;
 
       if (!this.statusTypeCheck(status)) {
-        return new FetchError({ statusCode: TRANSFER_STATUSES.UNKNOWN_ERROR });
+        return new FetchError(TRANSFER_STATUSES.UNKNOWN_ERROR);
       }
 
       return !isInReadonlyArray(TRANSFER_ERROR_STATUSES, status)
         ? await this.transformData(response, options, status === TRANSFER_STATUSES.NO_CONTENT)
         : await this.transformError(response, status);
     } catch (e: unknown) {
-      return new FetchError({ statusCode: TRANSFER_STATUSES.UNKNOWN_ERROR });
+      return new FetchError(TRANSFER_STATUSES.UNKNOWN_ERROR);
     }
   };
 
@@ -111,7 +112,7 @@ export class Fetch implements Transfer {
   private serializeTypeCheck2 = (value: unknown): value is OneOrMore<object> =>
     isTypeObject(value) || Array.isArray(value);
 
-  private statusTypeCheck = (status: number): status is TransferSuccessStatus | TransferErrorStatus =>
+  private statusTypeCheck = (status: number): status is TransferStatusCodeSuccess | TransferStatusCodeError =>
     Object.values(TRANSFER_STATUSES).includes(status);
 
   private transformData = async <T>(response: Response, options: TransferSettings['options'], is204: boolean = false): TransferResponseOrError<T> => {
@@ -128,22 +129,22 @@ export class Fetch implements Transfer {
 
       return JSON.parse(text, isset(this.parseDates) ? this.parseDates : undefined) as T;
     } catch {
-      return new FetchError({ statusCode: TRANSFER_STATUSES.UNKNOWN_ERROR });
+      return new FetchError(TRANSFER_STATUSES.UNKNOWN_ERROR);
     }
   };
 
-  private transformError = async (response: Response, statusCode: TransferErrorStatus): Promise<TransferError> => {
+  private transformError = async (response: Response, statusCode: TransferStatusCodeError): Promise<TransferError> => {
     try {
       const text = await response.text();
       const json: unknown = JSON.parse(text);
-      return new FetchError({
+      return new FetchError(
         statusCode,
-        message: isTypeObject(json) && isTypeString(json.message)
+        isTypeObject(json) && isTypeString(json.message)
           ? json.message
           : undefined
-      });
+      );
     } catch {
-      return new FetchError({ statusCode: TRANSFER_STATUSES.UNKNOWN_ERROR });
+      return new FetchError(TRANSFER_STATUSES.UNKNOWN_ERROR);
     }
   };
 

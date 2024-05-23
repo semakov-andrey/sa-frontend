@@ -65,3 +65,6 @@ export const isKeyOfObject = <T>(u: T, key: ObjectKey): key is keyof T =>
   isTypeObject(u) && Object.prototype.hasOwnProperty.call(u, key);
 
 export const cast = <T, E = unknown>(u: E): T => u as unknown as T;
+
+export const isInReadonlyArray = <T, A extends T>(array: readonly A[], item: T): item is A =>
+  array.includes(item as A);

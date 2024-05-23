@@ -29,16 +29,11 @@ export type TransferResponseOrError<T> = Promise<T | TransferError>;
 
 export type TransferMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export type TransferSuccessStatus = 200 | 201 | 204;
+export type TransferStatusCodeSuccess = 200 | 201 | 204;
 
-export type TransferErrorStatus = 400 | 401 | 403 | 404 | 409 | 500 | 520;
+export type TransferStatusCodeError = 400 | 401 | 403 | 404 | 409 | 500 | 520;
 
 export interface TransferError {
-  statusCode: TransferErrorStatus;
+  code: TransferStatusCodeError;
   message: string;
-}
-
-export interface TransferErrorDetails {
-  statusCode: TransferErrorStatus;
-  message?: string;
 }
