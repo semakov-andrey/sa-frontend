@@ -1,4 +1,4 @@
-import type { TransferError, TransferResponseOrError, TransferStatusCodeError } from '../Transfer/Transfer.contracts';
+import { type TransferError, type TransferResponseOrError, type TransferStatusCodeError } from '../Transfer/Transfer.contracts';
 
 export interface TransferConstructor {
   new (options?: HttpRequestOptions): HttpRequest;
