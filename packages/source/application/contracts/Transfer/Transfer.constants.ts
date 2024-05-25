@@ -1,13 +1,3 @@
-export const transferUnique = Symbol('transfer');
-
-export const TRANSFER_METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  PATCH: 'PATCH',
-  DELETE: 'DELETE'
-} as const;
-
 export const TRANSFER_STATUSES = {
   OK: 200,
   CREATED: 201,

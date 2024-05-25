@@ -1,15 +1,12 @@
+import { HTTP_REQUEST_METHODS } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.constants';
+import { type HttpRequest, type HttpRequestBody, type HttpRequestOptions, type HttpRequestSettings } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.contracts';
 import {
   TRANSFER_ERROR_STATUSES,
-  TRANSFER_METHODS,
   TRANSFER_STATUSES
 } from '@sa-frontend/application/contracts/Transfer/Transfer.constants';
 import {
   type TransferError,
   type TransferResponseOrError,
-  type Transfer,
-  type TransferBody,
-  type TransferOptions,
-  type TransferSettings,
   type TransferStatusCodeSuccess,
   type TransferStatusCodeError
 } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
@@ -26,17 +23,17 @@ import {
 
 import { FetchError } from './Fetch.utilities';
 
-export class Fetch implements Transfer {
-  constructor(options: TransferOptions = {}) {
+export class Fetch implements HttpRequest {
+  constructor(options: HttpRequestOptions = {}) {
     this.parseDates = options.parseDates;
   }
 
   private parseDates;
 
-  public go = async <T>(settings: TransferSettings): TransferResponseOrError<T> => {
-    const { method = TRANSFER_METHODS.GET, url, body, options } = settings;
+  public go = async <T>(settings: HttpRequestSettings): TransferResponseOrError<T> => {
+    const { method = HTTP_REQUEST_METHODS.GET, url, body, options } = settings;
     const data = this.getData(settings);
-    const query = method === TRANSFER_METHODS.GET ? this.getQuery(body) : '';
+    const query = method === HTTP_REQUEST_METHODS.GET ? this.getQuery(body) : '';
 
     try {
       const response = await window.fetch(`${ url }${ query }`, data);
@@ -54,7 +51,7 @@ export class Fetch implements Transfer {
     }
   };
 
-  public getData = (settings: TransferSettings): RequestInit => {
+  public getData = (settings: HttpRequestSettings): RequestInit => {
     const { method, body, headers, options } = settings;
     return {
       method,
@@ -64,7 +61,7 @@ export class Fetch implements Transfer {
             'Accept': 'application/json',
             'Content-Type': Boolean(options?.readAsArrayBuffer)
               ? 'application/octet-stream'
-              : method !== TRANSFER_METHODS.PATCH
+              : method !== HTTP_REQUEST_METHODS.PATCH
                 ? 'application/json'
                 : 'application/json-patch+json',
             ...headers
@@ -74,13 +71,13 @@ export class Fetch implements Transfer {
       mode: 'cors',
       ...body instanceof FormData
         ? { body }
-        : method !== TRANSFER_METHODS.GET && (isTypeObject(body) || Array.isArray(body))
+        : method !== HTTP_REQUEST_METHODS.GET && (isTypeObject(body) || Array.isArray(body))
           ? { body: JSON.stringify(body) }
           : {}
     };
   };
 
-  public getQuery = (body?: TransferBody): string => {
+  public getQuery = (body?: HttpRequestBody): string => {
     if (!isset(body) || body instanceof FormData) return '';
 
     const query = this.serialize(body);
@@ -115,7 +112,7 @@ export class Fetch implements Transfer {
   private statusTypeCheck = (status: number): status is TransferStatusCodeSuccess | TransferStatusCodeError =>
     Object.values(TRANSFER_STATUSES).includes(status);
 
-  private transformData = async <T>(response: Response, options: TransferSettings['options'], is204: boolean = false): TransferResponseOrError<T> => {
+  private transformData = async <T>(response: Response, options: HttpRequestSettings['options'], is204: boolean = false): TransferResponseOrError<T> => {
     if (is204) return '' as unknown as T;
 
     try {
@@ -147,6 +144,9 @@ export class Fetch implements Transfer {
       return new FetchError(TRANSFER_STATUSES.UNKNOWN_ERROR);
     }
   };
+
+  public transferError = (code: TransferStatusCodeError, message?: string): TransferError =>
+    new FetchError(code, message);
 
   public isTransferError = <T>(u: T | TransferError): u is TransferError =>
     u instanceof FetchError;
