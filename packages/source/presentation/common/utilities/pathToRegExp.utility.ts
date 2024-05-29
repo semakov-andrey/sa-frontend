@@ -32,7 +32,7 @@ export const pathToRegexp = (path: string): PathToRegexpReturn => {
       ? `/${ choices }`
       : isset(optional)
         ? '/?([A-Za-z0-9_]+)?'
-        : `/([A-Za-z0-9_]+${ isset(rest) ? '(\/.*)?' : '' })`;
+        : `/([A-Za-z0-9_]+${ isset(rest) ? '(/.*)?' : '' })`;
     result += `${ escapeRx(prev) }${ newRegExp }`;
     match = groupRx.exec(path);
   }

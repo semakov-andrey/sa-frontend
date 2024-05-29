@@ -3,9 +3,8 @@ import '@sa-frontend/infrastructure/services';
 import React, { useMemo } from 'react';
 
 import { RouterContext } from './Router.context';
-import { useInternalLocation } from './Router.hooks/useInternalLocation.hook/useInternalLocation.hook';
-import { getChildren } from './Router.utilities/getChildren.utility';
-import { getMatching } from './Router.utilities/getMatching.utility';
+import { useStore } from './Router.hooks/useStore.hook/useStore.hook';
+import { getContextValues } from './Router.utilities/getContextValues.utility';
 
 export interface RouterProps {
   children: OneOrMore<EntireElement>;
@@ -15,16 +14,16 @@ export interface RouterProps {
 export const Router = (props: RouterProps): JSX.Element | null => {
   const { children, isMemory } = props;
 
-  const location = useInternalLocation({ isMemory });
-  const routerContextValue = useMemo(() => ({
+  const { location, locations } = useStore({ isMemory });
+  const value = useMemo(() => ({
     location,
-    ...getMatching({ location, children })
-  }), [ location, children ]);
-  const jsx = getChildren({ location, children });
+    locations,
+    ...getContextValues({ location, children })
+  }), [ location, locations, children ]);
 
   return (
-    <RouterContext.Provider value={ routerContextValue }>
-      { jsx }
+    <RouterContext.Provider value={ value }>
+      { children }
     </RouterContext.Provider>
   );
 };

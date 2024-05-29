@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-
+import { useInfluence } from '../../common/hooks/useInfluence.hook';
 import { useHistory } from '../Router/Router.hooks/useHistory.hook/useHistory.hook';
 
 export interface RedirectProps {
@@ -10,7 +9,7 @@ export const Redirect = (props: RedirectProps): null => {
   const { to } = props;
   const history = useHistory();
 
-  useEffect(() => {
+  useInfluence(() => {
     history.push(to);
   }, [ to, history ]);
 

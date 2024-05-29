@@ -5,17 +5,16 @@ import { toArray } from '../../../common/utilities/toArray.utility';
 
 import { isRouteElement } from './isRouteElement.utility';
 
-export interface GetMatchingParams {
+import type { RouterContextValues } from '../Router.context';
+
+export interface GetContextValuesParams {
   location: string;
   children: OneOrMore<EntireElement>;
 }
 
-export interface GetMatchingReturnType {
-  matching: ObjectDefType<string, string>;
-  route: string;
-}
+export type GetContextValuesResult = Pick<RouterContextValues, 'matching' | 'route'>;
 
-export const getMatching = (params: GetMatchingParams): GetMatchingReturnType => {
+export const getContextValues = (params: GetContextValuesParams): GetContextValuesResult => {
   const { location, children } = params;
 
   let matching: ObjectDefType<string, string> = {};

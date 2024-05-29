@@ -3,7 +3,7 @@ export const fcSortingParams = {
     'useInject',
     'useHistory',
     'useLocation',
-    'useMatch',
+    'useMatching',
     'useRoute',
     'useSyncExternalStore',
     'useStore',

@@ -1,35 +1,13 @@
-import React, { Suspense } from 'react';
+import { useRoute } from '../Router/Router.hooks/useRoute.hook';
 
-export type RouteProps = NormalRoutePropsWithRender | NormalRoutePropsWithElement | LazyRouteProps;
-
-export interface NormalRoutePropsWithRender {
-  path: string;
-  render: () => JSX.Element | null;
-}
-
-export interface NormalRoutePropsWithElement {
+export interface RouteProps {
   path: string;
   element: JSX.Element | null;
 }
 
-export interface LazyRouteProps {
-  path: string;
-  lazy: boolean;
-  component: React.FunctionComponent;
-}
-
 export const Route = (props: RouteProps): JSX.Element | null => {
-  if ('lazy' in props) {
-    return (
-      <Suspense fallback={ null }>
-        <props.component />
-      </Suspense>
-    );
-  }
+  const { path } = props;
+  const route = useRoute();
 
-  if ('element' in props) {
-    return props.element;
-  }
-
-  return props.render();
+  return path === route ? props.element : null;
 };

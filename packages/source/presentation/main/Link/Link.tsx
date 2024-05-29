@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
+import { useEvent } from '../../common/hooks/useEvent.hook';
 import { useHistory } from '../Router/Router.hooks/useHistory.hook/useHistory.hook';
 
 export interface LinkProps extends React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
@@ -12,10 +13,14 @@ export const Link = (props: LinkProps): JSX.Element => {
 
   const history = useHistory();
 
-  const onClick = useCallback((event: React.MouseEvent) => {
+  const onClick = useEvent((event: React.MouseEvent) => {
     event.preventDefault();
     history.push(to);
-  }, [ to, history ]);
+  });
 
-  return <a { ...restProps } href={ to } onClick={ onClick } rel="noreferrer">{ children }</a>;
+  return (
+    <a { ...restProps } href={ to } onClick={ onClick } rel="noreferrer">
+      { children }
+    </a>
+  );
 };
