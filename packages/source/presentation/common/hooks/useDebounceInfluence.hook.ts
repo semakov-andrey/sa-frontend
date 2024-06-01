@@ -1,9 +1,9 @@
 import { useUpdateInfluence } from './useUpdateInfluence.hook';
 
-export type UpdateCallback = () => (void | (() => void));
+export type Setup = () => (void | (() => void));
 
 export const useDebounceInfluence = (
-  callback: UpdateCallback,
+  callback: Setup,
   deps: unknown[],
   timeout: number
 ): void => {
