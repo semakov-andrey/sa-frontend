@@ -9,8 +9,8 @@ import {
 } from '@sa-frontend/application/contracts/HookApi/HookApi.contracts';
 import { type TransferError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import { deCapitalize } from '@sa-frontend/application/utilities/deCapitalize.utility';
+import { useDeepInfluence } from '@sa-frontend/presentation/common/hooks/useDeepInfluence.hook';
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
-import { useInfluence } from '@sa-frontend/presentation/common/hooks/useInfluence.hook';
 
 export const request = <Controller extends string, MethodName extends string>(
   fetcher: EventRequest,
@@ -48,7 +48,7 @@ export const hook = <Controller extends string, MethodName extends string>(
     setLoading(false);
   });
 
-  useInfluence(() => {
+  useDeepInfluence(() => {
     refetch();
   }, [ refetch, ...args ]);
 
