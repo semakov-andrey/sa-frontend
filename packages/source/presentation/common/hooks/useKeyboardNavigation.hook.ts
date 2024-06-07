@@ -98,7 +98,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
   const activeInactiveSwitch = useEvent((enable: boolean): (() => void) => {
     if (enable) {
       if (scrollIntoView) {
-        ref.current?.children[selected]?.scrollIntoView({ block: 'center' });
+        ref.current?.children[selected]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
       }
       setSelectedVisible(true);
     }
