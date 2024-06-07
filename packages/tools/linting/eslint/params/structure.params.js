@@ -24,6 +24,15 @@ const REACT_APP_COMMON_STRUCTURE = {
     },
     'file': 'use(.*).hook.ts'
   },
+  keyboards: {
+    'use(.*).keyboard': {
+      file1: 'use\\1.constants?.tsx?',
+      file2: 'use\\1.keyboard.ts',
+      file4: 'use\\1.types?.ts',
+      file5: 'use\\1.utilit(y|ies).ts'
+    },
+    'file': 'use(.*).keyboard.ts'
+  },
   stores: {
     '(.*).store': {
       file1: '\\1.constants?.tsx?',
@@ -127,13 +136,14 @@ const STRUCTURE = {
           file3: '\\4.constants?.tsx?',
           file4: '\\4.contexts?.ts',
           file5: '\\4.hooks?.ts',
-          file6: '\\4.stores?.ts',
-          file7: '\\4.stor(y|ies).tsx?',
-          file8: '\\4.styles?.css.d.ts',
-          file9: '\\4.tests?.tsx?',
-          file10: '\\4.types?.tsx?',
-          file11: '\\4.utilit(y|ies).ts',
-          file12: '\\4.tsx?'
+          file6: '\\4.keyboards?.ts',
+          file7: '\\4.stores?.ts',
+          file8: '\\4.stor(y|ies).tsx?',
+          file9: '\\4.styles?.css.d.ts',
+          file10: '\\4.tests?.tsx?',
+          file11: '\\4.types?.tsx?',
+          file12: '\\4.utilit(y|ies).ts',
+          file13: '\\4.tsx?'
         }
       },
       'file1': 'index.html',
