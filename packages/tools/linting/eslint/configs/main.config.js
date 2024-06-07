@@ -653,8 +653,19 @@ export const reactConfig = {
   }
 };
 
+export const ignoreConfigs = [
+  {
+    ...commonConfig,
+    files: [ 'eslint.config.js', 'stylelint.config.js' ],
+    rules: {
+      'import/no-default-export': 'off'
+    }
+  }
+];
+
 export const config = [
   commonConfig,
   reactConfig,
-  typescriptConfig
+  typescriptConfig,
+  ...ignoreConfigs
 ];
