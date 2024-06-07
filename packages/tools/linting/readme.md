@@ -102,11 +102,13 @@ export default config;
 │  │  ├─ assets
 │  │  ├─ constants
 │  │  ├─ contexts
-│  │  ├─ stores
+│  │  ├─ contexts
+│  │  ├─ hooks
+│  │  ├─ keyboards
 │  │  ├─ stories
 │  │  ├─ styles
-│  │  ├─ types
 │  │  ├─ tests
+│  │  ├─ types
 │  │  └─ utilities
 │  ├─ main
 │  │  ├─ {ComponentA}
@@ -151,6 +153,14 @@ export default config;
 │  │     │  │  ├─ use{HookY}.type.ts
 │  │     │  │  └─ use{HookY}.utility.ts
 │  │     │  └─ use{HookZ}.ts
+│  │     ├─ {ComponentB}.keyboards
+│  │     │  ├─ use{KeyboardX}
+│  │     │  ├─ use{KeyboardY}
+│  │     │  │  ├─ use{KeyboardY}.constant.ts
+│  │     │  │  ├─ use{KeyboardY}.hook.ts
+│  │     │  │  ├─ use{KeyboardY}.type.ts
+│  │     │  │  └─ use{KeyboardY}.utility.ts
+│  │     │  └─ use{KeyboardZ}.ts
 │  │     ├─ {ComponentB}.stores
 │  │     │  ├─ {storeX}
 │  │     │  ├─ {storeY}
@@ -180,6 +190,7 @@ export default config;
 │  │     ├─ {ComponentB}.constant.ts
 │  │     ├─ {ComponentB}.context.ts
 │  │     ├─ {ComponentB}.hook.ts
+│  │     ├─ {ComponentB}.keyboard.ts
 │  │     ├─ {ComponentB}.store.ts
 │  │     ├─ {ComponentB}.story.ts
 │  │     ├─ {ComponentB}.style.css
