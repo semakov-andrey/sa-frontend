@@ -19,7 +19,7 @@ export const buildApplication = async (name, appPath) => {
   const appName = getAppName(name, isWindows);
   await deleteAsync(`${ appName }-win32-x64`);
   await deleteAsync(`${ appName }-darwin-arm64`);
-  electron = spawn('electron-packager', [
+  electron = spawn('@electron/packager', [
     appPath,
     appName,
     `--icon=${ appPath }/icon.icns`,
