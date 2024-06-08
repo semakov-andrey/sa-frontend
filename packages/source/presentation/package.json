@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/presentation",
   "author": "Semakov Andrey",
-  "version": "1.100.0",
+  "version": "1.101.0",
   "publishConfig": {
     "access": "public"
   },
@@ -13,6 +13,10 @@
   "dependencies": {
     "dequal": "2.0.3",
     "@sa-frontend/application": "1.8.0",
-    "@sa-frontend/infrastructure": "1.1.0"
+    "@sa-frontend/infrastructure": "1.1.0",
+    "@types/react": "18.2.17",
+    "@types/react-dom": "18.2.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
