@@ -14,8 +14,6 @@ type Absent<T> = T | null | undefined;
 
 type NonOptional<T> = T extends undefined ? never : T;
 
-type NonNullable<T> = T extends null ? never : T;
-
 type NonAbsent<T> = T extends null | undefined ? never : T;
 
 type OneOrMore<T> = T | T[];
