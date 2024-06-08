@@ -12,19 +12,19 @@
     "publish:tools": "run-s version:up push:it"
   },
   "dependencies": {
-    "@stylistic/eslint-plugin": "^1.6.2",
-    "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "@typescript-eslint/parser": "^7.0.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jam3": "^0.2.3",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-unused-imports": "^3.1.0",
-    "fast-glob": "^3.3.2",
-    "globals": "^14.0.0",
+    "@stylistic/eslint-plugin": "1.6.2",
+    "@typescript-eslint/eslint-plugin": "7.0.1",
+    "@typescript-eslint/parser": "7.0.1",
+    "eslint": "8.56.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jam3": "0.2.3",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-unused-imports": "3.1.0",
+    "fast-glob": "3.3.2",
+    "globals": "14.0.0",
     "log-update": "6.0.0",
-    "stylelint": "^16.2.1",
-    "stylelint-order": "^6.0.4"
+    "stylelint": "16.2.1",
+    "stylelint-order": "6.0.4"
   }
 }

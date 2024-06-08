@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "dequal": "2.0.3",
-    "@sa-frontend/application": "^1.8.0",
-    "@sa-frontend/infrastructure": "^1.1.0"
+    "@sa-frontend/application": "1.8.0",
+    "@sa-frontend/infrastructure": "1.1.0"
   }
 }

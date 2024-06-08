@@ -11,6 +11,6 @@
     "publish:source": "run-s version:up push:it"
   },
   "dependencies": {
-    "@sa-frontend/application": "^1.10.0"
+    "@sa-frontend/application": "1.10.0"
   }
 }
