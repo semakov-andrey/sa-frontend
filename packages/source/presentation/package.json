@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "dequal": "2.0.3",
-    "@sa-frontend/application": "1.8.0",
-    "@sa-frontend/infrastructure": "1.1.0",
+    "@sa-frontend/application": "^1.8.0",
+    "@sa-frontend/infrastructure": "^1.1.0",
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
     "react": "18.2.0",
