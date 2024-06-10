@@ -59,7 +59,7 @@ export const methodHook = <Controller extends string, MethodName extends string>
   fetcher: EventRequest,
   controller: Controller,
   methodName: MethodName
-): HookLazyMethodResult<unknown, unknown> => {
+) => (): HookLazyMethodResult<unknown, unknown> => {
   const [ isLoading, setLoading ] = useState(false);
 
   const method = deCapitalize(methodName.slice(9));
