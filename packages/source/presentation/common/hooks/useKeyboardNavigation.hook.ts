@@ -2,7 +2,7 @@ import '@sa-frontend/infrastructure/services';
 
 import { useRef, useState } from 'react';
 
-import { localStorageUnique, sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
+import { sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isTypeNumber, isset, iswritten } from '@sa-frontend/application/utilities/typeGuards.utilities';
 import { KEYBOARD_KEYS } from '@sa-frontend/presentation/common/constants/keys.constant';
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
@@ -14,31 +14,38 @@ import { useInfluence } from './useInfluence.hook';
 import { useInject } from './useInject.hook';
 import { useUpdateInfluence } from './useUpdateInfluence.hook';
 
-export interface UseGamesNavigationParams {
+export interface UseKeyboardNavigationParams {
+  // Amount of child elements that used in navigation
   amount?: number;
-  localStorageKey?: string;
-  sessionStorageKey?: string;
+  // Key for saving current state to session storage
+  storageKey?: string;
+  // Press enter key handler, equals click handler by default
   onPressEnter?: (element: HTMLElement) => void;
+  // Click element handler
   onClick?: (element: HTMLElement) => void;
   timeToInactive?: number;
+  // Scroll selected element into view
   scrollIntoView?: boolean;
+  // Skip this keyboard navigation
   skip?: boolean;
 }
 
-export interface UseGamesNavigationReturn<T> {
+export interface UseKeyboardNavigationReturn<T> {
+  // Ref for installation to grid of elements
   ref: React.RefObject<T>;
+  // Index of selected element
   selected: number;
+  // Selected element setter
   setSelected: (selected: number) => void;
   setSelectedNotChangingVisible: (selected: number) => void;
   isSelectedVisible: boolean;
   setSelectedVisible: (isSelectedVisible: boolean) => void;
 }
 
-export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNavigationParams): UseGamesNavigationReturn<T> => {
+export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboardNavigationParams): UseKeyboardNavigationReturn<T> => {
   const {
     amount,
-    localStorageKey,
-    sessionStorageKey,
+    storageKey,
     onPressEnter = (element: HTMLElement): void => { element.click(); },
     onClick,
     timeToInactive,
@@ -46,20 +53,14 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
     skip
   } = params;
 
-  const localStorage = useInject(localStorageUnique);
   const sessionStorage = useInject(sessionStorageUnique);
 
-  const valueFromLocalStorage = isset(localStorageKey)
-    ? localStorage.get(localStorageKey)
+  const valueFromStorage = isset(storageKey)
+    ? sessionStorage.get(storageKey)
     : undefined;
-  const valueFromSessionStorage = isset(sessionStorageKey)
-    ? sessionStorage.get(sessionStorageKey)
-    : undefined;
-  const initialSelected = isTypeNumber(valueFromLocalStorage)
-    ? valueFromLocalStorage
-    : isTypeNumber(valueFromSessionStorage)
-      ? valueFromSessionStorage
-      : 0;
+  const initialSelected = isTypeNumber(valueFromStorage)
+    ? valueFromStorage
+    : 0;
 
   const [ selected, setSelected ] = useState(initialSelected);
   const [ isSelectedVisible, setSelectedVisible ] = useState(false);
@@ -188,9 +189,8 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseGamesNav
   }, { skip });
 
   useInfluence(() => {
-    if (isset(localStorageKey)) localStorage.set(localStorageKey, selected);
-    if (isset(sessionStorageKey)) sessionStorage.set(sessionStorageKey, selected);
-  }, [ localStorage, localStorageKey, sessionStorage, sessionStorageKey, selected ]);
+    if (isset(storageKey)) sessionStorage.set(storageKey, selected);
+  }, [ sessionStorage, storageKey, selected ]);
 
   useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
