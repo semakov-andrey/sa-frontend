@@ -12,7 +12,6 @@ import { isTypeHTMLElement, isTypeNode } from '../utilities/typeGuards.utilities
 
 import { useInfluence } from './useInfluence.hook';
 import { useInject } from './useInject.hook';
-import { useUpdateInfluence } from './useUpdateInfluence.hook';
 
 export interface UseKeyboardNavigationParams {
   // Amount of child elements that used in navigation
@@ -23,6 +22,8 @@ export interface UseKeyboardNavigationParams {
   onPressEnter?: (element: HTMLElement) => void;
   // Click element handler
   onClick?: (element: HTMLElement) => void;
+  // Time to start hiding selected element in interface
+  // Always visible by default
   timeToInactive?: number;
   // Scroll selected element into view
   scrollIntoView?: boolean;
@@ -39,7 +40,6 @@ export interface UseKeyboardNavigationReturn<T> {
   setSelected: (selected: number) => void;
   setSelectedNotChangingVisible: (selected: number) => void;
   isSelectedVisible: boolean;
-  setSelectedVisible: (isSelectedVisible: boolean) => void;
 }
 
 export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboardNavigationParams): UseKeyboardNavigationReturn<T> => {
@@ -62,16 +62,24 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     ? valueFromStorage
     : 0;
 
-  const [ selected, setSelected ] = useState(initialSelected);
-  const [ isSelectedVisible, setSelectedVisible ] = useState(false);
+  const [ selected, setSelectedLocal ] = useState(initialSelected);
+  const [ isSelectedVisible, setSelectedVisible ] = useState(!isset(timeToInactive));
 
   const ref = useRef<T>(null);
-  const dontChangeVisibleState = useRef(false);
   const visibilityTimeout = useRef(0);
 
+  const setSelected = useEvent((selected: number) => {
+    setSelectedLocal(selected);
+    activeInactiveSwitch();
+    if (isset(storageKey)) sessionStorage.set(storageKey, selected);
+    if (scrollIntoView) {
+      ref.current?.children[selected]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  });
+
   const setSelectedNotChangingVisible = useEvent((selected: number) => {
-    dontChangeVisibleState.current = true;
     setSelected(selected);
+    if (isset(storageKey)) sessionStorage.set(storageKey, selected);
   });
 
   const getAmount = useEvent(() => amount ?? ref.current?.children.length ?? 0);
@@ -94,21 +102,14 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     return amount > itemsInRow ? itemsInRow : amount;
   });
 
-  const activeInactiveSwitch = useEvent((enable: boolean): (() => void) => {
-    if (enable) {
-      if (scrollIntoView) {
-        ref.current?.children[selected]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      }
-      setSelectedVisible(true);
-    }
+  const activeInactiveSwitch = useEvent(() => {
+    if (!isset(timeToInactive)) return;
+    setSelectedVisible(true);
     window.clearTimeout(visibilityTimeout.current);
     visibilityTimeout.current = window.setTimeout(() => {
       setSelectedVisible(false);
-    }, timeToInactive);
-
-    return () => {
       window.clearTimeout(visibilityTimeout.current);
-    };
+    }, timeToInactive);
   });
 
   const getElement = useEvent((event: MouseEvent): Element | undefined => {
@@ -117,8 +118,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
     const element = elements[index];
     if (isTypeHTMLElement(element)) {
-      dontChangeVisibleState.current = true;
-      setSelected(index);
+      setSelectedNotChangingVisible(index);
     }
     return element;
   });
@@ -131,7 +131,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch(true);
+      activeInactiveSwitch();
       return;
     }
     const amount = getAmount();
@@ -144,7 +144,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_RIGHT, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch(true);
+      activeInactiveSwitch();
       return;
     }
     const amount = getAmount();
@@ -157,7 +157,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_UP, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch(true);
+      activeInactiveSwitch();
       return;
     }
     const amount = getAmount();
@@ -172,7 +172,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_DOWN, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch(true);
+      activeInactiveSwitch();
       return;
     }
     const amount = getAmount();
@@ -189,10 +189,6 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   }, { skip });
 
   useInfluence(() => {
-    if (isset(storageKey)) sessionStorage.set(storageKey, selected);
-  }, [ sessionStorage, storageKey, selected ]);
-
-  useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
 
     return () => {
@@ -200,21 +196,11 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     };
   }, [ ref, clickHandler ]);
 
-  useUpdateInfluence(() => {
-    if (dontChangeVisibleState.current) {
-      dontChangeVisibleState.current = false;
-      return isset(timeToInactive) ? activeInactiveSwitch(false) : undefined;
-    }
-
-    return isset(timeToInactive) ? activeInactiveSwitch(true) : undefined;
-  }, [ selected, timeToInactive, activeInactiveSwitch, dontChangeVisibleState ]);
-
   return {
     ref,
     selected,
     setSelected,
     setSelectedNotChangingVisible,
-    isSelectedVisible,
-    setSelectedVisible
+    isSelectedVisible
   };
 };
