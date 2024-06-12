@@ -2,10 +2,9 @@ import { iswritten } from '@sa-frontend/application/utilities/typeGuards.utiliti
 
 import { pathToRegexp } from '../../../common/utilities/pathToRegExp.utility';
 import { toArray } from '../../../common/utilities/toArray.utility';
+import { type RouterContextValues } from '../Router.context';
 
 import { isRouteElement } from './isRouteElement.utility';
-
-import type { RouterContextValues } from '../Router.context';
 
 export interface GetContextValuesParams {
   location: string;
