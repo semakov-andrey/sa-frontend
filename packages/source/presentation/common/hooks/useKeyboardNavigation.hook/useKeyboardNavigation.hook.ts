@@ -21,6 +21,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     storageKey,
     onPressEnter = (element: HTMLElement): void => { element.click(); },
     onClick,
+    onSelect,
     isKeyboardContext,
     timeToInactive,
     scrollIntoView = false,
@@ -45,6 +46,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   const setSelected = useEvent((selected: number) => {
     setSelectedLocal(selected);
     activeInactiveSwitch(true);
+    onSelect?.();
     if (isset(storageKey)) sessionStorage.set(storageKey, selected);
     if (scrollIntoView) {
       ref.current?.children[selected]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -109,6 +111,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
+      onSelect?.();
       return;
     }
     const amount = getAmount();
@@ -122,6 +125,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_RIGHT, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
+      onSelect?.();
       return;
     }
     const amount = getAmount();
@@ -135,6 +139,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_UP, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
+      onSelect?.();
       return;
     }
     const amount = getAmount();
@@ -150,6 +155,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_DOWN, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
+      onSelect?.();
       return;
     }
     const amount = getAmount();

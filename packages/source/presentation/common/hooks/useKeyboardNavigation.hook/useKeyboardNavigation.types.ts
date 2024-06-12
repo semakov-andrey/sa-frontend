@@ -7,6 +7,8 @@ export interface UseKeyboardNavigationParams {
   onPressEnter?: (element: HTMLElement) => void;
   // Click element handler
   onClick?: (element: HTMLElement) => void;
+  // Select element handler
+  onSelect?: () => void;
   // Keyboard is used right now
   isKeyboardContext?: boolean;
   // Time to start hiding selected element in interface
