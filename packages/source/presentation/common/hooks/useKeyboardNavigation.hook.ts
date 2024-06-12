@@ -22,6 +22,8 @@ export interface UseKeyboardNavigationParams {
   onPressEnter?: (element: HTMLElement) => void;
   // Click element handler
   onClick?: (element: HTMLElement) => void;
+  // Keyboard is used right now
+  isKeyboardContext?: boolean;
   // Time to start hiding selected element in interface
   // Always visible by default
   timeToInactive?: number;
@@ -48,6 +50,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     storageKey,
     onPressEnter = (element: HTMLElement): void => { element.click(); },
     onClick,
+    isKeyboardContext = false,
     timeToInactive,
     scrollIntoView = false,
     skip
@@ -70,7 +73,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   const setSelected = useEvent((selected: number) => {
     setSelectedLocal(selected);
-    activeInactiveSwitch();
+    activeInactiveSwitch(true);
     if (isset(storageKey)) sessionStorage.set(storageKey, selected);
     if (scrollIntoView) {
       ref.current?.children[selected]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
@@ -102,9 +105,11 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     return amount > itemsInRow ? itemsInRow : amount;
   });
 
-  const activeInactiveSwitch = useEvent(() => {
+  const activeInactiveSwitch = useEvent((enable: boolean) => {
+    if (isKeyboardContext) return;
     if (!isset(timeToInactive)) return;
-    setSelectedVisible(true);
+
+    if (enable) setSelectedVisible(true);
     window.clearTimeout(visibilityTimeout.current);
     visibilityTimeout.current = window.setTimeout(() => {
       setSelectedVisible(false);
@@ -131,7 +136,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch();
+      activeInactiveSwitch(true);
       return;
     }
     const amount = getAmount();
@@ -144,7 +149,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_RIGHT, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch();
+      activeInactiveSwitch(true);
       return;
     }
     const amount = getAmount();
@@ -157,7 +162,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_UP, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch();
+      activeInactiveSwitch(true);
       return;
     }
     const amount = getAmount();
@@ -172,7 +177,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useKeyboardEvent(KEYBOARD_KEYS.ARROW_DOWN, () => {
     if (!isSelectedVisible) {
-      activeInactiveSwitch();
+      activeInactiveSwitch(true);
       return;
     }
     const amount = getAmount();
@@ -187,6 +192,10 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     const element = ref.current?.children[selected];
     if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
+
+  useInfluence(() => {
+    if (!isKeyboardContext) activeInactiveSwitch(false);
+  }, [ isKeyboardContext, activeInactiveSwitch ]);
 
   useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
