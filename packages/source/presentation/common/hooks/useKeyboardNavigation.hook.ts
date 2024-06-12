@@ -106,10 +106,11 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   });
 
   const activeInactiveSwitch = useEvent((enable: boolean) => {
+    if (enable) setSelectedVisible(true);
+
     if (isKeyboardContext) return;
     if (!isset(timeToInactive)) return;
 
-    if (enable) setSelectedVisible(true);
     window.clearTimeout(visibilityTimeout.current);
     visibilityTimeout.current = window.setTimeout(() => {
       setSelectedVisible(false);
