@@ -12,6 +12,7 @@ import { isTypeHTMLElement, isTypeNode } from '../utilities/typeGuards.utilities
 
 import { useInfluence } from './useInfluence.hook';
 import { useInject } from './useInject.hook';
+import { useUpdateInfluence } from './useUpdateInfluence.hook';
 
 export interface UseKeyboardNavigationParams {
   // Amount of child elements that used in navigation
@@ -107,11 +108,11 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   const activeInactiveSwitch = useEvent((set: boolean) => {
     if (set) setSelectedVisible(true);
+    window.clearTimeout(visibilityTimeout.current);
 
     if (isset(isKeyboardContext) && set) return;
     if (!isset(timeToInactive)) return;
 
-    window.clearTimeout(visibilityTimeout.current);
     visibilityTimeout.current = window.setTimeout(() => {
       setSelectedVisible(false);
       window.clearTimeout(visibilityTimeout.current);
@@ -195,16 +196,16 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   }, { skip });
 
   useInfluence(() => {
-    if (isKeyboardContext === false) activeInactiveSwitch(false);
-  }, [ isKeyboardContext, activeInactiveSwitch ]);
-
-  useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
 
     return () => {
       ref.current?.removeEventListener('click', clickHandler);
     };
   }, [ ref, clickHandler ]);
+
+  useUpdateInfluence(() => {
+    if (isKeyboardContext === false) activeInactiveSwitch(false);
+  }, [ isKeyboardContext, activeInactiveSwitch ]);
 
   return {
     ref,
