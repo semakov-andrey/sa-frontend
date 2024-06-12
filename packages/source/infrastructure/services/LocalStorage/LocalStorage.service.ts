@@ -13,4 +13,8 @@ export class LocalStorage implements ExternalStorage {
   public set = (name: string, value: unknown): void => {
     window.localStorage.setItem(name, JSON.stringify(value));
   };
+
+  public remove = (name: string): void => {
+    window.sessionStorage.removeItem(name);
+  };
 }

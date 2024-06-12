@@ -13,4 +13,8 @@ export class SessionStorage implements ExternalStorage {
   public set = (name: string, value: unknown): void => {
     window.sessionStorage.setItem(name, JSON.stringify(value));
   };
+
+  public remove = (name: string): void => {
+    window.sessionStorage.removeItem(name);
+  };
 }
