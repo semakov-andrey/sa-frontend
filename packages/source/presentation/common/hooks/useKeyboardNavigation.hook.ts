@@ -41,7 +41,9 @@ export interface UseKeyboardNavigationReturn<T> {
   selected: number;
   // Selected element setter
   setSelected: (selected: number) => void;
-  setSelectedNotChangingVisible: (selected: number) => void;
+  // Set new selected element and don't touch visibility
+  setSelectedKeepingVisibility: (selected: number) => void;
+  // Selected element visibility state
   isSelectedVisible: boolean;
 }
 
@@ -81,7 +83,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     }
   });
 
-  const setSelectedNotChangingVisible = useEvent((selected: number) => {
+  const setSelectedKeepingVisibility = useEvent((selected: number) => {
     setSelected(selected);
     if (isset(storageKey)) sessionStorage.set(storageKey, selected);
   });
@@ -125,7 +127,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       .findIndex((child: Element) => isTypeNode(event.target) && child.contains(event.target));
     const element = elements[index];
     if (isTypeHTMLElement(element)) {
-      setSelectedNotChangingVisible(index);
+      setSelectedKeepingVisibility(index);
     }
     return element;
   });
@@ -204,14 +206,14 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   }, [ ref, clickHandler ]);
 
   useUpdateInfluence(() => {
-    if (isKeyboardContext === false) activeInactiveSwitch(false);
+    activeInactiveSwitch(Boolean(isKeyboardContext));
   }, [ isKeyboardContext, activeInactiveSwitch ]);
 
   return {
     ref,
     selected,
     setSelected,
-    setSelectedNotChangingVisible,
+    setSelectedKeepingVisibility,
     isSelectedVisible
   };
 };
