@@ -50,7 +50,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     storageKey,
     onPressEnter = (element: HTMLElement): void => { element.click(); },
     onClick,
-    isKeyboardContext = false,
+    isKeyboardContext,
     timeToInactive,
     scrollIntoView = false,
     skip
@@ -105,10 +105,10 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     return amount > itemsInRow ? itemsInRow : amount;
   });
 
-  const activeInactiveSwitch = useEvent((enable: boolean) => {
-    if (enable) setSelectedVisible(true);
+  const activeInactiveSwitch = useEvent((set: boolean) => {
+    if (set) setSelectedVisible(true);
 
-    if (isKeyboardContext) return;
+    if (isset(isKeyboardContext) && set) return;
     if (!isset(timeToInactive)) return;
 
     window.clearTimeout(visibilityTimeout.current);
@@ -195,7 +195,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   }, { skip });
 
   useInfluence(() => {
-    if (!isKeyboardContext) activeInactiveSwitch(false);
+    if (isKeyboardContext === false) activeInactiveSwitch(false);
   }, [ isKeyboardContext, activeInactiveSwitch ]);
 
   useInfluence(() => {
