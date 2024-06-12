@@ -67,7 +67,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     : 0;
 
   const [ selected, setSelectedLocal ] = useState(initialSelected);
-  const [ isSelectedVisible, setSelectedVisible ] = useState(!isset(timeToInactive));
+  const [ isSelectedVisible, setSelectedVisible ] = useState(!isset(timeToInactive) || Boolean(isKeyboardContext));
 
   const ref = useRef<T>(null);
   const visibilityTimeout = useRef(0);
