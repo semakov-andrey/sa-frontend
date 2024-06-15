@@ -54,7 +54,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   });
 
   const setSelectedKeepingVisibility = useEvent((selected: number) => {
-    setSelected(selected);
+    setSelectedLocal(selected);
     if (isset(storageKey)) sessionStorage.set(storageKey, selected);
   });
 
