@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { type CleanMethodResult, type ConfigApi, type HookApi, type HookLazyMethodResult, type HookMethodResult } from '@sa-frontend/application/contracts/HookApi/HookApi.contracts';
-import { type HttpRequest } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.contracts';
+import { type HttpRequest, type HttpRequestBody } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.contracts';
 import { type TransferError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import { deCapitalize } from '@sa-frontend/application/utilities/deCapitalize.utility';
 import { isTypeObject } from '@sa-frontend/application/utilities/typeGuards.utilities';
@@ -20,11 +20,11 @@ export const request = <
 ) => async (
   ...args: unknown[]
 ): Promise<CleanMethodResult<unknown>> => {
-  const { query } = (isTypeObject(args[0]) ? args[0] : {}) as { query?: unknown };
+  const { query, body } = (isTypeObject(args[0]) ? args[0] : {}) as { query?: unknown, body?: HttpRequestBody };
   const result = await fetcher.go({
     method: config[controller][method].method,
     url: config[controller][method].url(query),
-    body: args
+    body
   });
   return {
     [!fetcher.isTransferError(result) ? 'data' : 'error']: result
