@@ -23,7 +23,7 @@ import {
 
 import { FetchError } from './BrowserFetcher.utilities';
 
-export class Fetch implements HttpRequest {
+export class BrowserFetcher implements HttpRequest {
   constructor(options: HttpRequestOptions = {}) {
     this.parseDates = options.parseDates;
   }
