@@ -73,7 +73,7 @@ export const methodHook = <
   config: ConfigApi<Api>,
   controller: Controller,
   methodName: MethodName
-): HookLazyMethodResult<unknown, unknown> => {
+) => (): HookLazyMethodResult<unknown, unknown> => {
   const [ isLoading, setLoading ] = useState(false);
 
   const method = deCapitalize(methodName.slice(9)) as keyof Api[Controller];
