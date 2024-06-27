@@ -21,7 +21,7 @@ import {
   iswritten
 } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
-import { FetchError } from './Fetch.utilities';
+import { FetchError } from './BrowserFetcher.utilities';
 
 export class Fetch implements HttpRequest {
   constructor(options: HttpRequestOptions = {}) {

@@ -1,5 +1,7 @@
 import { type TransferError, type TransferResponseOrError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 
+import { type HTTPRequestMethods } from '../HttpRequest/HttpRequest.contracts';
+
 export type HookApi<Api> = {
   [Controller in keyof Api]: HookApiMethods<Api[Controller]>;
 };
@@ -48,3 +50,9 @@ export type HookLazyMethodResult<Data, Params> = [
   mutation: (...args: Params extends unknown[] ? Params : unknown[]) => Promise<{ data?: Data, error?: TransferError }>,
   isLoading: boolean
 ];
+
+export type ConfigApi<Api> = {
+  [Controller in keyof Api]: {
+    [Method in keyof Api[Controller]]: { method: HTTPRequestMethods, url: string };
+  }
+};
