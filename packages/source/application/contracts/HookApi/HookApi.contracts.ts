@@ -54,10 +54,10 @@ export type HookLazyMethodResult<Data, Params> = [
 export type ConfigApi<Api> = {
   [Controller in keyof Api]: {
     [Method in keyof Api[Controller]]: {
-      method: HTTPRequestMethods,
       url: Api[Controller][Method] extends (params: { query: infer R }) => unknown
         ? (query: R) => string
         : () => string,
+      method?: HTTPRequestMethods,
       readAsArrayBuffer?: boolean
     };
   }
