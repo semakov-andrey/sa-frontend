@@ -57,7 +57,8 @@ export type ConfigApi<Api> = {
       method: HTTPRequestMethods,
       url: Api[Controller][Method] extends (params: { query: infer R }) => unknown
         ? (query: R) => string
-        : () => string
+        : () => string,
+      readAsArrayBuffer?: boolean
     };
   }
 };

@@ -24,7 +24,10 @@ export const request = <
   const result = await fetcher.go({
     method: config[controller][method].method,
     url: config[controller][method].url(query),
-    body
+    body,
+    options: {
+      readAsArrayBuffer: config[controller][method].readAsArrayBuffer
+    }
   });
   return {
     [!fetcher.isTransferError(result) ? 'data' : 'error']: result
