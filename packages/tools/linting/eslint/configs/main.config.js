@@ -572,7 +572,7 @@ export const reactTsxFormatRules = {
   '@stylistic/jsx-first-prop-new-line': [ 'error', 'multiline-multiprop' ],
   '@stylistic/jsx-indent': [ 'error', INDENT, { checkAttributes: true } ],
   '@stylistic/jsx-indent-props': [ 'error', INDENT ],
-  '@stylistic/jsx-max-props-per-line': [ 'error', { maximum: 4 } ],
+  '@stylistic/jsx-max-props-per-line': [ 'error', { maximum: 8 } ],
   '@stylistic/jsx-pascal-case': 'error',
   '@stylistic/jsx-props-no-multi-spaces': 'error',
   '@stylistic/jsx-tag-spacing': [
