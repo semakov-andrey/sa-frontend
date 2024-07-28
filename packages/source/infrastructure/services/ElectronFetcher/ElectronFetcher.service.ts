@@ -5,7 +5,8 @@ import { EVENT_TRANSFER } from '@sa-frontend/application/contracts/EventResponse
 import { type EventResponseParameters } from '@sa-frontend/application/contracts/EventResponse/EventResponse.contracts';
 import { TRANSFER_STATUSES } from '@sa-frontend/application/contracts/Transfer/Transfer.constants';
 import { type TransferError, type TransferResponseOrError, type TransferStatusCodeError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
-import { isKeyOfObject, isTypeObject } from '@sa-frontend/application/utilities/typeGuards.utilities';
+import { isTransferStatusCodeError } from '@sa-frontend/application/contracts/Transfer/Transfer.utility';
+import { isKeyOfObject, isTypeObject, isTypeString } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 import { ElectronHandlerError } from '../ElectronHandler/ElectronHandler.utility';
 
@@ -27,7 +28,14 @@ export class ElectronFetcher implements EventRequest {
       const unsubscribe = window.electron.on(EVENT_TRANSFER, (data: unknown) => {
         if (!isTypeObject(data) || !isKeyOfObject(data, 'id') || !isKeyOfObject(data, 'data') || data.id !== id) return;
 
-        resolve(data.data as Data);
+        if (isKeyOfObject(data, 'code')
+          && isTransferStatusCodeError(data.code)
+          && isKeyOfObject(data, 'message')
+          && isTypeString(data.message)) {
+          resolve(new ElectronHandlerError(data.code, data.message));
+        } else {
+          resolve(data.data as Data);
+        }
 
         unsubscribe();
         window.clearTimeout(timeout);
