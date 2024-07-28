@@ -28,13 +28,15 @@ export class ElectronFetcher implements EventRequest {
       const unsubscribe = window.electron.on(EVENT_TRANSFER, (data: unknown) => {
         if (!isTypeObject(data) || !isKeyOfObject(data, 'id') || !isKeyOfObject(data, 'data') || data.id !== id) return;
 
-        if (isKeyOfObject(data, 'code')
-          && isTransferStatusCodeError(data.code)
-          && isKeyOfObject(data, 'message')
-          && isTypeString(data.message)) {
-          resolve(new ElectronHandlerError(data.code, data.message));
+        const { data: finalData } = data;
+        if (isTypeObject(finalData)
+          && isKeyOfObject(finalData, 'code')
+          && isTransferStatusCodeError(finalData.code)
+          && isKeyOfObject(finalData, 'message')
+          && isTypeString(finalData.message)) {
+          resolve(new ElectronHandlerError(finalData.code, finalData.message));
         } else {
-          resolve(data.data as Data);
+          resolve(finalData as Data);
         }
 
         unsubscribe();
