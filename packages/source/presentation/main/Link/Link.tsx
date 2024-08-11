@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
+
 import { useEvent } from '../../common/hooks/useEvent.hook';
 import { cn } from '../../common/utilities/cn.utility';
 import { useHistory } from '../Router/Router.hooks/useHistory.hook/useHistory.hook';
@@ -11,16 +13,25 @@ export interface LinkProps extends React.DetailedHTMLProps<React.AnchorHTMLAttri
   className?: string;
   children: OneOrMore<EntireElement | OneOrMore<EntireElement>>;
   disabled?: boolean;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 export const Link = (props: LinkProps): JSX.Element => {
-  const { to: href, className, children, disabled = false, ...restProps } = props;
+  const {
+    to: href,
+    className,
+    children,
+    disabled = false,
+    onClick: externalOnClick,
+    ...restProps
+  } = props;
 
   const history = useHistory();
 
   const onClick = useEvent((event: React.MouseEvent) => {
     event.preventDefault();
-    history.push(href);
+    if (!isset(externalOnClick)) history.push(href);
+    else externalOnClick(event);
   });
 
   const cnDisabled = disabled ? css.disabled : undefined;
