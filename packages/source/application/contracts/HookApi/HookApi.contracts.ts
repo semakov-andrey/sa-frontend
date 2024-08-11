@@ -47,7 +47,7 @@ export interface HookMethodResult<Data> {
 }
 
 export type HookLazyMethodResult<Data, Params> = [
-  mutation: (...args: Params extends unknown[] ? Params : unknown[]) => Promise<{ data?: Data, error?: TransferError }>,
+  mutation: (...args: Params extends unknown[] ? Params : unknown[]) => Promise<CleanMethodResult<Data>>,
   isLoading: boolean
 ];
 
