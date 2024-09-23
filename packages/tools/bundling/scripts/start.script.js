@@ -17,7 +17,7 @@ export const start = async (config, params, middlewares = []) => {
     middlewares.forEach((middleware) => middleware(server));
     server.use(webpackDevMiddleware(compiler, { stats: 'minimal' }));
     server.use(webpackHotMiddleware(compiler, { log: false }));
-    server.listen({ port });
+    server.listen({ port, host: '0.0.0.0' });
   } else {
     await new Promise((resolve) => {
       compiler.watch({}, resolve);
