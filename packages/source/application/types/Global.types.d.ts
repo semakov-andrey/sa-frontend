@@ -20,7 +20,12 @@ type OneOrMore<T> = T | T[];
 
 type Item<List extends unknown[]> = List extends (infer Item)[] ? Item : never;
 
-type NonEmpty<List extends unknown[]> = [Item<List>, ...Item<List>[]];
+type NonEmpty<Value extends unknown> =
+  Value extends unknown[]
+    ? [Item<Value>, ...Item<Value>[]]
+    : Value extends Record<ObjectKey, infer M>
+      ? Value & { 0: M }
+      : never;
 
 type KeyOf<T> = keyof T;
 
