@@ -5,11 +5,14 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import { webpackDevConfig } from '../configs/webpack.dev.js';
+import { webpackProdConfig } from '../configs/webpack.prod.js';
 import { isset } from '../utilities/typeGuards.utility.js';
 
-export const start = async (config, params, middlewares = []) => {
+export const start = async (config, params, middlewares = [], isWatchBuilded = false) => {
   const { port } = params;
-  const compiler = webpack(webpackDevConfig(config, params));
+  const compiler = webpack(
+    (!isWatchBuilded ? webpackDevConfig : webpackProdConfig)(config, params)
+  );
 
   if (isset(port)) {
     const server = fastify();

@@ -19,7 +19,8 @@ export const electron = async (params) => {
     clientDirectories,
     clientConfig = () => ({}),
     clientParams: restClientParams = {},
-    devMiddlewares = [ devMiddleware ]
+    devMiddlewares = [ devMiddleware ],
+    isWatchBuilded
   } = params;
 
   const isWatch = process.argv[2] === '--watch';
@@ -89,7 +90,8 @@ export const electron = async (params) => {
       serverParams,
       clientConfig,
       clientParams,
-      devMiddlewares
+      devMiddlewares,
+      isWatchBuilded
     };
     if (isWatch) startElectron(params);
     else buildElectron(params);
