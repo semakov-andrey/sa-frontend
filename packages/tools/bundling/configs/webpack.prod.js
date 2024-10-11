@@ -5,6 +5,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { ESBuildMinifyPlugin } from 'esbuild-loader';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 
@@ -103,7 +104,12 @@ export const webpackProdConfig = (config, params) => {
         : [],
       ...isServiceWorker
         ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath }) ]
-        : []
+        : [],
+      new webpack.DefinePlugin({
+        ...isServiceWorker
+          ? { 'proccess.env.isPWA': JSON.stringify(true) }
+          : {}
+      })
     ],
     optimization: {
       minimize: true,
