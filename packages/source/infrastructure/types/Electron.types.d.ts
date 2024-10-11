@@ -5,4 +5,4 @@ interface Window {
   };
 }
 
-declare const IS_PWA: boolean;
+declare const IS_PWA: 'true' | 'false';
