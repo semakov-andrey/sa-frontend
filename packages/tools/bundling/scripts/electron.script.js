@@ -16,6 +16,7 @@ export const electron = async (params) => {
     rootDirectory,
     serverDirectories,
     serverConfig = () => ({}),
+    serverParams: restServerParams = {},
     clientDirectories,
     clientConfig = () => ({}),
     clientParams: restClientParams = {},
@@ -60,7 +61,8 @@ export const electron = async (params) => {
         ? { include: tsConfigInclude.filter((item) => !item.includes('./srcClient/')) }
         : {}
     },
-    aliases
+    aliases,
+    ...restServerParams
   };
 
   const clientParams = {

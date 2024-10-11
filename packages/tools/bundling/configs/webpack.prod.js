@@ -24,7 +24,8 @@ export const webpackProdConfig = (config, params) => {
     isAnalyzeBundle = true,
     analyzeStatsFilename = 'stats.json',
     isServiceWorker = false,
-    serviceWorkerName = 'sw.js'
+    serviceWorkerName = 'sw.js',
+    isPWA = false
   } = params;
   const publicPath = config.output?.publicPath ?? '/';
 
@@ -106,9 +107,7 @@ export const webpackProdConfig = (config, params) => {
         ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath }) ]
         : [],
       new webpack.DefinePlugin({
-        ...isServiceWorker
-          ? { IS_PWA: JSON.stringify(true) }
-          : {}
+        IS_PWA: JSON.stringify(isPWA ? 'true' : 'false')
       })
     ],
     optimization: {
