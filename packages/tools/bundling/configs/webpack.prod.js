@@ -107,7 +107,7 @@ export const webpackProdConfig = (config, params) => {
         : [],
       new webpack.DefinePlugin({
         ...isServiceWorker
-          ? { 'process.env.isPWA': JSON.stringify(true) }
+          ? { IS_PWA: JSON.stringify(true) }
           : {}
       })
     ],
