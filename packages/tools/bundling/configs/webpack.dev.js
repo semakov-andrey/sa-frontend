@@ -81,6 +81,9 @@ export const webpackDevConfig = (config, params) => {
         failOnError: true,
         allowAsyncCycles: false,
         cwd: process.cwd()
+      }),
+      new webpack.DefinePlugin({
+        IS_PWA: JSON.stringify('false')
       })
     ]
   }, config);
