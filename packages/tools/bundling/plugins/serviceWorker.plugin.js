@@ -1,9 +1,12 @@
+import { isset } from '../utilities/typeGuards.utility.js';
+
 export class ServiceWorkerPlugin {
   filename = '';
 
   constructor(options) {
     this.filename = options?.filename ?? 'sw.js';
     this.publicPath = options?.publicPath ?? '/';
+    this.filter = options?.filter;
   };
 
   apply(compiler) {
@@ -17,6 +20,7 @@ export class ServiceWorkerPlugin {
         const assets = Object.keys(compilation.assets)
           .filter((asset) =>
             typeof asset === 'string' && asset !== this.filename)
+          .filter(isset(this.filter) ? this.filter : () => true)
           .map((asset) => `${ slash }${ asset.replace('\\', '/') }`);
 
         const source = compiler.options.mode === 'production'

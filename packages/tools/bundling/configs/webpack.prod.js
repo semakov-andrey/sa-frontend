@@ -27,6 +27,7 @@ export const webpackProdConfig = (config, params) => {
     analyzeStatsFilename = 'stats.json',
     isServiceWorker = false,
     serviceWorkerName = 'sw.js',
+    serviceWorkerFilter,
     isPWA = false,
     pwaManifest
   } = params;
@@ -108,7 +109,7 @@ export const webpackProdConfig = (config, params) => {
         ]
         : [],
       ...isServiceWorker
-        ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath }) ]
+        ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath, filter: serviceWorkerFilter }) ]
         : [],
       ...isHTML && isPWA && isset(pwaManifest)
         ? [ new FaviconPlugin({ faviconsDirectory, assetsDirectory, hash: true, manifest: pwaManifest }) ]
