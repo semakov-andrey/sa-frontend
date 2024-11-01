@@ -13,8 +13,8 @@ import { isset } from '../utilities/typeGuards.utility.js';
  * - favicon.ico - safari
  * - favicon.svg - macbook touchbar grayscale icon
  * - favicon.ios.180x180.png - ios app icon (apple touch icon)
- * - favicon.192x192.png - app icon
- * - favicon.512x512.png - app icon
+ * - favicon.macos.192x192.png - macos app icon
+ * - favicon.macos.512x512.png - macos app icon
  */
 
 export class FaviconPlugin {
@@ -93,7 +93,7 @@ export class FaviconPlugin {
       this.html.push(`<link href="/${ asset.url }" rel="apple-touch-icon">`);
     }
 
-    if (extension === 'png') {
+    if (name.includes('macos')) {
       this.manifestIcons.push({
         sizes: `${ width }x${ height }`,
         src: `/${ this.assetsDirectory }/${ name }${ hash }.${ extension }`,
