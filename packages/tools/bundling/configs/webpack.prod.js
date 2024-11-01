@@ -9,6 +9,7 @@ import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { merge } from 'webpack-merge';
 
+import { FaviconPlugin } from '../plugins/favicon.plugin.js';
 import { ServiceWorkerPlugin } from '../plugins/serviceWorker.plugin.js';
 import { getDirectories } from '../utilities/getDirectories.utility.js';
 
@@ -25,13 +26,15 @@ export const webpackProdConfig = (config, params) => {
     analyzeStatsFilename = 'stats.json',
     isServiceWorker = false,
     serviceWorkerName = 'sw.js',
-    isPWA = false
+    isPWA = false,
+    pwaManifest = {}
   } = params;
   const publicPath = config.output?.publicPath ?? '/';
 
   const {
     sourceDirectory,
     htmlFileDirectory,
+    faviconsDirectory,
     assetsDirectory,
     productionDirectory
   } = getDirectories(rootDirectory, directories);
@@ -105,6 +108,9 @@ export const webpackProdConfig = (config, params) => {
         : [],
       ...isServiceWorker
         ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath }) ]
+        : [],
+      ...isPWA
+        ? [ new FaviconPlugin({ faviconsDirectory, assetsDirectory, hash: true, manifest: pwaManifest }) ]
         : [],
       new webpack.DefinePlugin({
         IS_PWA: JSON.stringify(isPWA ? 'true' : 'false')

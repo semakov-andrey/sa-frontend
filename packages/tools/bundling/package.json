@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/bundling",
   "author": "Semakov Andrey",
-  "version": "2.20.0",
+  "version": "2.21.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -23,9 +23,11 @@
     "del": "7.0.0",
     "electron": "30.1.0",
     "esbuild-loader": "2.21.0",
+    "fast-glob": "3.3.2",
     "fastify": "4.15.0",
     "file-loader": "6.2.0",
     "fork-ts-checker-webpack-plugin": "8.0.0",
+    "image-size": "1.1.1",
     "html-webpack-plugin": "5.5.0",
     "mini-css-extract-plugin": "2.9.0",
     "node-loader": "2.0.0",
