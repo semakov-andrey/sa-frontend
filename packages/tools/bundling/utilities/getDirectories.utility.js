@@ -6,7 +6,7 @@ export const getDirectories = (rootDirectory, directories) => ({
   htmlFileDirectory: directories?.htmlFile
     ?? path.resolve(directories?.source ?? path.resolve(rootDirectory, 'src'), 'presentation'),
   faviconsDirectory: directories?.favicons
-    ?? path.resolve(directories?.source ?? path.resolve(rootDirectory, 'src'), 'presentation', 'common', 'assets'),
+    ?? path.resolve(directories?.source ?? path.resolve(rootDirectory, 'src'), 'presentation', 'common', 'favicons'),
   assetsDirectory: directories?.assets
     ?? 'assets',
   developmentDirectory: directories?.development
