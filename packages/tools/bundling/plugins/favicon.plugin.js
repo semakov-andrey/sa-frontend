@@ -106,18 +106,18 @@ export class FaviconPlugin {
   tapManifest(compilation) {
     const spaces = 2;
     const hash = this.makeHash();
-    const path = `${ this.assetsDirectory }/manifest${ hash }.json`;
+    const url = `${ this.assetsDirectory }/manifest${ hash }.json`;
     const source = JSON.stringify(
       { ...this.manifest, icons: this.manifestIcons },
       undefined,
       spaces
     );
     this.pushAsset(compilation, {
-      url: `${ this.assetsDirectory }/manifest${ hash }.json`,
+      url,
       source,
       size: source.length
     });
-    this.html.push(`<link href="/${ path }" rel="manifest">`);
+    this.html.push(`<link href="/${ url }" rel="manifest">`);
   };
 
   apply(compiler) {
