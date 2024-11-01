@@ -74,7 +74,7 @@ export class FaviconPlugin {
     const name = path.basename(icon, `.${ extension }`);
     const hash = this.makeHash();
     const asset = {
-      url: `assets/${ name }${ hash }.${ extension }`,
+      url: `${ this.assetsDirectory }/${ name }${ hash }.${ extension }`,
       source: buffer,
       size: buffer.length
     };

@@ -12,6 +12,7 @@ import { merge } from 'webpack-merge';
 import { FaviconPlugin } from '../plugins/favicon.plugin.js';
 import { ServiceWorkerPlugin } from '../plugins/serviceWorker.plugin.js';
 import { getDirectories } from '../utilities/getDirectories.utility.js';
+import { isset } from '../utilities/typeGuards.utility.js';
 
 import { webpackCommonConfig } from './webpack.common.js';
 
@@ -27,7 +28,7 @@ export const webpackProdConfig = (config, params) => {
     isServiceWorker = false,
     serviceWorkerName = 'sw.js',
     isPWA = false,
-    pwaManifest = {}
+    pwaManifest
   } = params;
   const publicPath = config.output?.publicPath ?? '/';
 
@@ -109,7 +110,7 @@ export const webpackProdConfig = (config, params) => {
       ...isServiceWorker
         ? [ new ServiceWorkerPlugin({ filename: serviceWorkerName, publicPath }) ]
         : [],
-      ...isPWA
+      ...isHTML && isPWA && isset(pwaManifest)
         ? [ new FaviconPlugin({ faviconsDirectory, assetsDirectory, hash: true, manifest: pwaManifest }) ]
         : [],
       new webpack.DefinePlugin({
