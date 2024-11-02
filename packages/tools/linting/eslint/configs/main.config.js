@@ -547,7 +547,7 @@ export const reactLintRules = {
 export const reactTsxLintRules = {
   'react/jsx-boolean-value': [ 'error', 'never' ],
   'react/jsx-filename-extension': [ 'error', { extensions: [ '.tsx' ] } ],
-  'react/jsx-fragments': [ 'error', 'element' ],
+  'react/jsx-fragments': [ 'error', 'syntax' ],
   'react/jsx-key': [ 'error', { checkFragmentShorthand: true } ],
   'react/jsx-max-depth': [ 'error', { max: 10 } ],
   'react/jsx-no-bind': [ 'error', { ignoreDOMComponents: true } ],
