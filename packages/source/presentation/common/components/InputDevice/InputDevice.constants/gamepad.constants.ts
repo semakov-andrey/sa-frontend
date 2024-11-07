@@ -1,5 +1,3 @@
-import { type TButtonIndex, type TButtonValue } from '@/types/gamepad';
-
 export const GAMEPAD_KEYS = {
   B: 'B',
   A: 'A',
@@ -19,7 +17,7 @@ export const GAMEPAD_KEYS = {
   Right: 'Right'
 } as const;
 
-export const GAMEPAD_BUTTONS: Record<TButtonIndex, TButtonValue> = {
+export const GAMEPAD_BUTTONS: Record<number, string> = {
   0: GAMEPAD_KEYS.B,
   1: GAMEPAD_KEYS.A,
   2: GAMEPAD_KEYS.Y,

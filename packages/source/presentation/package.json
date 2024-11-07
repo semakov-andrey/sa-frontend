@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/presentation",
   "author": "Semakov Andrey",
-  "version": "1.120.0",
+  "version": "1.123.0",
   "publishConfig": {
     "access": "public"
   },
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "dequal": "2.0.3",
+    "@nanostores/react": "0.7.1",
     "@sa-frontend/application": "^1.8.0",
     "@sa-frontend/infrastructure": "^1.1.0",
     "@types/react": "18.2.17",

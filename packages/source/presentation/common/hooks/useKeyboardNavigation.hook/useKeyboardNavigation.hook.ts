@@ -4,10 +4,10 @@ import { useRef, useState } from 'react';
 
 import { sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
 import { isTypeNumber, isset, iswritten } from '@sa-frontend/application/utilities/typeGuards.utilities';
-import { KEYBOARD_KEYS } from '@sa-frontend/presentation/common/constants/keys.constant';
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
-import { useKeyboardEvent } from '@sa-frontend/presentation/common/hooks/useKeyboardEvent.hook/useKeyboardEvent.hook';
 
+import { KEYBOARD_KEYS } from '../../components/InputDevice/InputDevice.constants/keyboard.constants';
+import { useKeyboardEvent } from '../../components/InputDevice/InputDevice.hooks/useKeyboardEvent.hook';
 import { isTypeHTMLElement, isTypeNode } from '../../utilities/typeGuards.utilities';
 import { useInfluence } from '../useInfluence.hook';
 import { useInject } from '../useInject.hook';
@@ -22,7 +22,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     onPressEnter = (element: HTMLElement): void => { element.click(); },
     onClick,
     onSelect,
-    isKeyboardContext,
+    isInputDeviceContext,
     timeToInactive,
     scrollIntoView = false,
     skip
@@ -38,7 +38,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     : 0;
 
   const [ selected, setSelectedLocal ] = useState(initialSelected);
-  const [ isSelectedVisible, setSelectedVisible ] = useState(!isset(timeToInactive) || Boolean(isKeyboardContext));
+  const [ isSelectedVisible, setSelectedVisible ] = useState(!isset(timeToInactive) || Boolean(isInputDeviceContext));
 
   const ref = useRef<T>(null);
   const visibilityTimeout = useRef(0);
@@ -82,7 +82,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     if (set) setSelectedVisible(true);
     window.clearTimeout(visibilityTimeout.current);
 
-    if (isset(isKeyboardContext) && set) return;
+    if (isset(isInputDeviceContext) && set) return;
     if (!isset(timeToInactive)) return;
 
     visibilityTimeout.current = window.setTimeout(() => {
@@ -180,8 +180,8 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   }, [ ref, clickHandler ]);
 
   useUpdateInfluence(() => {
-    activeInactiveSwitch(Boolean(isKeyboardContext));
-  }, [ isKeyboardContext, activeInactiveSwitch ]);
+    activeInactiveSwitch(Boolean(isInputDeviceContext));
+  }, [ isInputDeviceContext, activeInactiveSwitch ]);
 
   return {
     ref,

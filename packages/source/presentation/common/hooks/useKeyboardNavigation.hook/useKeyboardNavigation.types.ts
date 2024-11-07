@@ -10,7 +10,7 @@ export interface UseKeyboardNavigationParams {
   // Select element handler
   onSelect?: () => void;
   // Keyboard is used right now
-  isKeyboardContext?: boolean;
+  isInputDeviceContext?: boolean;
   // Time to start hiding selected element in interface
   // Always visible by default
   timeToInactive?: number;
