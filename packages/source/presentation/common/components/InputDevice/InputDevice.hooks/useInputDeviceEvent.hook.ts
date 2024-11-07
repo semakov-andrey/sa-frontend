@@ -1,7 +1,7 @@
 import { useGamepadEvent } from './useGamepadEvent.hook';
 import { useKeyboardEvent } from './useKeyboardEvent.hook';
 
-export const useInputDevice = (
+export const useInputDeviceEvent = (
   keys: OneOrMore<string>,
   buttons: OneOrMore<string>,
   handler: () => void,

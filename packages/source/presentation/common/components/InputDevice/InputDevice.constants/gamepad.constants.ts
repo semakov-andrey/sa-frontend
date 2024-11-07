@@ -7,14 +7,14 @@ export const GAMEPAD_KEYS = {
   R: 'R',
   ZL: 'ZL',
   ZR: 'ZR',
-  Select: 'Select',
-  Start: 'Start',
-  LeftStick: 'LeftStick',
-  RightStick: 'RightStick',
-  Up: 'Up',
-  Down: 'Down',
-  Left: 'Left',
-  Right: 'Right'
+  SELECT: 'Select',
+  START: 'Start',
+  LEFT_STICK: 'LeftStick',
+  RIGHT_STICK: 'RightStick',
+  UP: 'Up',
+  DOWN: 'Down',
+  LEFT: 'Left',
+  RIGHT: 'Right'
 } as const;
 
 export const GAMEPAD_BUTTONS: Record<number, string> = {
@@ -26,12 +26,12 @@ export const GAMEPAD_BUTTONS: Record<number, string> = {
   5: GAMEPAD_KEYS.R,
   6: GAMEPAD_KEYS.ZL,
   7: GAMEPAD_KEYS.ZR,
-  8: GAMEPAD_KEYS.Select,
-  9: GAMEPAD_KEYS.Start,
-  10: GAMEPAD_KEYS.LeftStick,
-  11: GAMEPAD_KEYS.RightStick,
-  12: GAMEPAD_KEYS.Up,
-  13: GAMEPAD_KEYS.Down,
-  14: GAMEPAD_KEYS.Left,
-  15: GAMEPAD_KEYS.Right
+  8: GAMEPAD_KEYS.SELECT,
+  9: GAMEPAD_KEYS.START,
+  10: GAMEPAD_KEYS.LEFT_STICK,
+  11: GAMEPAD_KEYS.RIGHT_STICK,
+  12: GAMEPAD_KEYS.UP,
+  13: GAMEPAD_KEYS.DOWN,
+  14: GAMEPAD_KEYS.LEFT,
+  15: GAMEPAD_KEYS.RIGHT
 };

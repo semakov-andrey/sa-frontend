@@ -6,8 +6,9 @@ import { sessionStorageUnique } from '@sa-frontend/application/contracts/Externa
 import { isTypeNumber, isset, iswritten } from '@sa-frontend/application/utilities/typeGuards.utilities';
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 
+import { GAMEPAD_KEYS } from '../../components/InputDevice/InputDevice.constants/gamepad.constants';
 import { KEYBOARD_KEYS } from '../../components/InputDevice/InputDevice.constants/keyboard.constants';
-import { useKeyboardEvent } from '../../components/InputDevice/InputDevice.hooks/useKeyboardEvent.hook';
+import { useInputDeviceEvent } from '../../components/InputDevice/InputDevice.hooks/useInputDeviceEvent.hook';
 import { isTypeHTMLElement, isTypeNode } from '../../utilities/typeGuards.utilities';
 import { useInfluence } from '../useInfluence.hook';
 import { useInject } from '../useInject.hook';
@@ -108,7 +109,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     onClick?.(element);
   });
 
-  useKeyboardEvent(KEYBOARD_KEYS.ARROW_LEFT, () => {
+  useInputDeviceEvent(KEYBOARD_KEYS.ARROW_LEFT, GAMEPAD_KEYS.LEFT, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
       onSelect?.();
@@ -122,7 +123,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     setSelected(selected % itemsInRow === 0 ? selected + itemsInCurrentRow - 1 : selected - 1);
   }, { skip, timeout: 100 });
 
-  useKeyboardEvent(KEYBOARD_KEYS.ARROW_RIGHT, () => {
+  useInputDeviceEvent(KEYBOARD_KEYS.ARROW_RIGHT, GAMEPAD_KEYS.RIGHT, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
       onSelect?.();
@@ -136,7 +137,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     setSelected(selected % itemsInRow === itemsInCurrentRow - 1 ? selected - itemsInCurrentRow + 1 : selected + 1);
   }, { skip, timeout: 100 });
 
-  useKeyboardEvent(KEYBOARD_KEYS.ARROW_UP, () => {
+  useInputDeviceEvent(KEYBOARD_KEYS.ARROW_UP, GAMEPAD_KEYS.UP, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
       onSelect?.();
@@ -152,7 +153,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       : selected - itemsInRow);
   }, { skip, timeout: 100 });
 
-  useKeyboardEvent(KEYBOARD_KEYS.ARROW_DOWN, () => {
+  useInputDeviceEvent(KEYBOARD_KEYS.ARROW_DOWN, GAMEPAD_KEYS.DOWN, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
       onSelect?.();
@@ -166,7 +167,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       : selected + itemsInRow);
   }, { skip, timeout: 100 });
 
-  useKeyboardEvent(KEYBOARD_KEYS.ENTER, () => {
+  useInputDeviceEvent(KEYBOARD_KEYS.ENTER, GAMEPAD_KEYS.A, () => {
     const element = ref.current?.children[selected];
     if (isTypeHTMLElement(element)) onPressEnter(element);
   }, { skip });
