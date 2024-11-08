@@ -5,7 +5,7 @@ import { isexists, isset } from '@sa-frontend/application/utilities/typeGuards.u
 
 import { useEvent } from '../../../hooks/useEvent.hook';
 import { useInfluence } from '../../../hooks/useInfluence.hook';
-import { GAMEPAD_BUTTONS } from '../InputDevice.constants/gamepad.constants';
+import { GAMEPAD_BUTTONS, GAMEPAD_KEYS } from '../InputDevice.constants/gamepad.constants';
 import { gamepadHandlersStore, type Handler } from '../InputDevice.stores/gamepadHandlers.store';
 
 export const useGamepad = (): void => {
@@ -14,16 +14,28 @@ export const useGamepad = (): void => {
 
   const next = useEvent((): number => window.requestAnimationFrame(catchPressings));
 
+  const getButton = useEvent((pressedButtonIndex: number) =>
+    GAMEPAD_BUTTONS[pressedButtonIndex]);
+
+  const getStick = useEvent((y1: number, y2: number) => {
+    let stick: string | undefined;
+    if (y1 < -0.75) stick = GAMEPAD_KEYS.LEFT_STICK_UP;
+    if (y1 > 0.75) stick = GAMEPAD_KEYS.LEFT_STICK_DOWN;
+    if (y2 < -0.75) stick = GAMEPAD_KEYS.RIGHT_STICK_UP;
+    if (y2 > 0.75) stick = GAMEPAD_KEYS.RIGHT_STICK_DOWN;
+    return stick;
+  });
+
   const catchPressings = useEvent(() => {
     if (!isset(gamepadIndex)) return next();
 
     const gamepad = navigator.getGamepads()[gamepadIndex];
     if (!isexists(gamepad)) return next();
 
-    const pressedButtonIndex = gamepad.buttons.findIndex((e: GamepadButton) => e.pressed);
-    if (pressedButtonIndex === -1) return next();
+    const { axes: [ , y1 = 0,, y2 = 0 ], buttons } = gamepad;
+    const pressedButtonIndex = buttons.findIndex((e: GamepadButton) => e.pressed);
 
-    const button = GAMEPAD_BUTTONS[pressedButtonIndex];
+    const button = pressedButtonIndex !== -1 ? getButton(pressedButtonIndex) : getStick(y1, y2);
     if (!isset(button)) return next();
 
     const handlers = button in gamepadHandlers ? gamepadHandlers[button] : undefined;

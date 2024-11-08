@@ -14,7 +14,11 @@ export const GAMEPAD_KEYS = {
   UP: 'Up',
   DOWN: 'Down',
   LEFT: 'Left',
-  RIGHT: 'Right'
+  RIGHT: 'Right',
+  LEFT_STICK_UP: 'LeftStickUp',
+  LEFT_STICK_DOWN: 'LeftStickDown',
+  RIGHT_STICK_UP: 'RightStickUp',
+  RIGHT_STICK_DOWN: 'RightStickDown'
 } as const;
 
 export const GAMEPAD_BUTTONS: Record<number, string> = {
