@@ -121,7 +121,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       ? amount % itemsInRow
       : itemsInRow;
     setSelected(selected % itemsInRow === 0 ? selected + itemsInCurrentRow - 1 : selected - 1);
-  }, { skip, timeout: 100 });
+  }, { skip });
 
   useInputDeviceEvent(KEYBOARD_KEYS.ARROW_RIGHT, GAMEPAD_KEYS.RIGHT, () => {
     if (!isSelectedVisible) {
@@ -135,7 +135,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       ? amount % itemsInRow
       : itemsInRow;
     setSelected(selected % itemsInRow === itemsInCurrentRow - 1 ? selected - itemsInCurrentRow + 1 : selected + 1);
-  }, { skip, timeout: 100 });
+  }, { skip });
 
   useInputDeviceEvent(KEYBOARD_KEYS.ARROW_UP, GAMEPAD_KEYS.UP, () => {
     if (!isSelectedVisible) {
@@ -151,7 +151,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
         ? amount - amount % itemsInRow + selected
         : amount - amount % itemsInRow - itemsInRow + selected
       : selected - itemsInRow);
-  }, { skip, timeout: 100 });
+  }, { skip });
 
   useInputDeviceEvent(KEYBOARD_KEYS.ARROW_DOWN, GAMEPAD_KEYS.DOWN, () => {
     if (!isSelectedVisible) {
@@ -165,7 +165,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     setSelected(selected + itemsInRow > amount - 1
       ? selected % itemsInRow
       : selected + itemsInRow);
-  }, { skip, timeout: 100 });
+  }, { skip });
 
   useInputDeviceEvent(KEYBOARD_KEYS.ENTER, GAMEPAD_KEYS.A, () => {
     const element = ref.current?.children[selected];
