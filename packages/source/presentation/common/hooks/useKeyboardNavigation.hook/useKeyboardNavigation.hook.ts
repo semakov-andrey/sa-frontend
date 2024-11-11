@@ -1,5 +1,6 @@
 import '@sa-frontend/infrastructure/services';
 
+import { useStore } from '@nanostores/react';
 import { useRef, useState } from 'react';
 
 import { sessionStorageUnique } from '@sa-frontend/application/contracts/ExternalStorage/ExternalStorage.constant';
@@ -9,11 +10,14 @@ import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 import { GAMEPAD_KEYS } from '../../components/InputDevice/InputDevice.constants/gamepad.constants';
 import { KEYBOARD_KEYS } from '../../components/InputDevice/InputDevice.constants/keyboard.constants';
 import { useInputDeviceEvent } from '../../components/InputDevice/InputDevice.hooks/useInputDeviceEvent.hook';
+import { addGamepadHandler, removeGamepadHandler } from '../../components/InputDevice/InputDevice.stores/gamepadHandlers.store';
+import { addKeyboardHandler, removeKeyboardHandler } from '../../components/InputDevice/InputDevice.stores/keyboardHandlers.store';
 import { isTypeHTMLElement, isTypeNode } from '../../utilities/typeGuards.utilities';
 import { useInfluence } from '../useInfluence.hook';
 import { useInject } from '../useInject.hook';
 import { useUpdateInfluence } from '../useUpdateInfluence.hook';
 
+import { pressEnterStore } from './useKeyboardNavigation.store';
 import { type UseKeyboardNavigationParams, type UseKeyboardNavigationReturn } from './useKeyboardNavigation.types';
 
 export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboardNavigationParams): UseKeyboardNavigationReturn<T> => {
@@ -30,6 +34,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   } = params;
 
   const sessionStorage = useInject(sessionStorageUnique);
+  const pressEnter = useStore(pressEnterStore);
 
   const valueFromStorage = isset(storageKey)
     ? sessionStorage.get(storageKey)
@@ -109,6 +114,10 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     onClick?.(element);
   });
 
+  const pressEnterHandler = useEvent((): void => {
+    pressEnter(ref, selected, onPressEnter);
+  });
+
   useInputDeviceEvent(KEYBOARD_KEYS.ARROW_LEFT, GAMEPAD_KEYS.LEFT, () => {
     if (!isSelectedVisible) {
       activeInactiveSwitch(true);
@@ -167,14 +176,18 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
       : selected + itemsInRow);
   }, { skip });
 
-  useInputDeviceEvent(KEYBOARD_KEYS.ENTER, GAMEPAD_KEYS.A, () => {
-    const element = ref.current?.children[selected];
-    if (isTypeHTMLElement(element)) onPressEnter(element);
-  }, { skip });
+  useInfluence(() => {
+    if (Boolean(skip)) return;
+    addGamepadHandler(GAMEPAD_KEYS.A, pressEnterHandler);
+    addKeyboardHandler(KEYBOARD_KEYS.ENTER, pressEnterHandler);
+    return (): void => {
+      removeGamepadHandler(GAMEPAD_KEYS.A, pressEnterHandler);
+      removeKeyboardHandler(KEYBOARD_KEYS.ENTER, pressEnterHandler);
+    };
+  }, [ skip, pressEnterHandler ]);
 
   useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
-
     return () => {
       ref.current?.removeEventListener('click', clickHandler);
     };
