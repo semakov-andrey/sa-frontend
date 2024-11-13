@@ -7,6 +7,7 @@ import { useEvent } from '../../../hooks/useEvent.hook';
 import { useInfluence } from '../../../hooks/useInfluence.hook';
 import { GAMEPAD_BUTTONS, GAMEPAD_KEYS } from '../InputDevice.constants/gamepad.constants';
 import { gamepadHandlersStore, type Handler } from '../InputDevice.stores/gamepadHandlers.store';
+import { setGamepadConnected } from '../InputDevice.stores/isGamepadConnected.store';
 
 export const useGamepad = (): void => {
   const gamepadHandlers = useStore(gamepadHandlersStore);
@@ -50,9 +51,11 @@ export const useGamepad = (): void => {
 
   useInfluence(() => {
     window.addEventListener('gamepadconnected', (event: GamepadEvent) => {
+      setGamepadConnected(true);
       setGamepadIndex(event.gamepad.index);
     });
     window.addEventListener('gamepaddisconnected', () => {
+      setGamepadConnected(false);
       setGamepadIndex(undefined);
     });
 
