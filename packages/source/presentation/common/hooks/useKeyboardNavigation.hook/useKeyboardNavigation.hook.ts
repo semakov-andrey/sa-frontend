@@ -55,7 +55,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     onSelect?.();
     if (isset(storageKey)) sessionStorage.set(storageKey, selected);
     if (scrollIntoView) {
-      ref.current?.children[selected]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      ref.current?.children[selected]?.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
     }
   });
 
