@@ -1,24 +1,23 @@
 import { atom } from 'nanostores';
+import { type RefObject } from 'react';
 
 import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
 
 import { isTypeHTMLElement } from '../../utilities/typeGuards.utilities';
 
-import type { RefObject } from 'react';
-
-export type PressEnterStore = <T extends HTMLElement>(
+export type OpenStore = <T extends HTMLElement>(
   ref: RefObject<T>,
   selected: number,
-  onPressEnter: (element: HTMLElement) => void
+  onOpen: (element: HTMLElement) => void
 ) => void;
 
-export const pressEnterStore = atom<PressEnterStore>(
+export const openStore = atom<OpenStore>(
   throttle(<T extends HTMLElement>(
     ref: RefObject<T>,
     selected: number,
-    onPressEnter: (element: HTMLElement) => void
+    onOpen: (element: HTMLElement) => void
   ): void => {
     const element = ref.current?.children[selected];
-    if (isTypeHTMLElement(element)) onPressEnter(element);
+    if (isTypeHTMLElement(element)) onOpen(element);
   }, 250)
 );

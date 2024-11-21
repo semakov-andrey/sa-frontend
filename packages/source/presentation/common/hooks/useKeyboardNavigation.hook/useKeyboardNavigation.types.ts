@@ -3,8 +3,8 @@ export interface UseKeyboardNavigationParams {
   amount?: number;
   // Key for saving current state to session storage
   storageKey?: string;
-  // Press enter key handler, equals click handler by default
-  onPressEnter?: (element: HTMLElement) => void;
+  // Open handler, equals click handler by default
+  onOpen?: (element: HTMLElement) => void;
   // Click element handler
   onClick?: (element: HTMLElement) => void;
   // Select element handler

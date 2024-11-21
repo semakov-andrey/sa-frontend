@@ -8,7 +8,7 @@ import { isTypeNumber, isset, iswritten } from '@sa-frontend/application/utiliti
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 
 import { GAMEPAD_KEYS } from '../../components/InputDevice/InputDevice.constants/gamepad.constants';
-import { KEYBOARD_KEYS } from '../../components/InputDevice/InputDevice.constants/keyboard.constants';
+import { COMBINATION_SEPARATOR, KEYBOARD_KEYS, SPECIAL_KEYS } from '../../components/InputDevice/InputDevice.constants/keyboard.constants';
 import { useInputDeviceEvent } from '../../components/InputDevice/InputDevice.hooks/useInputDeviceEvent.hook';
 import { addGamepadHandler, removeGamepadHandler } from '../../components/InputDevice/InputDevice.stores/gamepadHandlers.store';
 import { addKeyboardHandler, removeKeyboardHandler } from '../../components/InputDevice/InputDevice.stores/keyboardHandlers.store';
@@ -17,14 +17,14 @@ import { useInfluence } from '../useInfluence.hook';
 import { useInject } from '../useInject.hook';
 import { useUpdateInfluence } from '../useUpdateInfluence.hook';
 
-import { pressEnterStore } from './useKeyboardNavigation.store';
+import { openStore } from './useKeyboardNavigation.store';
 import { type UseKeyboardNavigationParams, type UseKeyboardNavigationReturn } from './useKeyboardNavigation.types';
 
 export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboardNavigationParams): UseKeyboardNavigationReturn<T> => {
   const {
     amount,
     storageKey,
-    onPressEnter = (element: HTMLElement): void => { element.click(); },
+    onOpen = (element: HTMLElement): void => { element.click(); },
     onClick,
     onSelect,
     isInputDeviceContext,
@@ -34,7 +34,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   } = params;
 
   const sessionStorage = useInject(sessionStorageUnique);
-  const pressEnter = useStore(pressEnterStore);
+  const open = useStore(openStore);
 
   const valueFromStorage = isset(storageKey)
     ? sessionStorage.get(storageKey)
@@ -114,8 +114,8 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     onClick?.(element);
   });
 
-  const pressEnterHandler = useEvent((): void => {
-    pressEnter(ref, selected, onPressEnter);
+  const openHandler = useEvent((): void => {
+    open(ref, selected, onOpen);
   });
 
   useInputDeviceEvent(KEYBOARD_KEYS.ARROW_LEFT, GAMEPAD_KEYS.LEFT, () => {
@@ -178,13 +178,19 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
 
   useInfluence(() => {
     if (Boolean(skip)) return;
-    addGamepadHandler(GAMEPAD_KEYS.A, pressEnterHandler);
-    addKeyboardHandler(KEYBOARD_KEYS.ENTER, pressEnterHandler);
+    const openKey = [
+      SPECIAL_KEYS.CMD,
+      COMBINATION_SEPARATOR,
+      KEYBOARD_KEYS.ARROW_DOWN
+    ].join('');
+    const openButton = GAMEPAD_KEYS.A;
+    addKeyboardHandler(openKey, openHandler);
+    addGamepadHandler(openButton, openHandler);
     return (): void => {
-      removeGamepadHandler(GAMEPAD_KEYS.A, pressEnterHandler);
-      removeKeyboardHandler(KEYBOARD_KEYS.ENTER, pressEnterHandler);
+      removeKeyboardHandler(openKey, openHandler);
+      removeGamepadHandler(openButton, openHandler);
     };
-  }, [ skip, pressEnterHandler ]);
+  }, [ skip, openHandler ]);
 
   useInfluence(() => {
     ref.current?.addEventListener('click', clickHandler);
