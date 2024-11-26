@@ -5,6 +5,7 @@ export const fcSortingParams = {
     'useLocation',
     'useMatching',
     'useRoute',
+    'useLocalStorage',
     'useSyncExternalStore',
     'useStore',
     'useState',
