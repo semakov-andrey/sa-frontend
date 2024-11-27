@@ -3,10 +3,15 @@ import { useState } from 'react';
 import { type CleanMethodResult, type ConfigApi, type HookApi, type HookLazyMethodResult, type HookMethodResult } from '@sa-frontend/application/contracts/HookApi/HookApi.contracts';
 import { type HttpRequest, type HttpRequestBody } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.contracts';
 import { type TransferError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
+import { type Validator } from '@sa-frontend/application/contracts/Validator/Validator.contract';
 import { deCapitalize } from '@sa-frontend/application/utilities/deCapitalize.utility';
-import { isTypeObject } from '@sa-frontend/application/utilities/typeGuards.utilities';
+import { isset, isTypeObject } from '@sa-frontend/application/utilities/typeGuards.utilities';
 import { useDeepInfluence } from '@sa-frontend/presentation/common/hooks/useDeepInfluence.hook';
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
+
+import { FetchError } from '../BrowserFetcher/BrowserFetcher.utilities';
+
+export const validationError = new FetchError(500, 'Validation Error');
 
 export const request = <
   Api,
@@ -15,24 +20,26 @@ export const request = <
   ValidationTokens
 >(
   fetcher: HttpRequest,
+  validator: Validator<ValidationTokens>,
   config: ConfigApi<Api, ValidationTokens>,
-  controller: Controller,
-  method: MethodName
+  controllerName: Controller,
+  methodName: MethodName
 ) => async (
   ...args: unknown[]
 ): Promise<CleanMethodResult<unknown>> => {
   const { query, body } = (isTypeObject(args[0]) ? args[0] : {}) as { query?: unknown, body?: HttpRequestBody };
+  const { method, url, readAsArrayBuffer, token } = config[controllerName][methodName];
   const result = await fetcher.go({
-    method: config[controller][method].method,
-    url: config[controller][method].url(query),
+    method,
+    url: url(query),
     body,
     options: {
-      readAsArrayBuffer: config[controller][method].readAsArrayBuffer
+      readAsArrayBuffer
     }
   });
-  return {
-    [!fetcher.isTransferError(result) ? 'data' : 'error']: result
-  };
+  if (fetcher.isTransferError(result)) return { error: result };
+  if (isset(token) && !validator.validate(token, result)) return { error: validationError };
+  return { data: result };
 };
 
 export const hook = <
@@ -42,6 +49,7 @@ export const hook = <
   ValidationTokens
 >(
   fetcher: HttpRequest,
+  validator: Validator<ValidationTokens>,
   config: ConfigApi<Api, ValidationTokens>,
   controller: Controller,
   methodName: MethodName
@@ -55,7 +63,7 @@ export const hook = <
   const refetch = useEvent(async () => {
     setData(undefined);
     setLoading(true);
-    const result = await request(fetcher, config, controller, method)(...args);
+    const result = await request(fetcher, validator, config, controller, method)(...args);
     if ('data' in result) {
       setData(result.data);
     } else {
@@ -78,6 +86,7 @@ export const methodHook = <
   ValidationTokens
 >(
   fetcher: HttpRequest,
+  validator: Validator<ValidationTokens>,
   config: ConfigApi<Api, ValidationTokens>,
   controller: Controller,
   methodName: MethodName
@@ -88,7 +97,7 @@ export const methodHook = <
 
   const handler = useEvent(async (...args: unknown[]) => {
     setLoading(true);
-    const result = await request(fetcher, config, controller, method)(...args);
+    const result = await request(fetcher, validator, config, controller, method)(...args);
     setLoading(false);
     return result;
   });
@@ -98,6 +107,7 @@ export const methodHook = <
 
 export const BrowserHooker = <Api, ValidationTokens>(
   fetcher: HttpRequest,
+  validator: Validator<ValidationTokens>,
   config: ConfigApi<Api, ValidationTokens>
 ): HookApi<Api> => {
   type HookerResult = HookApi<Api>;
@@ -112,10 +122,10 @@ export const BrowserHooker = <Api, ValidationTokens>(
           method: MethodName
         ) =>
           method.startsWith('useMethod')
-            ? methodHook(fetcher, config, controller, method)
+            ? methodHook(fetcher, validator, config, controller, method)
             : method.startsWith('use')
-              ? hook(fetcher, config, controller, method)
-              : request(fetcher, config, controller, method)
+              ? hook(fetcher, validator, config, controller, method)
+              : request(fetcher, validator, config, controller, method)
       })
   });
 };
