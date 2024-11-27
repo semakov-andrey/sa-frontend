@@ -8,8 +8,6 @@ import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginUnusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 
-import { eslintPluginSaRules } from '../rules/index.js';
-
 const INDENT = 2;
 const MAX_CLASSES_PER_FILE = 5;
 
@@ -38,8 +36,7 @@ export const plugins = {
   'react-hooks': eslintPluginReactHooks,
   'unused-imports': eslintPluginUnusedImports,
   '@typescript-eslint': eslintPluginTypescript,
-  '@stylistic': eslintPluginStylistic,
-  'saRules': eslintPluginSaRules
+  '@stylistic': eslintPluginStylistic
 };
 
 export const reactSettings = {
@@ -354,10 +351,6 @@ export const jsLintRules = {
 
 export const jsFormatRules = {};
 
-export const saRules = {
-  'saRules/fc-sorting': 'error'
-};
-
 export const tsLintRules = {
   '@typescript-eslint/adjacent-overload-signatures': 'error',
   '@typescript-eslint/array-type': [ 'error', { default: 'array', readonly: 'array' } ],
@@ -629,7 +622,6 @@ export const typescriptConfig = {
     ...lintRules,
     ...formatRules,
     ...importRules,
-    ...saRules,
     ...tsLintRules,
     ...tsFormatRules,
     ...reactHookRules
