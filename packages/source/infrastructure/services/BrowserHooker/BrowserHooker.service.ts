@@ -38,7 +38,7 @@ export const request = <
     }
   });
   if (fetcher.isTransferError(result)) return { error: result };
-  if (isset(token) && !validator.validate(token, result)) return { error: validationError };
+  if (isset(token) && !validator.validate(token as keyof ValidationTokens, result)) return { error: validationError };
   return { data: result };
 };
 
