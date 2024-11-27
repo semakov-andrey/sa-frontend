@@ -11,10 +11,11 @@ import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 export const request = <
   Api,
   Controller extends keyof Api,
-  MethodName extends keyof Api[Controller]
+  MethodName extends keyof Api[Controller],
+  ValidationTokens
 >(
   fetcher: HttpRequest,
-  config: ConfigApi<Api>,
+  config: ConfigApi<Api, ValidationTokens>,
   controller: Controller,
   method: MethodName
 ) => async (
@@ -37,10 +38,11 @@ export const request = <
 export const hook = <
   Api,
   Controller extends keyof Api,
-  MethodName extends string
+  MethodName extends string,
+  ValidationTokens
 >(
   fetcher: HttpRequest,
-  config: ConfigApi<Api>,
+  config: ConfigApi<Api, ValidationTokens>,
   controller: Controller,
   methodName: MethodName
 ) => (...args: unknown[]): HookMethodResult<unknown> => {
@@ -72,10 +74,11 @@ export const hook = <
 export const methodHook = <
   Api,
   Controller extends keyof Api,
-  MethodName extends string
+  MethodName extends string,
+  ValidationTokens
 >(
   fetcher: HttpRequest,
-  config: ConfigApi<Api>,
+  config: ConfigApi<Api, ValidationTokens>,
   controller: Controller,
   methodName: MethodName
 ) => (): HookLazyMethodResult<unknown, unknown> => {
@@ -93,7 +96,10 @@ export const methodHook = <
   return [ handler, isLoading ];
 };
 
-export const BrowserHooker = <Api>(fetcher: HttpRequest, config: ConfigApi<Api>): HookApi<Api> => {
+export const BrowserHooker = <Api, ValidationTokens>(
+  fetcher: HttpRequest,
+  config: ConfigApi<Api, ValidationTokens>
+): HookApi<Api> => {
   type HookerResult = HookApi<Api>;
   return new Proxy({} as HookerResult, {
     get: <Controller extends keyof Api & string>(

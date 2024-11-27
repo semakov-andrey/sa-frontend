@@ -51,14 +51,19 @@ export type HookLazyMethodResult<Data, Params> = [
   isLoading: boolean
 ];
 
-export type ConfigApi<Api> = {
+export type ConfigApi<Api, ValidationTokens> = {
   [Controller in keyof Api]: {
     [Method in keyof Api[Controller]]: {
       url: Api[Controller][Method] extends (params: { query: infer R }) => unknown
         ? (query: R) => string
         : () => string,
       method?: HTTPRequestMethods,
-      readAsArrayBuffer?: boolean
+      readAsArrayBuffer?: boolean,
+      token?: Api[Controller][Method] extends (params: never) => TransferResponseOrError<infer R>
+        ? keyof {
+          [K in keyof ValidationTokens as ValidationTokens[K] extends R ? K : never]: never
+        }
+        : never
     };
   }
 };
