@@ -1,7 +1,7 @@
 import { eslintPluginSaRules } from '../rules/index.js';
 
 export const config = (options) => [ {
-  files: [ 'src/**/*.ts', 'src/**/*.tsx' ],
+  files: [ '**/*.ts', '**/*.tsx' ],
   plugins: {
     saRules: eslintPluginSaRules
   },
