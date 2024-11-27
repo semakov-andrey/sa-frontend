@@ -58,12 +58,14 @@ export type ConfigApi<Api, ValidationTokens> = {
         ? (query: R) => string
         : () => string,
       method?: HTTPRequestMethods,
-      readAsArrayBuffer?: boolean,
-      token?: Api[Controller][Method] extends (params: never) => TransferResponseOrError<infer R>
-        ? keyof {
+      readAsArrayBuffer?: boolean
+    } & (Api[Controller][Method] extends (params: never) => TransferResponseOrError<infer R>
+      ? unknown extends R
+        ? unknown
+        : { token: keyof {
           [K in keyof ValidationTokens as ValidationTokens[K] extends R ? K : never]: never
-        }
-        : never
-    };
+        } }
+      : unknown
+    );
   }
 };
