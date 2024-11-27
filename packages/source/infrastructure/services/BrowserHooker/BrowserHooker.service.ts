@@ -5,7 +5,7 @@ import { type HttpRequest, type HttpRequestBody } from '@sa-frontend/application
 import { type TransferError } from '@sa-frontend/application/contracts/Transfer/Transfer.contracts';
 import { type Validator } from '@sa-frontend/application/contracts/Validator/Validator.contract';
 import { deCapitalize } from '@sa-frontend/application/utilities/deCapitalize.utility';
-import { isset, isTypeObject } from '@sa-frontend/application/utilities/typeGuards.utilities';
+import { isTypeObject } from '@sa-frontend/application/utilities/typeGuards.utilities';
 import { useDeepInfluence } from '@sa-frontend/presentation/common/hooks/useDeepInfluence.hook';
 import { useEvent } from '@sa-frontend/presentation/common/hooks/useEvent.hook';
 
@@ -28,7 +28,8 @@ export const request = <
   ...args: unknown[]
 ): Promise<CleanMethodResult<unknown>> => {
   const { query, body } = (isTypeObject(args[0]) ? args[0] : {}) as { query?: unknown, body?: HttpRequestBody };
-  const { method, url, readAsArrayBuffer, token } = config[controllerName][methodName];
+  const params = config[controllerName][methodName];
+  const { method, url, readAsArrayBuffer } = params;
   const result = await fetcher.go({
     method,
     url: url(query),
@@ -38,7 +39,7 @@ export const request = <
     }
   });
   if (fetcher.isTransferError(result)) return { error: result };
-  if (isset(token) && !validator.validate(token as keyof ValidationTokens, result)) return { error: validationError };
+  if ('token' in params && !validator.validate(params.token as keyof ValidationTokens, result)) return { error: validationError };
   return { data: result };
 };
 
