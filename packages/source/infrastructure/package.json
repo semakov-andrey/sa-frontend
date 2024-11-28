@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/infrastructure",
   "author": "Semakov Andrey",
-  "version": "1.40.0",
+  "version": "1.41.0",
   "publishConfig": {
     "access": "public"
   },
@@ -11,6 +11,7 @@
     "publish:source": "run-s version:up push:it"
   },
   "dependencies": {
-    "@sa-frontend/application": "^1.10.0"
+    "@sa-frontend/application": "^1.10.0",
+    "zod": "^3.23.8"
   }
 }
