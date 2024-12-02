@@ -40,9 +40,9 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   const valueFromStorage = isset(storageKey)
     ? sessionStorage.get(storageKey)
     : undefined;
-  const initialSelected = isTypeNumber(valueFromStorage)
+  const { current: initialSelected } = useRef(isTypeNumber(valueFromStorage)
     ? valueFromStorage
-    : 0;
+    : 0);
 
   const [ selected, setSelectedLocal ] = useState(initialSelected);
   const [ isSelectedVisible, setSelectedVisible ] = useState(!isset(timeToInactive) || Boolean(isInputDeviceContext));
