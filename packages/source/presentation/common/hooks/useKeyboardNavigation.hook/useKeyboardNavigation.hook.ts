@@ -30,6 +30,7 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
     isInputDeviceContext,
     timeToInactive,
     scrollIntoView = false,
+    initialScrollIntoView = false,
     skip
   } = params;
 
@@ -202,6 +203,12 @@ export const useKeyboardNavigation = <T extends HTMLElement>(params: UseKeyboard
   useUpdateInfluence(() => {
     activeInactiveSwitch(Boolean(isInputDeviceContext));
   }, [ isInputDeviceContext, activeInactiveSwitch ]);
+
+  useInfluence(() => {
+    if (initialScrollIntoView) {
+      ref.current?.children[initialSelected]?.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+    }
+  }, [ initialScrollIntoView, initialSelected ]);
 
   return {
     ref,

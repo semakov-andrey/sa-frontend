@@ -1,7 +1,7 @@
 {
   "name": "@sa-frontend/presentation",
   "author": "Semakov Andrey",
-  "version": "1.133.0",
+  "version": "1.134.0",
   "publishConfig": {
     "access": "public"
   },

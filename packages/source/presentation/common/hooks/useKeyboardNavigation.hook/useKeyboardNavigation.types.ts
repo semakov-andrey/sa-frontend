@@ -16,6 +16,8 @@ export interface UseKeyboardNavigationParams {
   timeToInactive?: number;
   // Scroll selected element into view
   scrollIntoView?: boolean;
+  // Initial scroll selected element into view
+  initialScrollIntoView?: boolean;
   // Skip this keyboard navigation
   skip?: boolean;
 }
