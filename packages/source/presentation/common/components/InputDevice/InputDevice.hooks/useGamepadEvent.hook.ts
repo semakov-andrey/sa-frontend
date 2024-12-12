@@ -1,3 +1,4 @@
+import { useStore } from '@nanostores/react';
 import { useRef } from 'react';
 
 import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
@@ -5,17 +6,20 @@ import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
 import { useEvent } from '../../../hooks/useEvent.hook';
 import { useInfluence } from '../../../hooks/useInfluence.hook';
 import { addGamepadHandler, removeGamepadHandler, type Handler } from '../InputDevice.stores/gamepadHandlers.store';
+import { isInputDeviceStore } from '../InputDevice.stores/isInputDeviceEnabled.store';
 
 export const useGamepadEvent = (
   buttons: OneOrMore<string>,
   handler: Handler,
-  { skip, timeout }: { skip?: boolean, timeout?: number } = {}
+  { skip = false, timeout }: { skip?: boolean, timeout?: number } = {}
 ): void => {
+  const isInputDevice = useStore(isInputDeviceStore);
+  const skipHandling = skip || !isInputDevice;
   const { current: combinations } = useRef(Array.isArray(buttons) ? buttons : [ buttons ]);
   const fn = useEvent(handler);
 
   useInfluence(() => {
-    if (Boolean(skip)) return;
+    if (skipHandling) return;
 
     const trottledHandler = throttle(fn, timeout ?? 250);
 
@@ -28,5 +32,5 @@ export const useGamepadEvent = (
         removeGamepadHandler(combination, trottledHandler);
       });
     };
-  }, [ combinations, fn, skip, timeout ]);
+  }, [ combinations, fn, skipHandling, timeout ]);
 };

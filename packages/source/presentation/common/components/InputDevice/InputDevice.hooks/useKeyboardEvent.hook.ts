@@ -1,21 +1,25 @@
+import { useStore } from '@nanostores/react';
 import { useRef } from 'react';
 
 import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
 
 import { useEvent } from '../../../hooks/useEvent.hook';
 import { useInfluence } from '../../../hooks/useInfluence.hook';
+import { isInputDeviceStore } from '../InputDevice.stores/isInputDeviceEnabled.store';
 import { addKeyboardHandler, removeKeyboardHandler } from '../InputDevice.stores/keyboardHandlers.store';
 
 export const useKeyboardEvent = (
   keys: OneOrMore<string>,
   handler: (event: KeyboardEvent) => void,
-  { skip, timeout }: { skip?: boolean, timeout?: number } = {}
+  { skip = false, timeout }: { skip?: boolean, timeout?: number } = {}
 ): void => {
+  const isInputDevice = useStore(isInputDeviceStore);
+  const skipHandling = skip || !isInputDevice;
   const { current: combinations } = useRef(Array.isArray(keys) ? keys : [ keys ]);
   const fn = useEvent(handler);
 
   useInfluence(() => {
-    if (Boolean(skip)) return;
+    if (skipHandling) return;
 
     const trottledHandler = throttle(fn, timeout ?? 250);
 
@@ -28,5 +32,5 @@ export const useKeyboardEvent = (
         removeKeyboardHandler(combination, trottledHandler);
       });
     };
-  }, [ combinations, fn, skip, timeout ]);
+  }, [ combinations, fn, skipHandling, timeout ]);
 };
