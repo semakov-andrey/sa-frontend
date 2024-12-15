@@ -8,6 +8,7 @@ export const fcSortingParams = {
     'useLocalStorage',
     'useSyncExternalStore',
     'useStore',
+    'useContext',
     'useState',
     'useStateWithCallback',
     'useStateRef',

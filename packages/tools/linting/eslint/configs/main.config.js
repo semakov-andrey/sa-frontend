@@ -80,7 +80,6 @@ export const lintRules = {
   'new-cap': [ 'error', { capIsNew: false } ],
   'no-alert': 'error',
   'no-async-promise-executor': 'error',
-  'no-await-in-loop': 'error',
   'no-caller': 'error',
   'no-case-declarations': 'error',
   'no-class-assign': 'error',
