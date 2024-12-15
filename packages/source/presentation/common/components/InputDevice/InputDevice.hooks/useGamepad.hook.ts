@@ -1,16 +1,17 @@
 import { useStore } from '@nanostores/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { isexists, isset } from '@sa-frontend/application/utilities/typeGuards.utilities';
 
 import { useEvent } from '../../../hooks/useEvent.hook';
 import { useInfluence } from '../../../hooks/useInfluence.hook';
 import { GAMEPAD_BUTTONS, GAMEPAD_KEYS } from '../InputDevice.constants/gamepad.constants';
+import { InputDeviceContext } from '../InputDevice.context';
 import { gamepadHandlersStore, type Handler } from '../InputDevice.stores/gamepadHandlers.store';
-import { setGamepadConnected } from '../InputDevice.stores/isGamepadConnected.store';
 
 export const useGamepad = (): void => {
   const gamepadHandlers = useStore(gamepadHandlersStore);
+  const { setGamepadConnected } = useContext(InputDeviceContext);
   const [ gamepadIndex, setGamepadIndex ] = useState<number>();
 
   const next = useEvent((): number => window.requestAnimationFrame(catchPressings));

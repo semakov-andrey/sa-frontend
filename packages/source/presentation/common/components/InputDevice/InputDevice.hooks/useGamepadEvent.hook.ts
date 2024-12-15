@@ -1,20 +1,19 @@
-import { useStore } from '@nanostores/react';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 
 import { throttle } from '@sa-frontend/application/utilities/throttle.utility';
 
 import { useEvent } from '../../../hooks/useEvent.hook';
 import { useInfluence } from '../../../hooks/useInfluence.hook';
+import { InputDeviceContext } from '../InputDevice.context';
 import { addGamepadHandler, removeGamepadHandler, type Handler } from '../InputDevice.stores/gamepadHandlers.store';
-import { isInputDeviceStore } from '../InputDevice.stores/isInputDeviceEnabled.store';
 
 export const useGamepadEvent = (
   buttons: OneOrMore<string>,
   handler: Handler,
   { skip = false, timeout }: { skip?: boolean, timeout?: number } = {}
 ): void => {
-  const isInputDevice = useStore(isInputDeviceStore);
-  const skipHandling = skip || !isInputDevice;
+  const { isEnabled } = useContext(InputDeviceContext);
+  const skipHandling = skip || !isEnabled;
   const { current: combinations } = useRef(Array.isArray(buttons) ? buttons : [ buttons ]);
   const fn = useEvent(handler);
 
