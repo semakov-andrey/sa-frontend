@@ -10,7 +10,7 @@ export class ZodValidator<ValidationTokens> implements Validator<ValidationToken
   public validate = (validationToken: keyof ValidationTokens, value: unknown): boolean => {
     const result = this.schemas[validationToken].safeParse(value);
     if ('error' in result) {
-      console.error(validationToken, result.error?.format());
+      console.error(validationToken, result.error.errors);
     }
     return result.success;
   };
