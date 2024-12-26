@@ -29,13 +29,14 @@ export const request = <
 ): Promise<CleanMethodResult<unknown>> => {
   const { query, body } = (isTypeObject(args[0]) ? args[0] : {}) as { query?: unknown, body?: HttpRequestBody };
   const params = config[controllerName][methodName];
-  const { method, url, readAsArrayBuffer } = params;
+  const { method, url, readAsArrayBuffer, reviver } = params;
   const result = await fetcher.go({
     method,
     url: url(query),
     body,
     options: {
-      readAsArrayBuffer
+      readAsArrayBuffer,
+      reviver
     }
   });
   if (fetcher.isTransferError(result)) return { error: result };

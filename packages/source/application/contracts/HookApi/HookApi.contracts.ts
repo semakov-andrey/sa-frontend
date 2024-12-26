@@ -58,7 +58,8 @@ export type ConfigApi<Api, ValidationTokens> = {
         ? (query: R) => string
         : () => string,
       method?: HTTPRequestMethods,
-      readAsArrayBuffer?: boolean
+      readAsArrayBuffer?: boolean,
+      reviver?: (_: string, value: unknown) => unknown
     } & (Api[Controller][Method] extends (params: never) => TransferResponseOrError<infer R>
       ? unknown extends R
         ? unknown

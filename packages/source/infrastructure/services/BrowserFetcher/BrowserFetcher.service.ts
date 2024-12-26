@@ -1,5 +1,5 @@
 import { HTTP_REQUEST_METHODS } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.constants';
-import { type HttpRequest, type HttpRequestBody, type HttpRequestOptions, type HttpRequestSettings } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.contracts';
+import { type HttpRequest, type HttpRequestBody, type HttpRequestSettings } from '@sa-frontend/application/contracts/HttpRequest/HttpRequest.contracts';
 import {
   TRANSFER_ERROR_STATUSES,
   TRANSFER_STATUSES
@@ -24,12 +24,6 @@ import {
 import { FetchError } from './BrowserFetcher.utilities';
 
 export class BrowserFetcher implements HttpRequest {
-  constructor(options: HttpRequestOptions = {}) {
-    this.parseDates = options.parseDates;
-  }
-
-  private parseDates;
-
   public go = async <T>(settings: HttpRequestSettings): TransferResponseOrError<T> => {
     const { method = HTTP_REQUEST_METHODS.GET, url, body, options } = settings;
     const data = this.getData(settings);
@@ -124,7 +118,7 @@ export class BrowserFetcher implements HttpRequest {
       const contentType = response.headers.get('Content-Type');
       if (!Boolean(contentType?.includes('application/json'))) return text as T;
 
-      return JSON.parse(text, isset(this.parseDates) ? this.parseDates : undefined) as T;
+      return JSON.parse(text, options?.reviver) as T;
     } catch {
       return new FetchError(TRANSFER_STATUSES.UNKNOWN_ERROR);
     }

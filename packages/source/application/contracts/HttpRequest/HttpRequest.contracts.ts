@@ -1,7 +1,7 @@
 import { type TransferError, type TransferResponseOrError, type TransferStatusCodeError } from '../Transfer/Transfer.contracts';
 
 export interface TransferConstructor {
-  new (options?: HttpRequestOptions): HttpRequest;
+  new (): HttpRequest;
 };
 
 export interface HttpRequest {
@@ -12,17 +12,14 @@ export interface HttpRequest {
   isTransferError: <T>(u: T | TransferError) => u is TransferError;
 }
 
-export interface HttpRequestOptions {
-  parseDates?: (_: string, value: unknown) => unknown | Date;
-}
-
 export interface HttpRequestSettings {
   method?: HTTPRequestMethods;
   url: string;
   body?: HttpRequestBody;
   headers?: object;
   options?: {
-    readAsArrayBuffer?: boolean
+    readAsArrayBuffer?: boolean,
+    reviver?: (_: string, value: unknown) => unknown
   };
 }
 
