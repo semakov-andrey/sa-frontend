@@ -24,14 +24,19 @@ export const startElectron = async (params) => {
     });
   }
   const clientCompiler = await start(clientConfig(), clientParams, devMiddlewares, isPWA);
-  clientCompiler.hooks.afterDone.tap('electron-renderer', () => {
-    if (!isPWA) {
+  if (!isPWA) {
+    clientCompiler.hooks.afterDone.tap('electron-renderer', () => {
       startApplication();
-    } else {
-      const address = networkInterfaces().en0.find(({ family }) => family === 'IPv4')?.address;
-      console.info('PWA started at:');
-      console.info(`https://localhost:${ clientParams.port }`);
-      if (address) console.info(`https://${ address }:${ clientParams.port }`);
-    }
-  });
+    });
+  } else {
+    clientCompiler.hooks.afterDone.tap('browser-link', () => {
+      setTimeout(() => {
+        const address = networkInterfaces().en0.find(({ family }) => family === 'IPv4')?.address;
+        console.info('');
+        console.info('PWA started at:');
+        console.info(`https://localhost:${ clientParams.port }`);
+        if (address) console.info(`https://${ address }:${ clientParams.port }`);
+      }, 1000);
+    });
+  }
 };
