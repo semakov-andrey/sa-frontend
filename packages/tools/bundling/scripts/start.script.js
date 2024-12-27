@@ -8,10 +8,10 @@ import { webpackDevConfig } from '../configs/webpack.dev.js';
 import { webpackProdConfig } from '../configs/webpack.prod.js';
 import { isset } from '../utilities/typeGuards.utility.js';
 
-export const start = async (config, params, middlewares = [], isWatchBuilded = false) => {
+export const start = async (config, params, middlewares = [], isPWA = false) => {
   const { port, https } = params;
   const compiler = webpack(
-    (!isWatchBuilded ? webpackDevConfig : webpackProdConfig)(config, params)
+    (!isPWA ? webpackDevConfig : webpackProdConfig)(config, params)
   );
 
   if (isset(port)) {

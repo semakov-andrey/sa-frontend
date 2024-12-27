@@ -11,18 +11,18 @@ export const startElectron = async (params) => {
     clientConfig,
     clientParams,
     devMiddlewares,
-    isWatchBuilded
+    isPWA
   } = params;
 
-  if (isCompileServer) {
-    const serverCompiler = await start({ ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams, undefined, isWatchBuilded);
+  if (isCompileServer && !isPWA) {
+    const serverCompiler = await start({ ...webpackElectronServerProdConfig, ...serverConfig() }, serverParams, undefined, isPWA);
     serverCompiler.hooks.afterDone.tap('electron-main', () => {
       killApplication();
       startApplication();
     });
   }
-  const clientCompiler = await start(clientConfig(), clientParams, devMiddlewares, isWatchBuilded);
+  const clientCompiler = await start(clientConfig(), clientParams, devMiddlewares, isPWA);
   clientCompiler.hooks.afterDone.tap('electron-renderer', () => {
-    startApplication();
+    if (!isPWA) startApplication();
   });
 };
