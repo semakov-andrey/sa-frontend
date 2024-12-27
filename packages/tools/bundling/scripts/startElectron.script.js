@@ -1,3 +1,5 @@
+import { networkInterfaces } from 'node:os';
+
 import { webpackElectronServerProdConfig } from '../configs/webpack.electron.server.prod.js';
 
 import { startApplication, killApplication } from './application.script.js';
@@ -23,6 +25,13 @@ export const startElectron = async (params) => {
   }
   const clientCompiler = await start(clientConfig(), clientParams, devMiddlewares, isPWA);
   clientCompiler.hooks.afterDone.tap('electron-renderer', () => {
-    if (!isPWA) startApplication();
+    if (!isPWA) {
+      startApplication();
+    } else {
+      const address = networkInterfaces().en0.find(({ family }) => family === 'IPv4')?.address;
+      console.info('PWA started at:');
+      console.info(`https://localhost:${ clientParams.port }`);
+      if (address) console.info(`https://${ address }:${ clientParams.port }`);
+    }
   });
 };
