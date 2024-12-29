@@ -31,7 +31,7 @@ export const startElectron = async (params) => {
   } else {
     clientCompiler.hooks.afterDone.tap('browser-link', () => {
       setTimeout(() => {
-        const address = networkInterfaces().en0.find(({ family }) => family === 'IPv4')?.address;
+        const address = Object.values(networkInterfaces()).flat(1).find(({ family, internal }) => family === 'IPv4' && !internal)?.address;
         console.info('');
         console.info('PWA started at:');
         console.info(`https://localhost:${ clientParams.port }`);
