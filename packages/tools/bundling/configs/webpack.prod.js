@@ -26,6 +26,7 @@ export const webpackProdConfig = (config, params) => {
     isAnalyzeBundle = true,
     analyzeStatsFilename = 'stats.json',
     isServiceWorker = false,
+    serviceWorkerPath,
     serviceWorkerName = 'sw.js',
     serviceWorkerFilter,
     isPWA = false,
@@ -87,7 +88,7 @@ export const webpackProdConfig = (config, params) => {
               ...copyPatterns,
               ...isServiceWorker
                 ? [ {
-                  from: path.resolve(rootDirectory, 'node_modules/@sa-frontend/infrastructure/sw.js'),
+                  from: serviceWorkerPath ?? path.resolve(rootDirectory, 'node_modules/@sa-frontend/infrastructure/sw.js'),
                   to: serviceWorkerName
                 } ]
                 : []
